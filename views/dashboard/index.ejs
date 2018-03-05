@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <%- include("../parts/head") %>
+    </head>
+    <body>
+        <header>
+            <%- include("../parts/header") %>
+        </header>
+        <main>
+            <h1>debug show all user data:</h1>
+            <div class="container">
+                <blockquote><%=JSON.stringify(user)%></blockquote>
+            </div>
+        </main>
+        <footer>
+            <%- include("../parts/footer") %>
+        </footer>
+    </body>
+</html>
