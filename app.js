@@ -4,6 +4,7 @@ const passport = require("passport");
 const Discord = require("passport-discord");
 const {ensureLoggedIn, ensureLoggedOut} = require("connect-ensure-login");
 const compress = require("compression");
+const request = require("snekfetch");
 const minify = require("express-minify");
 const config = require("./config");
 const RethinkStore = require("session-rethinkdb")(session);
@@ -24,16 +25,30 @@ app.use(session({saveUninitialized: true, resave: false, name: "discordboats_ses
 app.use(passport.initialize());
 app.use(passport.session());
 
-passport.serializeUser((user, done) => done(undefined, user));
-passport.deserializeUser((user, done) => done(undefined, user));
+passport.serializeUser((user, done) => done(undefined, user.id));
+passport.deserializeUser(async (id, done) => {
+    const user = await r.table("users").get(id).run();
+    if (!user) return done();
+    // yay!
+    const res = await request.get(
+        "https://discordapp.com/api/users/@me")
+        .set("Authorization", `Bearer ${user.discordAT}`)
+        .set("User-Agent", "discordboats.club (https://discordboats.club, 1.0.0) Manual API Request")
+        .send();
+    user.discord = res.body;
+    delete user.discordAT;
+    
+    done(undefined, user);
+});
 
 const discordScopes = module.exports.discordScopes = ["identify"];
 passport.use(new Discord({
     clientID: config.clientID,
     clientSecret: config.clientSecret,
     scope: discordScopes
-}, (accessToken, refreshToken, profile, done) => {
+}, async (accessToken, refreshToken, profile, done) => {
     // we'll enable storing extra user data here.
+    await r.table("users").insert({id: profile.id, discordAT: accessToken}, {conflict: "update"}).run();
     done(undefined, profile);
 }));
 
