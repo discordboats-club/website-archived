@@ -4,8 +4,9 @@ const passport = require("passport");
 const Discord = require("passport-discord");
 const {ensureLoggedIn, ensureLoggedOut} = require("connect-ensure-login");
 const compress = require("compression");
-const minify = require("express-minify");
+const request = require("snekfetch");
 const config = require("./config");
+const minifyHTML = require("express-minify-html");
 const RethinkStore = require("session-rethinkdb")(session);
 const port = process.env.port || 4000;
 
@@ -17,23 +18,48 @@ app.disable("x-powered-by");
 app.set("view engine", "ejs");
 
 app.use(compress());
-app.use(minify());
+app.use(minifyHTML({
+    override: true,
+    exception_url: false,
+    htmlMinifier: {
+        removeComments: true,
+        collapseWhitespace: true,
+        collapseBooleanAttributes: true,
+        removeAttributeQuotes: true,
+        removeEmptyAttributes: true,
+        minifyJS: true
+    }
+}));
 app.use(express.static("static"));
 app.use(express.json());
 app.use(session({saveUninitialized: true, resave: false, name: "discordboats_session", secret, store: new RethinkStore(r)}));
 app.use(passport.initialize());
 app.use(passport.session());
 
-passport.serializeUser((user, done) => done(undefined, user));
-passport.deserializeUser((user, done) => done(undefined, user));
+passport.serializeUser((user, done) => done(undefined, user.id));
+passport.deserializeUser(async (id, done) => {
+    const user = await r.table("users").get(id).run();
+    if (!user) return done();
+    // yay!
+    const res = await request.get(
+        "https://discordapp.com/api/users/@me")
+        .set("Authorization", `Bearer ${user.discordAT}`)
+        .set("User-Agent", "discordboats.club (https://discordboats.club, 1.0.0) Manual API Request")
+        .send();
+    user.discord = res.body;
+    delete user.discordAT;
+    
+    done(undefined, user);
+});
 
 const discordScopes = module.exports.discordScopes = ["identify"];
 passport.use(new Discord({
     clientID: config.clientID,
     clientSecret: config.clientSecret,
     scope: discordScopes
-}, (accessToken, refreshToken, profile, done) => {
+}, async (accessToken, refreshToken, profile, done) => {
     // we'll enable storing extra user data here.
+    await r.table("users").insert({id: profile.id, discordAT: accessToken}, {conflict: "update"}).run();
     done(undefined, profile);
 }));
 
