@@ -7,7 +7,7 @@ const compress = require("compression");
 const minify = require("express-minify");
 const config = require("./config");
 const RethinkStore = require("session-rethinkdb")(session);
-const port = process.env.port || 3000;
+const port = process.env.port || 4000;
 
 const secret = require("./getSecret")();
 const app = module.exports = express();
