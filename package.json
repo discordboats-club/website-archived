@@ -1,12 +1,12 @@
 {
   "name": "discordboats.club",
   "version": "1.0.0",
-  "description": "(Private!!!)",
+  "description": "Discord bot list https://discordboats.club",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "RONTheCookie (and Jellz)",
+  "author": "discordboats.club",
   "license": "Apache-2.0",
   "dependencies": {
     "blossom-ui": "^1.6.1",
