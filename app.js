@@ -5,8 +5,8 @@ const Discord = require("passport-discord");
 const {ensureLoggedIn, ensureLoggedOut} = require("connect-ensure-login");
 const compress = require("compression");
 const request = require("snekfetch");
-const minify = require("express-minify");
 const config = require("./config");
+const minifyHTML = require("express-minify-html");
 const RethinkStore = require("session-rethinkdb")(session);
 const port = process.env.port || 3000;
 
@@ -18,7 +18,18 @@ app.disable("x-powered-by");
 app.set("view engine", "ejs");
 
 app.use(compress());
-app.use(minify());
+app.use(minifyHTML({
+    override: true,
+    exception_url: false,
+    htmlMinifier: {
+        removeComments: true,
+        collapseWhitespace: true,
+        collapseBooleanAttributes: true,
+        removeAttributeQuotes: true,
+        removeEmptyAttributes: true,
+        minifyJS: true
+    }
+}));
 app.use(express.static("static"));
 app.use(express.json());
 app.use(session({saveUninitialized: true, resave: false, name: "discordboats_session", secret, store: new RethinkStore(r)}));
