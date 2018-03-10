@@ -8,8 +8,20 @@
             <%- include("parts/header") %>
         </div>
         <div class="main">
-            <div class="bot-cards">
-                <!-- Bot cards includes can go here -->
+            <div class="container">
+                <div class="bot-cards">
+                    <!-- Bot cards includes can go here -->
+
+                    <!-- placeholder content -->
+                    <% var boathtml = include("parts/botCard", {bot: {name: "TestBoat", shortDesc: "I am a boat that is non existant and is test of the tests."}}) %>
+                    <!-- 4 boats per row -->
+                    <div class="row">
+                        <%- boathtml %>
+                        <%- boathtml %>
+                        <%- boathtml %>
+                        <%- boathtml %>
+                    </div>
+                </div>
             </div>
         </div>
     </body>
