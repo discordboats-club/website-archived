@@ -65,6 +65,7 @@ passport.use(new Discord({
 }));
 
 app.use(require("./routes/index"));
+app.use('/botpage', require('./routes/botpage'));
 app.use("/discord", require("./routes/discord"));
 app.use("/dashboard", ensureLoggedIn("/discord/login"), require("./routes/dashboard"));
 
