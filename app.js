@@ -56,7 +56,8 @@ const discordScopes = module.exports.discordScopes = ["identify"];
 passport.use(new Discord({
     clientID: config.clientID,
     clientSecret: config.clientSecret,
-    scope: discordScopes
+    scope: discordScopes,
+    callbackURL: config.callbackURL
 }, async (accessToken, refreshToken, profile, done) => {
     // we'll enable storing extra user data here.
     await r.table("users").insert({id: profile.id, discordAT: accessToken}, {conflict: "update"}).run();
