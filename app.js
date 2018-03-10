@@ -8,7 +8,7 @@ const request = require("snekfetch");
 const config = require("./config");
 const minifyHTML = require("express-minify-html");
 const RethinkStore = require("session-rethinkdb")(session);
-const port = require('./config.json').listeningPort || 3000;
+const port = process.env.port || require("./config.json").listeningPort || 3000;
 
 const secret = require("./getSecret")();
 const app = module.exports = express();

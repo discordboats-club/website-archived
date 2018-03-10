@@ -9,7 +9,6 @@
   "author": "discordboats.club",
   "license": "Apache-2.0",
   "dependencies": {
-    "blossom-ui": "^1.6.1",
     "compression": "^1.7.2",
     "connect-ensure-login": "^0.1.1",
     "ejs": "^2.5.7",
