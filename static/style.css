@@ -2,3 +2,4 @@ body { display: flex; min-height: 100vh; flex-direction: column; }
 .main { flex: 1 0 auto; }
 .tt { padding-left: 1%; }
 .footer { text-align: center; }
+.bot-card { size: 5%; }
