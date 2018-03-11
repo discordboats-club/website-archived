@@ -5,6 +5,3 @@ const config = require("./config.json");
 client.login(config.token);
 
 client.once("ready", () => console.log(`[discord] Logged in as ${client.user.tag}.`));
-client.once("ready", async () => {
-    console.log(await client.fetchApplication());
-});
