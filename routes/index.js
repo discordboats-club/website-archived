@@ -9,7 +9,3 @@ app.get("/", (req, res) => {
 app.get("/botpage", (req, res) => {
     res.render("botPage", {});
 });
-
-app.get("/add", (req, res) => {
-    res.render("addBot", {});
-});
