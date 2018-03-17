@@ -4,7 +4,8 @@
   "description": "Discord bot list https://discordboats.club",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "semistandard --fix"
   },
   "author": "discordboats.club",
   "license": "Apache-2.0",
@@ -23,5 +24,8 @@
     "rethinkdbdash": "^2.3.31",
     "session-rethinkdb": "^2.0.1",
     "snekfetch": "^4.0.0-beta.0"
+  },
+  "devDependencies": {
+    "semistandard": "^12.0.1"
   }
 }
