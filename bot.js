@@ -7,7 +7,7 @@ client.login(config.token);
 client.once("ready", () => console.log(`[discord] Logged in as ${client.user.tag}.`));
 
 client.on('message', async (msg) => {
-    if (msg.author.bot || msg.author.id == client.user.id) return;
+    if (msg.author.bot || msg.author.id === client.user.id) return;
     const cmd = msg.content.split(' ')[0].toLowerCase();
     const args = msg.content.split(' ');
     const prefix = '!';
