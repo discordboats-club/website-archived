@@ -14,7 +14,7 @@ const port = process.env.port || require("./config.json").listeningPort || 3000;
 const secret = require("./getSecret")();
 const app = module.exports = express();
 const r = module.exports.r = require("rethinkdbdash")({db: "discordboatsclub"});
-const client = require("./bot");
+const client = process.env.NOBOT === "true" ? undefined : require("./bot");
 
 app.disable("x-powered-by");
 app.set("view engine", "ejs");
