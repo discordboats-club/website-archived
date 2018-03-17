@@ -68,6 +68,5 @@ passport.use(new Discord({
 app.use(require("./routes/index"));
 app.use("/discord", require("./routes/discord"));
 app.use("/dashboard", ensureLoggedIn("/discord/login"), require("./routes/dashboard"));
-app.use("/api", require("./routes/api"));
 
 app.listen(port, () => console.log(`Listening on port ${port}.`))
