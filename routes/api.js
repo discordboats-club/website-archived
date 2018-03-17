@@ -1,7 +1,6 @@
 const express = require("express");
 const app = module.exports = express.Router();
 const { r } = require("../app");
-const client = require("../bot");
 
 // datamined from the discord api docs
 const libList = ["discordcr","Discord.Net","DSharpPlus","dscord","DiscordGo","Discord4j","JDA","discord.js","Eris","Discordia","RestCord","Yasmin","discord.py","disco","discordrb","discord-rs","Sword"];
