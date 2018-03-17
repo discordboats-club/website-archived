@@ -2,6 +2,7 @@ const express = require("express");
 const session = require("express-session");
 const passport = require("passport");
 const Discord = require("passport-discord");
+const logger = require('morgan');
 const {ensureLoggedIn, ensureLoggedOut} = require("connect-ensure-login");
 const compress = require("compression");
 const request = require("snekfetch");
@@ -18,6 +19,7 @@ const client = require("./bot");
 app.disable("x-powered-by");
 app.set("view engine", "ejs");
 
+app.use(logger('dev'));
 app.use(compress());
 app.use(minifyHTML({
     override: true,

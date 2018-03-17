@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <%- include("parts/head") %>
+    </head>
+    <body>
+		<div class="header">
+            <%- include("parts/header") %>
+        </div>
+        <div class="main">
+            <div class="container">
+                <h4>Add Bot</h4>
+                <subtitle>Here you can submit your bot to be added to our bot list.</subtitle>
+                <hr />
+                <div class="row">
+                    <form class="col s12">
+                    	<div class="row">
+                    		<div class="input-field col s6">
+                    			<input id="client_id" type="text" class="validate">
+                          		<label for="client_id">Client ID</label>
+                        	</div>
+                        	<div class="input-field col s6">
+                            	<input id="bot_prefix" type="text" class="validate">
+                            	<label for="bot_prefix">Prefix</label>
+                        	</div>
+                      	</div>
+                      	<div class="row">
+                            <div class="input-field col s12">
+                                <select>
+                                    <optgroup label="Other">
+                                            <option value="1">Other</option>
+                                    </optgroup>
+                                    <optgroup label="Node.js">
+                                    	<option value="1">discord.js</option>
+                                        <option value="2">Eris</option>
+                                    </optgroup>
+                                    <optgroup label="Java">
+                                    	<option value="3">JDA</option>
+                                        <option value="4">Javacord</option>
+                                    </optgroup>
+                                </select>
+                                <label>Library</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <input id="bot_website" type="text" class="validate">
+                                <label for="bot_website">Website (optional)</label>
+                            </div>
+                            <div class="input-field col s6">
+                                <input id="bot_twitter" type="text" class="validate">
+                                <label for="bot_twitter">Twitter (optional)</label>
+                            </div>
+                        </div>
+                            <div class="row">
+                                <div class="input-field col s6">
+                                    <input id="bot_invite" type="text" class="validate">
+                                    <label for="bot_invite">Custom Invite URL (optional)</label>
+                                </div>
+                                <p>Custom Invite URLs can be useful if your bot is a moderation bot or a bot that needs extra permissions - Custom Invite URLs make it easy for the user to start using your bot quicker. See <a href="https://discordapi.com/permissions.html">Permissions Calculator</a>.</p>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s6">
+                                    <input id="bot_description" data-length="100" type="text" class="validate">
+                                    <label for="bot_description">Short Description</label>
+                                </div>
+                                <p>Users browsing the list will see your Short Description before your Full Description, so make sure to include some info as to why they should click on your bot.</p>
+                        	</div>
+                            <div class="row">
+                                <form class="col s12">
+                                    <div class="row">
+                                        <div class="input-field col s12">
+                                            <textarea id="bot_description-full" class="materialize-textarea"></textarea>
+                                            <label for="bot_description-full">Full Description</label>
+										</div>
+											<p><a href="https://en.wikipedia.org/wiki/Markdown">Markdown formatting</a> is supported in the Full Description.</p>
+									</div>
+                                </form>
+							</div>
+							<div class="row">
+								<p>By clicking Submit you agree to the Terms & Conditions found <a href="#">here.</a></p>
+								<button class="btn waves-effect waves-light" type="submit" name="action">Submit <i class="material-icons right">send</i></button>
+							</div>
+						</form>
+				  </div>
+            </div>
+        </div>
+    </body>
+    <footer>
+        <%- include("parts/footer") %>
+    </footer>
+</html>

@@ -7,9 +7,7 @@ subtitle { color: gray; }
 .bot-image { max-width: 100%; max-height: 100%; }
 .bot-image-container { width: 100%; position: relative; }
 .bot-card { size: 5%; }
-.bot-cards { padding-top: 2%; }
-.container { padding-bottom: 2%; }
+.container { padding-top: 2%; padding-bottom: 2%; }
 
-.bp-top-info { padding-top: 2%; }
 .bp-heading { display: inline-block; padding-right: 2%; }
 .bp-action-button { padding-left: 10%; display: inline-block; }

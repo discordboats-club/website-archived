@@ -1,20 +1,27 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <%- include("../parts/head") %>
+        <%- include("parts/head") %>
     </head>
     <body>
-        <header>
-            <%- include("../parts/header") %>
-        </header>
-        <main>
-            <h1>debug show all user data:</h1>
+        <div class="header">
+            <%- include("parts/header") %>
+        </div>
+        <div class="main">
             <div class="container">
-                <blockquote><%=JSON.stringify(user)%></blockquote>
+                <div class="bot-cards">
+                    <!-- Bot cards includes can go here -->
+                    <div class="row">
+                        <%- include("parts/botCard") %>
+                        <%- include("parts/botCard") %>
+                        <%- include("parts/botCard") %>
+                        <%- include("parts/botCard") %>
+                    </div>
+                </div>
             </div>
-        </main>
-        <footer>
-            <%- include("../parts/footer") %>
-        </footer>
+        </div>
     </body>
+    <footer>
+        <%- include("parts/footer") %>
+    </footer>
 </html>
