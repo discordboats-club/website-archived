@@ -25,7 +25,6 @@ const newBotSchema = Joi.object().keys({
 });
 
 app.post("/bot", async (req, res) => {
-    if (typeof req.body !== "object") return res.sendStatus(400);
 
     const wdjt = Joi.validate(req.body, newBotSchema); // What Does Joi Think (wdjt)
     if (wdjt.error) {
@@ -43,20 +42,28 @@ app.post("/bot", async (req, res) => {
     Object.keys(newBotSchema.describe().children).forEach(key => {
         data[key] = req.body[key];
     });
-    if (data.library && !data.library.includes(libList)) return res.status(400).json({error: "invalid_lib"});
+    if (data.library && !data.library.includes(libList)) return res.status(400).json({error: "Invalid Library"});
 
     const { r } = require("./ConstantStore");
 
     // does bot already exist?
     const dbeBot = await r.table("bots").get(data.id);
-    if (dbeBot) return res.status(302).json({error: "bot_exists"});
+    if (dbeBot) return res.status(302).json({error: "Bot already exists"});
 
 
     // everything looks good.
     await r.table("bots").insert(data).run();
-    res.status(200).json({ok: "created_bot"});
+    res.status(200).json({ok: "Created bot"});
 });
 
+app.delete("/bot", (req, res) => {
+    const { r } = require("./ConstantStore");
+    if (typeof req.body.id !== "string") return res.status(400).json({error: "Expected Payload's id property to be a string."})
+    const bot = await r.table("bots").get(req.body.id).run();
+    if (bot.ownerID !== req.user.id) return res.status(403).json({error: "You can't delete a bot you don't own!"});
+    await r.table("bots").get(req.body.id).delete();
+    res.status(200).json({ok: "Deleted bot."});
+});
 
 app.use((req, res) => {
     res.status(404).json({error: "endpoint_not_found"});
