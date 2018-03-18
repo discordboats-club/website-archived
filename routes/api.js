@@ -1,10 +1,8 @@
 const express = require("express");
 const app = module.exports = express.Router();
-const { r } = require("../app");
 const Joi = require("joi");
 // datamined from the discord api docs
 const libList = ["discordcr","Discord.Net","DSharpPlus","dscord","DiscordGo","Discord4j","JDA","discord.js","Eris","Discordia","RestCord","Yasmin","discord.py","disco","discordrb","discord-rs","Sword"];
-
 app.use((req, res, next) => {
     if (req.isAuthenticated()) next();
     else {
@@ -23,7 +21,7 @@ const newBotSchema = Joi.object().keys({
     longDescription: Joi.string().max(1500).required(),
     invite: Joi.string().uri({scheme: ["https", "http"]}).required(),
     website: Joi.string().uri({scheme: ["https", "http"]}),
-    library: Joi.string() // extra validation later
+    library: Joi.string()
 });
 
 app.post("/bot", async (req, res) => {
@@ -40,16 +38,23 @@ app.post("/bot", async (req, res) => {
         return;
     }
 
-    // TODO: Using the discord bot, check if their ID is existant.
-
     // Filter out all of the data that we don't expect.
-    const data = {ownerID: req.user.id, createdAt: new Date().getTime()};
+    const data = {ownerID: req.user.id, createdAt: new Date().getTime(), verified: false};
     Object.keys(newBotSchema.describe().children).forEach(key => {
         data[key] = req.body[key];
     });
-    
+    if (data.library && !data.library.includes(libList)) return res.status(400).json({error: "invalid_lib"});
 
-    // TODO: Call draem's data manager magic
+    const { r } = require("./ConstantStore");
+
+    // does bot already exist?
+    const dbeBot = await r.table("bots").get(data.id);
+    if (dbeBot) return res.status(302).json({error: "bot_exists"});
+
+
+    // everything looks good.
+    await r.table("bots").insert(data).run();
+    res.status(200).json({ok: "created_bot"});
 });
 
 

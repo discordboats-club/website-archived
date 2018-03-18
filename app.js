@@ -11,9 +11,7 @@ const minifyHTML = require("express-minify-html");
 const RethinkStore = require("session-rethinkdb")(session);
 const port = process.env.port || require("./config.json").listeningPort || 3000;
 
-const secret = require("./getSecret")();
 const app = module.exports = express();
-const r = module.exports.r = require("rethinkdbdash")({db: "discordboatsclub"});
 // const client = require("./bot");
 
 app.disable("x-powered-by");
@@ -35,7 +33,7 @@ app.use(minifyHTML({
 }));
 app.use(express.static("static"));
 app.use(express.json());
-app.use(session({saveUninitialized: true, resave: false, name: "discordboats_session", secret, store: new RethinkStore(r)}));
+app.use(session({saveUninitialized: true, resave: false, name: "discordboats_session", secret: require("./ConstantStore").secret, store: new RethinkStore(r)}));
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -63,7 +61,14 @@ passport.use(new Discord({
     callbackURL: config.callbackURL
 }, async (accessToken, refreshToken, profile, done) => {
     // we'll enable storing extra user data here.
-    await r.table("users").insert({id: profile.id, discordAT: accessToken}, {conflict: "update"}).run();
+    const { r } = require("./ConstantStore");
+    await r.table("users").insert(
+        {
+            id: profile.id, 
+            discordAT: accessToken,
+            discordRT: refreshToken /* unused for now - this is for the future. */
+        }
+        , {conflict: "update"}).run();
     done(undefined, profile);
 }));
 
