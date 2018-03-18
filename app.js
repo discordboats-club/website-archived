@@ -33,7 +33,7 @@ app.use(minifyHTML({
 }));
 app.use(express.static("static"));
 app.use(express.json());
-app.use(session({saveUninitialized: true, resave: false, name: "discordboats_session", secret: require("./ConstantStore").secret, store: new RethinkStore(r)}));
+app.use(session({saveUninitialized: true, resave: false, name: "discordboats_session", secret: require("./ConstantStore").secret, store: new RethinkStore(require("./ConstantStore").r)}));
 app.use(passport.initialize());
 app.use(passport.session());
 

@@ -56,7 +56,7 @@ app.post("/bot", async (req, res) => {
     res.status(200).json({ok: "Created bot"});
 });
 
-app.delete("/bot", (req, res) => {
+app.delete("/bot", async (req, res) => {
     const { r } = require("./ConstantStore");
     if (typeof req.body.id !== "string") return res.status(400).json({error: "Expected Payload's id property to be a string."})
     const bot = await r.table("bots").get(req.body.id).run();

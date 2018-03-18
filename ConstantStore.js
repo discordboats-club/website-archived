@@ -1,5 +1,6 @@
 const { Client } = require("discord.js"); // for jsdoc
 const randomstring = require("randomstring");
+const fs = require("fs");
 let r;
 let bot;
 let secret;
