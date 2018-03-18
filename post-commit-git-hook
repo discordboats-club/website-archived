@@ -1,4 +1,4 @@
 #!/bin/sh
 echo "rons git hook is running build process"
 npm run build
-sleep 1
+git commit -am "hook automatic build"
