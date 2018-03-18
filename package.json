@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "NODE_ENV=production webpack",
-    "postinstall": "echo \"Setting up the git hooks\" && cp pre-commit-git-hook .git/hooks/pre-commit"
+    "postinstall": "echo \"Setting up the git hooks\" && cp pre-commit-git-hook .git/hooks/pre-commit && chmod +x .git/hooks/pre-commit"
   },
   "author": "discordboats.club",
   "license": "Apache-2.0",
