@@ -44,7 +44,7 @@ passport.deserializeUser(async (id, done) => {
     const res = await request.get(
         "https://discordapp.com/api/users/@me")
         .set("Authorization", `Bearer ${user.discordAT}`)
-        .set("User-Agent", "discordboats.club (https://discordboats.club, 1.0.0) Manual API Request")
+        .set("User-Agent", "discordboats.club (https://discordboats.club, 1.0.0) Manual API Request.")
         .send();
     user.discord = res.body;
     delete user.discordAT;
