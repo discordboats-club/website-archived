@@ -5,7 +5,7 @@ const UglifyJsPlugin = require("uglifyjs-webpack-plugin")
 module.exports = {
   context: __dirname,
   devtool: debug ? "inline-sourcemap" : undefined,
-  mode: debug ? "development" : "production",
+  mode: "production",
   entry: "./assets/js/main.js",
   output: {
     path: __dirname + "/static",
