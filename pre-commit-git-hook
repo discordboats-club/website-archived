@@ -1,0 +1,3 @@
+#!/bin/sh
+echo "rons git hook is running build process"
+npm run build
