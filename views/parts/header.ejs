@@ -7,7 +7,7 @@
             <% if (!user) { %>
                 <li><a href="/discord/login">Login</a></li>
             <% } else { %>
-                <li><i class="fas fa-user-circle"></i> <%= user.discord.username %></li>
+                <li id="profile-view-navbar"><b><i class="fas fa-user-circle"></i></b> <%= user.discord.username %></li>
             <% } %>
         </ul>
     </div>

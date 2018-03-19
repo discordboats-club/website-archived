@@ -11,3 +11,5 @@ subtitle { color: gray; }
 
 .bp-heading { display: inline-block; padding-right: 2%; }
 .bp-action-button { padding-left: 10%; display: inline-block; }
+
+#profile-view-navbar {padding-right: 10px;}
