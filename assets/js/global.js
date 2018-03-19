@@ -1,4 +1,5 @@
 const APIClient = require("./APIClient");
+const $ = require("jquery");
 const api = new APIClient();
 console.log('Welcome to discordboats.club! Why are you looking here? :P');
 
