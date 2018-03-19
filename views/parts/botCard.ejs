@@ -2,15 +2,15 @@
     <div class="card hoverable blue-grey darken-1">
         <div class="card-image bot-image-container">
             <img src="/boat.jpg" class="bot-image">
-            <span class="card-title">Sky</span>
+            <span class="card-title"><%= bot.name %></span>
         </div>
         <div class="card-content white-text">
-            <p style="padding-bottom: 5%;">Sky is a fun Discord bot featuring a chat-based points system &amp; soundboard.</p>
-            <div class="chip lime lighten-2" style="display: inline-block;">1337 servers</div>
+            <p style="padding-bottom: 5%;"><%= bot.shortDescription %></p>
+            <div class="chip lime lighten-2" style="display: inline-block;"><%= bot.servers %> servers</div>
         </div>
         <div class="card-action">
             <a href="#">Invite</a>
-            <a href="#">View</a>
+            <a href="/bot/<%= bot.id %>">View</a>
         </div>
     </div>
 </div>

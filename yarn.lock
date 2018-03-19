@@ -1116,6 +1116,10 @@ chrome-trace-event@^0.1.1:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/chrome-trace-event/-/chrome-trace-event-0.1.2.tgz#90f36885d5345a50621332f0717b595883d5d982"
 
+chunk@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/chunk/-/chunk-0.0.2.tgz#04aa4f31664ae850de500cf8d57b5f4c29cd522e"
+
 cipher-base@^1.0.0, cipher-base@^1.0.1, cipher-base@^1.0.3:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/cipher-base/-/cipher-base-1.0.4.tgz#8760e4ecc272f4c363532f926d874aae2c1397de"

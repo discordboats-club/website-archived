@@ -9,15 +9,14 @@
         </div>
         <div class="main">
             <div class="container">
-                <div class="bot-cards">
-                    <!-- Bot cards includes can go here -->
-                    <div class="row">
-                        <%- include("../parts/botCard") %>
-                        <%- include("../parts/botCard") %>
-                        <%- include("../parts/botCard") %>
-                        <%- include("../parts/botCard") %>
+                <% if (rawBots.length == 0) { %>
+                    <h4>You have no bots! <a href="/dashboard/new">Create one?</a></h4>
+                <% } else { %>
+                    <div class="bot-cards">
+                            <!-- Bot cards includes can go here -->
+                        <%- myBots.map(chunk => `<div class="row">${chunk.map(bot => include("../parts/botCard", {bot}))}</div>`) %>
                     </div>
-                </div>
+                <% } %>
             </div>
         </div>
     </body>
