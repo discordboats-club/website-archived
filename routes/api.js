@@ -40,7 +40,7 @@ app.post("/bot", async (req, res) => {
     if (wdjt.error) {
         if (!wdjt.error.isJoi) {
             console.error("Error while running Joi for signup data validation.", wdjt.error);
-            res.sendStatus(500);
+            res.status(500).json({error: "Internal Server Error"});
             return;
         }
         res.status(400).json({error: wdjt.error.name, details: wdjt.error.details.map(item => item.message)});
