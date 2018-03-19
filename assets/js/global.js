@@ -9,4 +9,7 @@ console.log("%cTyping anything here could make bad stuff happen!", "color: #e91e
 
 $(document).ready(async () => {
     $('select').material_select();
+    $("#new-bot-form").submit(e => {
+        // not implemented yet
+    });
 });
