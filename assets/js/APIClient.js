@@ -1,11 +1,5 @@
 module.exports = class APIClient {
-    constructor() {
-        this._me = undefined;
-    }
-    /**
-     * @api private
-     */
-    async getSelf() {
+    async getMe() {
         const res = await fetch("/api/me", {
             credentials: "include",
         });
@@ -13,13 +7,5 @@ module.exports = class APIClient {
         if (me.error) throw new Error(me.error);
         this._me = me;
         return me;
-    }
-    /**
-     * Gets the current user from the API. May need to catch a error.
-     * @returns {Promise<Object>}
-     */
-    get me() {
-        if (this._me) return Promise.resolve(this._me);
-        else return this.getSelf();
     }
 }
