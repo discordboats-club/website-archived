@@ -12,6 +12,7 @@ module.exports = class APIClient {
         const me = await res.json();
         if (me.error) throw new Error(me.error);
         this._me = me;
+        return me;
     }
     /**
      * Gets the current user from the API. May need to catch a error.
