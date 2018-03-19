@@ -1,8 +1,24 @@
 module.exports = class APIClient {
-    static async createBot(bot) {
-        throw new Error("WIP");
+    constructor() {
+        this._me = undefined;
     }
-    static async deleteBot(id) {
-        throw new Error("WIP!!");
+    /**
+     * @api private
+     */
+    async getSelf() {
+        const res = await fetch("/api/me", {
+            credentials: "include",
+        });
+        const me = await res.json();
+        if (me.error) throw new Error(me.error);
+        this._me = me;
+    }
+    /**
+     * Gets the current user from the API.
+     * @returns {Promise<Object>}
+     */
+    get me() {
+        if (this._me) return Promise.resolve(this._me);
+        else return this.getSelf();
     }
 }

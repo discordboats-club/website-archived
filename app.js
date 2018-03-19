@@ -6,6 +6,7 @@ const logger = require('morgan');
 const {ensureLoggedIn, ensureLoggedOut} = require("connect-ensure-login");
 const compress = require("compression");
 const request = require("snekfetch");
+const { r } = require("./ConstantStore")
 const config = require("./config");
 const minifyHTML = require("express-minify-html");
 const RethinkStore = require("session-rethinkdb")(session);
@@ -60,7 +61,6 @@ passport.use(new Discord({
     callbackURL: config.callbackURL
 }, async (accessToken, refreshToken, profile, done) => {
     // we'll enable storing extra user data here.
-    const { r } = require("./ConstantStore");
     await r.table("users").insert(
         {
             id: profile.id, 

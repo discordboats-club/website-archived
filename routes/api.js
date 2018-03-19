@@ -71,7 +71,14 @@ app.delete("/bot", async (req, res) => {
     res.status(200).json({ok: "Deleted bot."});
 });
 
-
+app.get("/me", (req, res) => {
+    res.json({id: req.user.id,
+             discord: {
+                username: req.user.discord.username,
+                discrim: req.user.discord.discriminator
+             }
+        });
+});
 
 app.use((req, res) => {
     res.status(404).json({error: "endpoint_not_found"});
