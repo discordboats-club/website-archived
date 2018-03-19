@@ -71,9 +71,7 @@ app.delete("/bot", async (req, res) => {
     res.status(200).json({ok: "Deleted bot."});
 });
 
-const newUserSchema = Joi.object().keys({
-    
-});
+
 
 app.post("/user/me", async (req, res) => {
     return res.sendStatus(501);
