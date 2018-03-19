@@ -14,6 +14,13 @@ app.get("/", (req, res) => {
     res.json({success: "you found the api!"});
 });
 
+function filterUnexpectedData(orig, startingData, schema) {
+    const data = Object.assign({}, startingData);
+    Object.keys(schema.describe().children).forEach(key => {
+        data[key] = orig[key];
+    });
+    return data;
+}
 
 const newBotSchema = Joi.object().keys({
     shortDescription: Joi.string().max(200).required(),
@@ -37,11 +44,7 @@ app.post("/bot", async (req, res) => {
         return;
     }
 
-    // Filter out all of the data that we don't expect.
-    const data = {ownerID: req.user.id, createdAt: new Date().getTime(), verified: false};
-    Object.keys(newBotSchema.describe().children).forEach(key => {
-        data[key] = req.body[key];
-    });
+    const data = filterUnexpectedData(req.body, {ownerID: req.user.id, createdAt: new Date().getTime(), verified: false}, newBotSchema);
     if (data.library && !data.library.includes(libList)) return res.status(400).json({error: "Invalid Library"});
 
     const { r } = require("./ConstantStore");
@@ -63,6 +66,16 @@ app.delete("/bot", async (req, res) => {
     if (bot.ownerID !== req.user.id) return res.status(403).json({error: "You can't delete a bot you don't own!"});
     await r.table("bots").get(req.body.id).delete();
     res.status(200).json({ok: "Deleted bot."});
+});
+
+const newUserSchema = Joi.object().keys({
+    
+});
+
+app.post("/user/me", async (req, res) => {
+    return res.sendStatus(501);
+    const { r } = require("./ConstantStore");
+
 });
 
 app.use((req, res) => {
