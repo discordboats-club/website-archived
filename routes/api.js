@@ -14,6 +14,9 @@ app.get("/", (req, res) => {
     res.json({success: "you found the api!"});
 });
 
+// ha just kidding! you came here because of my troll commit :^) no but seriously why would you do such a mean thing to the LEAD FRONTEND DEV
+// i guess this means demote
+
 
 const newBotSchema = Joi.object().keys({
     shortDescription: Joi.string().max(200).required(),
