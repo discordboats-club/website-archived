@@ -12,11 +12,8 @@ app.use((req, res, next) => {
 });
 
 app.get("/", (req, res) => {
-    res.json({success: "you found the api!"});
+    res.json({ok: "you found the api!"});
 });
-
-// ha just kidding! you came here because of my troll commit :^) no but seriously why would you do such a mean thing to the LEAD FRONTEND DEV
-// i guess this means demote
 
 function filterUnexpectedData(orig, startingData, schema) {
     const data = Object.assign({}, startingData);
