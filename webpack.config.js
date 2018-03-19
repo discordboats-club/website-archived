@@ -6,7 +6,7 @@ module.exports = {
   context: __dirname,
   devtool: debug ? "inline-sourcemap" : undefined,
   mode: "production",
-  entry: "./assets/js/main.js",
+  entry: "./assets/js/global.js",
   output: {
     path: __dirname + "/static",
     filename: "bundle.min.js"
