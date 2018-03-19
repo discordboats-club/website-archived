@@ -13,6 +13,10 @@ module.exports = {
   },
   plugins: [
     new UglifyJsPlugin({sourceMap: true}),
-    new webpack.BannerPlugin({banner: "Copyright 2018 discordboats.club. All rights reserved."})
+    new webpack.BannerPlugin({banner: "Copyright 2018 discordboats.club. All rights reserved."}),
+    new webpack.ProvidePlugin({
+      $: 'jquery',
+      jQuery: 'jquery'
+    })
   ]
 };
