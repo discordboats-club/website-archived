@@ -14,7 +14,7 @@ module.exports = class APIClient {
         this._me = me;
     }
     /**
-     * Gets the current user from the API.
+     * Gets the current user from the API. May need to catch a error.
      * @returns {Promise<Object>}
      */
     get me() {
