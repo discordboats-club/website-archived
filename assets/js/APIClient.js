@@ -13,7 +13,8 @@ module.exports = class APIClient {
     }
     /**
      * @param {Object} bot 
-     * @returns {Promise<Object>} this object has a `ok` or `error` property. Note: sometimes error objects may have a `details` property.
+     * @returns {Promise<Object>} this object has a `ok` property for data from the api (usually the same for all requests)
+     * @throws promise rejects with object that has a `error` property, sometimes error objects may have a `details` property.
      */
     async createBot(bot) {
         // id, shortDescription, longDescription, invite, website, library
