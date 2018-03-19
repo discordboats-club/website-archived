@@ -71,6 +71,10 @@ app.delete("/bot", async (req, res) => {
     res.status(200).json({ok: "Deleted bot."});
 });
 
+app.patch("/bot", async (req, res) => {
+    res.sendStatus(501);
+});
+
 app.post("/logout", (req, res) => {
     req.logOut();
     res.sendStatus(200);
