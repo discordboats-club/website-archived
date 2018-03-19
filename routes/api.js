@@ -73,12 +73,6 @@ app.delete("/bot", async (req, res) => {
 
 
 
-app.post("/user/me", async (req, res) => {
-    return res.sendStatus(501);
-    const { r } = require("./ConstantStore");
-
-});
-
 app.use((req, res) => {
     res.status(404).json({error: "endpoint_not_found"});
 });
