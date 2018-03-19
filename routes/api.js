@@ -62,10 +62,9 @@ app.post("/bot", async (req, res) => {
     res.status(200).json({ok: "Created bot"});
 });
 
-app.delete("/bot", async (req, res) => {
+app.delete("/bot/:id", async (req, res) => {
     const { r } = require("./ConstantStore");
-    if (typeof req.body.id !== "string") return res.status(400).json({error: "Expected Payload's id property to be a string."})
-    const bot = await r.table("bots").get(req.body.id).run();
+    const bot = await r.table("bots").get(req.params.id).run();
     if (bot.ownerID !== req.user.id) return res.status(403).json({error: "You can't delete a bot you don't own!"});
     await r.table("bots").get(req.body.id).delete();
     res.status(200).json({ok: "Deleted bot."});
