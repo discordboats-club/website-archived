@@ -8,4 +8,7 @@ module.exports = class APIClient {
         this._me = me;
         return me;
     }
+    async logOut() {
+        await fetch("/api/logout", {credentials: "include", method: "POST"});
+    }
 }
