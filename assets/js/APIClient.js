@@ -1,5 +1,6 @@
 module.exports = class APIClient {
     async getMe() {
+        if (this._me) return this._me;
         const res = await fetch("/api/me", {
             credentials: "include",
         });
