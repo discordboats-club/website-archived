@@ -4,7 +4,11 @@
         <ul id="nav-mobile" class="right hide-on-med-and-down">
             <li><a href="#">Our Discord</a></li>
             <!-- <li><a href="#">F.A.Q.</a></li> -->
-            <li id="user-proflog"><a href="/discord/login">Login</a></li>
+            <% if (!user) { %>
+                <li><a href="/discord/login">Login</a></li>
+            <% } else { %>
+                <li><i class="fas fa-user-circle"></i> <%= user.discord.username %></li>
+            <% } %>
         </ul>
     </div>
 </nav>

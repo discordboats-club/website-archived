@@ -7,5 +7,5 @@ app.get("/", (req, res) => {
 });
 
 app.get("/new", (req, res) => {
-    res.render("dashboard/newBot", {});
+    res.render("dashboard/newBot", {user: req.user});
 });

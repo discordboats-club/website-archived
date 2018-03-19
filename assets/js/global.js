@@ -9,10 +9,4 @@ console.log("%cTyping anything here could make bad stuff happen!", "color: #e91e
 
 $(document).ready(async () => {
     $('select').material_select();
-    try {
-        const me = await api.getMe();
-        $("#user-proflog").html(`<i class="fas fa-user-circle"></i> ${me.username}`);
-    } catch(err) {
-        console.error(err);
-    }
 });
