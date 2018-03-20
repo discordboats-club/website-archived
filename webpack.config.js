@@ -6,7 +6,10 @@ module.exports = {
   context: __dirname,
   devtool: debug ? "inline-sourcemap" : undefined,
   mode: "production",
-  entry: "./assets/js/global.js",
+  entry: [
+    "./assets/js/global.js",
+    "./assets/css/style.css"
+  ],
   output: {
     path: __dirname + "/static",
     filename: "bundle.min.js"
@@ -18,6 +21,15 @@ module.exports = {
       $: 'jquery',
       jQuery: 'jquery',
       jquery: 'jquery'
-    })
-  ]
+    }),
+  ],
+  module: {
+    rules: [
+      {
+        test: /\.css$/, 
+        use: ["file-loader?name=style.css", "extract-loader", {loader: "css-loader", options: {minimize: true}}]
+      }
+    ]
+  },
+  optimization: {splitChunks: {chunks: "all"}}
 };
