@@ -11,6 +11,6 @@ console.log("%cTyping anything here could make bad stuff happen!", "color: #e91e
 $(document).ready(async () => {
     M.FormSelect.init(document.querySelector("select"));
     $("#new-bot-form").submit(e => {
-        m.toast({html: "Coming soon!"});
+        M.toast({html: "Coming soon!"});
     });
 });
