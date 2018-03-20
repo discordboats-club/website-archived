@@ -9,9 +9,8 @@ console.log("%cTyping anything here could make bad stuff happen!", "color: #e91e
 
 
 $(window).ready(async () => {
-    M.FormSelect.init(document.querySelector("select"));
-    $("#new-bot-form").submit(e => {
+    M.FormSelect.init(document.querySelector("select#newbot"), {classes: "newbot-dd-wrap"});
+    document.querySelector("button#nb-submit").addEventListener("click", e => {
         M.toast({html: "Coming soon!"});
-        console.log("user tried to click non existant link");
     });
 });
