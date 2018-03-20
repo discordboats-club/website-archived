@@ -12,5 +12,6 @@ $(window).ready(async () => {
     M.FormSelect.init(document.querySelector("select"));
     $("#new-bot-form").submit(e => {
         M.toast({html: "Coming soon!"});
+        console.log("user tried to click non existant link");
     });
 });
