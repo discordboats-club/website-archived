@@ -2,7 +2,7 @@ module.exports = class APIClient {
     async getMe() {
         if (this._me) return this._me;
         const res = await fetch("/api/me", {
-            credentials: "include",
+            credentials: "same-origin",
         });
         const me = await res.json();
         if (me.error) throw new Error(me.error);
@@ -10,7 +10,7 @@ module.exports = class APIClient {
         return me;
     }
     async logOut() {
-        await fetch("/api/logout", {credentials: "include", method: "POST"});
+        await fetch("/api/logout", {credentials: "same-origin", method: "POST"});
     }
     /**
      * @param {Object} bot 
@@ -24,11 +24,11 @@ module.exports = class APIClient {
         headers: {
             "Content-Type": "application/json"
         },
-        credentials: "include"
+        credentials: "same-origin"
         });
         const data = await res.json();
         if (data.error) {
-            throw new Error({error: data.error, details: data.details/* does not always exist*/});
+            throw new Error(data.error);
         } else if (data.ok) {
             return {ok: data.ok};
         } else {

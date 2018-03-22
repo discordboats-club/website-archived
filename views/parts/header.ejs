@@ -1,4 +1,4 @@
-<nav class="blue lighten-3">
+<nav class="blue lighten-3 nav-extended">
     <div class="nav-wrapper">
         <span class="tt"><a href="/" class="brand-logo">discordboats.club</a></span>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
@@ -10,5 +10,8 @@
                 <li><a href="/dashboard"><b><i class="fas fa-user-circle"></i></b> <%= user.discord.username %></a></li>
             <% } %>
         </ul>
+    </div>
+    <div class="nav-content hide-on-small-only">
+        <%- typeof childBefore === "string" ? childBefore : ""  %>
     </div>
 </nav>

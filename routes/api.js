@@ -30,7 +30,8 @@ const newBotSchema = Joi.object().keys({
     prefix: Joi.string().max(50).required(),
     invite: Joi.string().uri({scheme: ["https", "http"]}).required(),
     website: Joi.string().uri({scheme: ["https", "http"]}),
-    library: Joi.string()
+    library: Joi.string(),
+    name: Joi.string().max(30)
 });
 
 function handleJoi(schema, req, res) {

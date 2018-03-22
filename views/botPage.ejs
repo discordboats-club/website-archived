@@ -5,7 +5,7 @@
     </head>
     <body>
         <div class="header">
-            <%- include("parts/header") %>
+            <%- include("parts/header", {childBefore: `<div class="tabs blue lighten-3"><p class="breadcrumb center-align">This bot has not been verified yet and only you can see it.</p></div>`}) %>
         </div>
         <div class="main">
             <div class="container">
@@ -16,8 +16,8 @@
                         </div> -->
                         <div class="bp-head-section">
                             <h4 class="bp-heading"><%= bot.name %></h4>
-                            <div class="chip red lighten-2" style="display: inline-block;"><%= bot.library ? bot.library : "N/A" /* bots dont have to select a lib */%></div>
-                            <div class="chip green lighten-2" style="display: inline-block;">online(thisisaplaceholder)</div>
+                            <div class="chip red lighten-2" style="display: inline-block;"><% if (bot.library) { %><%= bot.library %><% } else { %><span class="hide-on-small-only">Unknown Library</span><span class="hide-on-med-and-up">N/A</span><% } %></div>
+                            <div class="chip green lighten-2" style="display: inline-block;"><%= typeof bot.online === "boolean" ? bot.online ? "online" : "offline" : "N/A" %></div>
                             <div class="chip lime lighten-2" style="display: inline-block;"><%= bot.servers %> servers</div>
                         </div>
                         <subtitle><%= bot.shortDescription %></subtitle>
@@ -28,7 +28,7 @@
                         <div class="bp-action-button"><a href="#" class="waves-effect waves-light btn disabled">Twitter</a></div>
                         <hr />
                         <p>
-                            <%= bot._markedDescription %>
+                            <%- bot._markedDescription %>
                         </p>
                     </div>
                 </div>
