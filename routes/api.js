@@ -3,7 +3,7 @@ const app = module.exports = express.Router();
 const Joi = require("joi");
 const { r } = require("../ConstantStore");
 // datamined from the discord api docs
-const libList = ["discordcr","Discord.Net","DSharpPlus","dscord","DiscordGo","Discord4j","JDA","discord.js","Eris","Discordia","RestCord","Yasmin","discord.py","disco","discordrb","discord-rs","Sword"];
+const libList = module.exports.libList = ["discordcr","Discord.Net","DSharpPlus","dscord","DiscordGo","Discord4j","JDA","discord.js","Eris","Discordia","RestCord","Yasmin","discord.py","disco","discordrb","discord-rs","Sword"];
 app.use((req, res, next) => {
     if (req.isAuthenticated()) next();
     else {
@@ -27,6 +27,7 @@ const newBotSchema = Joi.object().keys({
     shortDescription: Joi.string().max(200).required(),
     id: Joi.string().length(18).required(),
     longDescription: Joi.string().max(1500).required(),
+    prefix: Joi.string().max(50).required(),
     invite: Joi.string().uri({scheme: ["https", "http"]}).required(),
     website: Joi.string().uri({scheme: ["https", "http"]}),
     library: Joi.string()
