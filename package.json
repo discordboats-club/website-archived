@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "NODE_ENV=production webpack --progress",
-    "postinstall": "echo \"Setting up the git hooks\" && cp post-commit-git-hook .git/hooks/post-commit && chmod +x .git/hooks/post-commit"
+    "postinstall": "cp post-commit-git-hook .git/hooks/post-commit && chmod +x .git/hooks/post-commit && cp pre-push-git-hook .git/hooks/pre-push && chmod +x .git/hooks/pre-push"
   },
   "author": "discordboats.club",
   "license": "Apache-2.0",
