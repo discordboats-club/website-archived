@@ -12,5 +12,6 @@ subtitle { color: gray; }
 .container { padding-top: 2%; padding-bottom: 2%; }
 
 .bp-heading { display: inline-block; padding-right: 2%; }
-.bp-action-button { padding: 1%; display: inline-block; }
+.bp-action-button-mobile { padding: 1%; display: inline-block; }
+.bp-action-button-pc { padding-left: 10%; display: inline-block; }
 div.newbot-dd-wrap input.select-dropdown {color: grey; }

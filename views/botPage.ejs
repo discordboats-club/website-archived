@@ -22,10 +22,18 @@
                         </div>
                         <subtitle><%= bot.shortDescription %></subtitle>
                         <hr />
-                        <div class="bp-action-button"><a href="#" class="waves-effect waves-light btn">Invite</a></div>
-                        <div class="bp-action-button"><a href="#" class="waves-effect waves-light btn">Github</a></div>
-                        <div class="bp-action-button"><a href="#" class="waves-effect waves-light btn">Website</a></div>
-                        <div class="bp-action-button"><a href="#" class="waves-effect waves-light btn disabled">Twitter</a></div>
+                        <div class="hide-on-med-and-up">
+                            <div class="bp-action-button-mobile"><a href="#" class="waves-effect waves-light btn">Invite</a></div>
+                            <div class="bp-action-button-mobile"><a href="#" class="waves-effect waves-light btn">Github</a></div>
+                            <div class="bp-action-button-mobile"><a href="#" class="waves-effect waves-light btn">Website</a></div>
+                            <div class="bp-action-button-mobile"><a href="#" class="waves-effect waves-light btn disabled">Twitter</a></div>
+                        </div>
+                        <div class="hide-on-small-only">
+                            <div class="bp-action-button-pc"><a href="#" class="waves-effect waves-light btn">Invite</a></div>
+                            <div class="bp-action-button-pc"><a href="#" class="waves-effect waves-light btn">Github</a></div>
+                            <div class="bp-action-button-pc"><a href="#" class="waves-effect waves-light btn">Website</a></div>
+                            <div class="bp-action-button-pc"><a href="#" class="waves-effect waves-light btn disabled">Twitter</a></div>
+                        </div>
                         <hr />
                         <p>
                             <%- bot._markedDescription %>

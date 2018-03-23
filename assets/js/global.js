@@ -16,16 +16,16 @@ $(window).ready(async () => {
             let lib = M.FormSelect.getInstance($("select")).getSelectedValues()[0];
             if (lib === "none") lib = undefined;
             console.log(e);
+            return;
             try { 
                 await api.createBot({
-                    name: e.target[0].value,
-                    id: e.target[1].value,
+                    id: e.target[0].value,
                     library: lib,
-                    prefix: e.target[4].value,
-                    website: e.target[5].value,
-                    invite: e.target[6].value || `https://discordapp.com/oauth2/authorize?client_id=${encodeURI(e.target[1].value)}&scope=bot&permissions=0`,
-                    shortDescription: e.target[7].value,
-                    longDescription: e.target[8].value
+                    prefix: e.target[2].value,
+                    website: e.target[4].value,
+                    invite: e.target[5].value || `https://discordapp.com/oauth2/authorize?client_id=${encodeURI(e.target[1].value)}&scope=bot&permissions=0`,
+                    shortDescription: e.target[6].value,
+                    longDescription: e.target[7].value
                 });
                 M.toast({html: "Submitted bot!"});
             } catch (error) {
