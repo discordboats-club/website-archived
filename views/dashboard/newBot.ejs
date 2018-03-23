@@ -14,42 +14,33 @@
                 <hr />
                 <div class="row">
                     <form class="col s12" id="new-bot-form">
-                    	<div class="row">
-                    		<div class="input-field col s6">
-                    			<input id="client_id" type="text" class="validate">
-                          		<label for="client_id">Client ID</label>
-                        	</div>
-                        	<div class="input-field col s6">
-                            	<input id="bot_prefix" type="text" class="validate">
-                            	<label for="bot_prefix">Prefix</label>
-                        	</div>
-                      	</div>
+                    <div class="row">
+                            <div class="input-field col s6">
+                                <input id="bot_name" type="text" maxlength="30" class="validate">
+                                <label for="bot_name">Name</label>
+                            </div>
+                            <div class="input-field col s6">
+                                <input id="client_id" type="text" size="18" class="validate">
+                                <label for="client_id">Client ID</label>
+                            </div>
+                        </div>
                       	<div class="row">
                             <div class="input-field col s12">
                                 <select id="newbot">
-                                    <optgroup label="Other">
-                                            <option value="1">Other</option>
-                                    </optgroup>
-                                    <optgroup label="Node.js">
-                                    	<option value="1">discord.js</option>
-                                        <option value="2">Eris</option>
-                                    </optgroup>
-                                    <optgroup label="Java">
-                                    	<option value="3">JDA</option>
-                                        <option value="4">Javacord</option>
-                                    </optgroup>
+                                    <option value="none">Other</option>
+                                    <%- libs.map(lib => `<option value="${lib}">${lib}</option>`) %>
                                 </select>
                                 <label>Library</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field col s6">
-                                <input id="bot_website" type="text" class="validate">
-                                <label for="bot_website">Website (optional)</label>
+                                    <input id="bot_prefix" type="text" maxlength="25" class="validate">
+                                    <label for="bot_prefix">Prefix</label>
                             </div>
                             <div class="input-field col s6">
-                                <input id="bot_twitter" type="text" class="validate">
-                                <label for="bot_twitter">Twitter (optional)</label>
+                                <input id="bot_website" type="url" class="validate">
+                                <label for="bot_website">Website (optional)</label>
                             </div>
                         </div>
                             <div class="row">
@@ -67,15 +58,13 @@
                                 <p>Users browsing the list will see your Short Description before your Full Description, so make sure to include some info as to why they should click on your bot.</p>
                         	</div>
                             <div class="row">
-                                <form class="col s12">
                                     <div class="row">
                                         <div class="input-field col s12">
                                             <textarea id="bot_description-full" class="materialize-textarea"></textarea>
                                             <label for="bot_description-full">Full Description</label>
 										</div>
-											<p><a href="https://en.wikipedia.org/wiki/Markdown">Markdown formatting</a> is supported in the Full Description.</p>
+                                        <p><a href="https://en.wikipedia.org/wiki/Markdown">Markdown formatting</a> is supported in the Full Description.</p>
 									</div>
-                                </form>
 							</div>
 							<div class="row">
 								<p>By clicking Submit you agree to the Terms & Conditions found <a href="#">here.</a></p>
