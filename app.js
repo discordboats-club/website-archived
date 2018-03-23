@@ -15,7 +15,7 @@ const port = process.env.port || require("./config.json").listeningPort || 3000;
 const app = module.exports = express();
 // const client = require("./bot");
 
-app.disable("x-powered-by");
+app.use(require("helmet")())
 app.set("view engine", "ejs");
 
 app.use(logger('dev'));
