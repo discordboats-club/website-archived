@@ -14,7 +14,7 @@
                 <% } else { %>
                     <div class="bot-cards">
                             <!-- Bot cards includes can go here -->
-                        <%- botChunks.map(chunk => `<div class="row">${chunk.map(bot => include("parts/botCard", {bot}))}</div>`) %>
+                        <%- botChunks.map(chunk => `<div class="row bot-card">${chunk.map(bot => include("parts/botCard", {bot}))}</div>`) %>
                     </div>
                 <% } %>
             </div>
