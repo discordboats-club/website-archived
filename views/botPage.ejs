@@ -5,7 +5,7 @@
 </head>
 <body>
     <div class="header">
-        <%- include("parts/header", {childBefore: `<div class="tabs blue lighten-3"><p class="breadcrumb center-align">This bot has not been verified yet and only you can see it.</p></div>`}) %>
+        <%- include("parts/header", {childBefore: bot.verified ? "" : `<div class="tabs blue lighten-3"><p class="breadcrumb center-align">This bot has not been verified yet and only you can see it.</p></div>`}) %>
     </div>
     <div class="main">
         <div class="container">
@@ -22,18 +22,10 @@
                     </div>
                     <subtitle><%= bot.shortDescription %></subtitle>
                     <hr />
-                    <div class="hide-on-med-and-up">
-                        <div class="bp-action-button-mobile"><a href="#" class="waves-effect waves-light btn">Invite</a></div>
-                        <div class="bp-action-button-mobile"><a href="#" class="waves-effect waves-light btn">Github</a></div>
-                        <div class="bp-action-button-mobile"><a href="#" class="waves-effect waves-light btn">Website</a></div>
-                        <div class="bp-action-button-mobile"><a href="#delete-bot-modal" class="waves-effect waves-light btn red modal-trigger">Delete</a></div>
-                    </div>
-                    <div class="hide-on-small-only">
-                        <div class="bp-action-button-pc"><a href="#" class="waves-effect waves-light btn">Invite</a></div>
-                        <div class="bp-action-button-pc"><a href="#" class="waves-effect waves-light btn">Github</a></div>
-                        <div class="bp-action-button-pc"><a href="#" class="waves-effect waves-light btn">Website</a></div>
-                        <div class="bp-action-button-pc"><a href="#delete-bot-modal" class="waves-effect waves-light btn red modal-trigger">Delete Bot</a></div>
-                    </div>
+                    <div class="bp-action-button"><a href="#" class="waves-effect waves-light btn">Invite</a></div>
+                    <div class="bp-action-button"><a href="#" class="waves-effect waves-light btn">Github</a></div>
+                    <div class="bp-action-button"><a href="#" class="waves-effect waves-light btn">Website</a></div>
+                    <div class="bp-action-button <%=  bot._ownerViewing ? `` : `hide` %>"><a href="#delete-bot-modal" class="waves-effect waves-light btn red modal-trigger">Delete Bot</a></div>
                     <hr />
                     <p>
                         <%- bot._markedDescription %>
