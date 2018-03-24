@@ -18,7 +18,8 @@ console.log("%c🚫 Warning! 🚫", "color: red; font-weight: bold; font-size: x
 console.log("%cTyping anything here could make bad stuff happen!", "color: #e91e63; font-size: large");
 
 function undefIfEmpty(str) {
-    return str.trim() === "" ? undefined : str;
+    const res = str.trim() === "" ? undefined : str;
+    return res;
 }
 $(window).ready(async () => {
     if (document.location.href.includes("/dashboard/new")) {
@@ -30,7 +31,7 @@ $(window).ready(async () => {
             try {
                 await api.createBot({
                     id: e.target[0].value,
-                    library: undefIfEmpty(lib),
+                    library: lib,
                     prefix: e.target[2].value,
                     website: undefIfEmpty(e.target[4].value),
                     invite: e.target[5].value || `https://discordapp.com/oauth2/authorize?client_id=${encodeURI(e.target[1].value)}&scope=bot&permissions=0`,
