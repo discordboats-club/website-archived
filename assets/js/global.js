@@ -25,8 +25,6 @@ $(window).ready(async () => {
             e.preventDefault();
             let lib = M.FormSelect.getInstance($("select")).getSelectedValues()[0];
             if (lib === "none") lib = undefined;
-            console.log(e);
-            return;
             try { 
                 await api.createBot({
                     id: e.target[0].value,
