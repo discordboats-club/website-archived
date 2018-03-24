@@ -6,7 +6,7 @@ const { r } = require("../ConstantStore");
 const app = module.exports = express.Router();
 
 app.get("/", async (req, res) => {
-    const bots = (await r.table("bots").sample(4 * 2).run()).map(Util.attachPropBot);
+    const bots = (await r.table("bots").filter({verified: true}).sample(4 * 2).run()).map(Util.attachPropBot);
     const botChunks = chunk(bots, 4); // 4 bots per 
     res.render("index", {user: req.user, rawBots: bots, botChunks});
 });
