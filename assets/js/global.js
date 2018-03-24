@@ -40,7 +40,7 @@ $(window).ready(async () => {
                     library: lib,
                     prefix: e.target[3].value,
                     website: undefIfEmpty(e.target[4].value),
-                    invite: e.target[5].value || `https://discordapp.com/oauth2/authorize?client_id=${encodeURI(e.target[1].value)}&scope=bot&permissions=0`,
+                    invite: e.target[5].value || `https://discordapp.com/oauth2/authorize?client_id=${encodeURI(e.target[0].value)}&scope=bot&permissions=0`,
                     shortDescription: e.target[6].value,
                     longDescription: e.target[7].value
                 });

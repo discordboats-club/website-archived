@@ -1,21 +1,8 @@
 const { Client } = require("discord.js"); // for jsdoc
 const randomstring = require("randomstring");
 const fs = require("fs");
-let r;
-let bot;
 let secret;
 module.exports = class ConstantStore {
-    static get r() {
-        if (!r) r = require("rethinkdbdash")({db: "discordboatsclub"});
-        return r;
-    }
-    /**
-     * @returns {Client}
-     */
-    static get bot() {
-        if (!bot) bot = require("./bot");
-        return bot;
-    }
     /**
      * @returns {String}
      */
@@ -28,5 +15,7 @@ module.exports = class ConstantStore {
         }
     }
 }
+let r = module.exports.r = require("rethinkdbdash")({db: "discordboatsclub"});;
+let bot = module.exports.bot = require("./bot");
 
 /* To use this, you just require("./getConstants").r and it'll give you the database. Same with bot.*/
