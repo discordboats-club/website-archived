@@ -53,9 +53,10 @@ app.post("/bot", async (req, res) => {
     if (handleJoi(newBotSchema, req, res)) return;+new Date()
     const data = filterUnexpectedData(req.body, {ownerID: req.user.id, createdAt: +new Date(), verified: false}, newBotSchema);
     if (data.library && !data.library.includes(libList)) return res.status(400).json({error: "Invalid Library"});
+
     const botUser = client.users.get(data.id) || await client.users.fetch(data.id);
     if (!botUser) return res.status(404).json({error: "Invalid Bot ID"});
-    data.name = botUser.name;
+    data.name = botUser.username;
 
     // does bot already exist?
     const dbeBot = await r.table("bots").get(data.id);
