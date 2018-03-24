@@ -22,6 +22,9 @@
                         <div class="chip red lighten-2" style="display: inline-block;"><% if (bot.library) { %><%= bot.library %><% } else { %><span class="hide-on-small-only">Unknown Library</span><span class="hide-on-med-and-up">N/A</span><% } %></div>
                         <div class="chip green lighten-2" style="display: inline-block;"><%= typeof bot.online === "boolean" ? bot.online ? "online" : "offline" : "N/A" %></div>
                         <div class="chip lime lighten-2" style="display: inline-block;"><%= bot.servers %> servers</div>
+                        <% if (!bot.verified) { %>
+                            <div class="chip red darken-1 hide-on-med-and-up" style="display: inline-block;">not verified</div>
+                        <% } %>
                     </div>
                     <subtitle><%= bot.shortDescription %></subtitle>
                     <hr />
