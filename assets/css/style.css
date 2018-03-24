@@ -19,4 +19,8 @@ subtitle { color: gray; }
 @media only screen and (max-width: 600px) {
     .bp-action-button { padding: 1%; display: inline-block; }
 }
+
+/* bot avatars */
+.bp-heading > img {width: 30%} 
+
 div.newbot-dd-wrap input.select-dropdown {color: grey; }
