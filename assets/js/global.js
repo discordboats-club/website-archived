@@ -17,7 +17,9 @@ console.log('Welcome to discordboats.club! Why are you looking here? :P');
 console.log("%c🚫 Warning! 🚫", "color: red; font-weight: bold; font-size: x-large");
 console.log("%cTyping anything here could make bad stuff happen!", "color: #e91e63; font-size: large");
 
-
+function undefIfEmpty(str) {
+    return str.trim() === "" ? undefined : str;
+}
 $(window).ready(async () => {
     if (document.location.href.includes("/dashboard/new")) {
         M.FormSelect.init($("select#newbot"), {classes: "newbot-dd-wrap"});
@@ -25,12 +27,12 @@ $(window).ready(async () => {
             e.preventDefault();
             let lib = M.FormSelect.getInstance($("select")).getSelectedValues()[0];
             if (lib === "none") lib = undefined;
-            try { 
+            try {
                 await api.createBot({
                     id: e.target[0].value,
-                    library: lib,
+                    library: undefIfEmpty(lib),
                     prefix: e.target[2].value,
-                    website: e.target[4].value,
+                    website: undefIfEmpty(e.target[4].value),
                     invite: e.target[5].value || `https://discordapp.com/oauth2/authorize?client_id=${encodeURI(e.target[1].value)}&scope=bot&permissions=0`,
                     shortDescription: e.target[6].value,
                     longDescription: e.target[7].value
