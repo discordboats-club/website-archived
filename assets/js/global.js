@@ -22,17 +22,23 @@ function undefIfEmpty(str) {
     return res;
 }
 $(window).ready(async () => {
+    document.querySelectorAll(".modal").forEach(ele => M.Modal.init(ele));
+    if (window.localStorage.toastOnNext) {
+        M.toast({html: window.localStorage.toastOnNext});
+        window.localStorage.removeItem("toastOnNext");
+    }
     if (document.location.href.includes("/dashboard/new")) {
         M.FormSelect.init($("select#newbot"), {classes: "newbot-dd-wrap"});
         $("form").submit(async e => {
             e.preventDefault();
+            console.log(e);
             let lib = M.FormSelect.getInstance($("select")).getSelectedValues()[0];
             if (lib === "none") lib = undefined;
             try {
                 await api.createBot({
                     id: e.target[0].value,
                     library: lib,
-                    prefix: e.target[2].value,
+                    prefix: e.target[3].value,
                     website: undefIfEmpty(e.target[4].value),
                     invite: e.target[5].value || `https://discordapp.com/oauth2/authorize?client_id=${encodeURI(e.target[1].value)}&scope=bot&permissions=0`,
                     shortDescription: e.target[6].value,
@@ -44,6 +50,12 @@ $(window).ready(async () => {
                 M.toast({html: "Error while submitting bot!"});
                 throw error;
             }
+        });
+    } else if (document.location.href.includes("/bot/")) {
+        $("#delete-bot-action").click(async e => {
+            await api.deleteBot(document.querySelector("#delete-bot-modal").getAttribute("data-bot-id"));
+            window.localStorage.setItem("toastOnNext", "Deleted bot.");
+            document.location.replace("/");
         });
     }
 });

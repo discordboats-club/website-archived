@@ -52,7 +52,7 @@ app.post("/bot", async (req, res) => {
     const client = require("../ConstantStore").bot;
     if (handleJoi(newBotSchema, req, res)) return;+new Date()
     const data = filterUnexpectedData(req.body, {ownerID: req.user.id, createdAt: +new Date(), verified: false}, newBotSchema);
-    if (data.library && !data.library.includes(libList)) return res.status(400).json({error: "Invalid Library"});
+    if (data.library && !libList.includes(data.library)) return res.status(400).json({error: "Invalid Library"});
 
     const botUser = client.users.get(data.id) || await client.users.fetch(data.id);
     if (!botUser) return res.status(404).json({error: "Invalid Bot ID"});
@@ -70,8 +70,9 @@ app.post("/bot", async (req, res) => {
 
 app.delete("/bot/:id", async (req, res) => {
     const bot = await r.table("bots").get(req.params.id).run();
+    if (!bot) return await res.status(404).json({error: "bot does not exist"});
     if (bot.ownerID !== req.user.id) return res.status(403).json({error: "You can't delete a bot you don't own!"});
-    await r.table("bots").get(req.body.id).delete().run();
+    await r.table("bots").get(req.params.id).delete().run();
     res.status(200).json({ok: "Deleted bot."});
 });
 

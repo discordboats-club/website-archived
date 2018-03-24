@@ -1,49 +1,58 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <%- include("parts/head") %>
-    </head>
-    <body>
-        <div class="header">
-            <%- include("parts/header", {childBefore: `<div class="tabs blue lighten-3"><p class="breadcrumb center-align">This bot has not been verified yet and only you can see it.</p></div>`}) %>
-        </div>
-        <div class="main">
-            <div class="container">
-                <div class="bot-page">
-                    <div class="bp-top-info">
-                        <!-- <div class="bot-image-container">
-                            <img src="/boat.jpg" class="bot-image">
-                        </div> -->
-                        <div class="bp-head-section">
-                            <h4 class="bp-heading"><%= bot.name %></h4>
-                            <div class="chip red lighten-2" style="display: inline-block;"><% if (bot.library) { %><%= bot.library %><% } else { %><span class="hide-on-small-only">Unknown Library</span><span class="hide-on-med-and-up">N/A</span><% } %></div>
-                            <div class="chip green lighten-2" style="display: inline-block;"><%= typeof bot.online === "boolean" ? bot.online ? "online" : "offline" : "N/A" %></div>
-                            <div class="chip lime lighten-2" style="display: inline-block;"><%= bot.servers %> servers</div>
-                        </div>
-                        <subtitle><%= bot.shortDescription %></subtitle>
-                        <hr />
-                        <div class="hide-on-med-and-up">
-                            <div class="bp-action-button-mobile"><a href="#" class="waves-effect waves-light btn">Invite</a></div>
-                            <div class="bp-action-button-mobile"><a href="#" class="waves-effect waves-light btn">Github</a></div>
-                            <div class="bp-action-button-mobile"><a href="#" class="waves-effect waves-light btn">Website</a></div>
-                            <div class="bp-action-button-mobile"><a href="#" class="waves-effect waves-light btn disabled">Twitter</a></div>
-                        </div>
-                        <div class="hide-on-small-only">
-                            <div class="bp-action-button-pc"><a href="#" class="waves-effect waves-light btn">Invite</a></div>
-                            <div class="bp-action-button-pc"><a href="#" class="waves-effect waves-light btn">Github</a></div>
-                            <div class="bp-action-button-pc"><a href="#" class="waves-effect waves-light btn">Website</a></div>
-                            <div class="bp-action-button-pc"><a href="#" class="waves-effect waves-light btn disabled">Twitter</a></div>
-                        </div>
-                        <hr />
-                        <p>
-                            <%- bot._markedDescription %>
-                        </p>
+<head>
+    <%- include("parts/head") %>
+</head>
+<body>
+    <div class="header">
+        <%- include("parts/header", {childBefore: `<div class="tabs blue lighten-3"><p class="breadcrumb center-align">This bot has not been verified yet and only you can see it.</p></div>`}) %>
+    </div>
+    <div class="main">
+        <div class="container">
+            <div class="bot-page">
+                <div class="bp-top-info">
+                    <!-- <div class="bot-image-container">
+                        <img src="/boat.jpg" class="bot-image">
+                    </div> -->
+                    <div class="bp-head-section">
+                        <h4 class="bp-heading"><%= bot.name %></h4>
+                        <div class="chip red lighten-2" style="display: inline-block;"><% if (bot.library) { %><%= bot.library %><% } else { %><span class="hide-on-small-only">Unknown Library</span><span class="hide-on-med-and-up">N/A</span><% } %></div>
+                        <div class="chip green lighten-2" style="display: inline-block;"><%= typeof bot.online === "boolean" ? bot.online ? "online" : "offline" : "N/A" %></div>
+                        <div class="chip lime lighten-2" style="display: inline-block;"><%= bot.servers %> servers</div>
                     </div>
+                    <subtitle><%= bot.shortDescription %></subtitle>
+                    <hr />
+                    <div class="hide-on-med-and-up">
+                        <div class="bp-action-button-mobile"><a href="#" class="waves-effect waves-light btn">Invite</a></div>
+                        <div class="bp-action-button-mobile"><a href="#" class="waves-effect waves-light btn">Github</a></div>
+                        <div class="bp-action-button-mobile"><a href="#" class="waves-effect waves-light btn">Website</a></div>
+                        <div class="bp-action-button-mobile"><a href="#delete-bot-modal" class="waves-effect waves-light btn red modal-trigger">Delete</a></div>
+                    </div>
+                    <div class="hide-on-small-only">
+                        <div class="bp-action-button-pc"><a href="#" class="waves-effect waves-light btn">Invite</a></div>
+                        <div class="bp-action-button-pc"><a href="#" class="waves-effect waves-light btn">Github</a></div>
+                        <div class="bp-action-button-pc"><a href="#" class="waves-effect waves-light btn">Website</a></div>
+                        <div class="bp-action-button-pc"><a href="#delete-bot-modal" class="waves-effect waves-light btn red modal-trigger">Delete Bot</a></div>
+                    </div>
+                    <hr />
+                    <p>
+                        <%- bot._markedDescription %>
+                    </p>
                 </div>
             </div>
         </div>
-    </body>
-    <footer class="blue lighten-3 page-footer">
-        <%- include("parts/footer") %>
-    </footer>
+        <div id="delete-bot-modal" class="modal" data-bot-id="<%= bot.id %>">
+            <div class="modal-content">
+                <h4>Are you sure you wanna delete your bot?</h4>
+                <p class="red-text">You cannot revert this action! Be careful.</p>
+            </div>
+            <div class="modal-footer">
+                <a id="delete-bot-action" class="modal-action modal-close waves-effect waves-red btn-flat">Delete It</a>
+            </div>
+        </div>            
+    </div>
+</body>
+<footer class="blue lighten-3 page-footer">
+    <%- include("parts/footer") %>
+</footer>
 </html>
