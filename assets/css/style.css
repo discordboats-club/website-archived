@@ -11,7 +11,7 @@ subtitle { color: gray; }
 .bot-card { size: 5%; }
 .container { padding-top: 2%; padding-bottom: 2%; }
 
-.bp-heading { display: inline-block; margin-right: -50px; }
+.bp-heading { display: inline-block; }
 
 @media only screen and (min-width: 601px) {
     .bp-action-button { padding-left: 10%; display: inline-block; }
