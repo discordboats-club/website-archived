@@ -128,8 +128,7 @@ app.post("/logout", (req, res) => {
 app.get("/me", (req, res) => {
     res.json({id: req.user.id,
              discord: {
-                username: req.user.discord.username,
-                discrim: req.user.discord.discriminator
+                username: req.user.username
              }
         });
 });

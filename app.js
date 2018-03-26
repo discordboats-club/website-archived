@@ -39,18 +39,7 @@ app.use(passport.session());
 
 passport.serializeUser((user, done) => done(undefined, user.id));
 passport.deserializeUser(async (id, done) => {
-    const user = await r.table("users").get(id).run();
-    if (!user) return done();
-    // yay!
-    const res = await request.get(
-        "https://discordapp.com/api/users/@me")
-        .set("Authorization", `Bearer ${user.discordAT}`)
-        .set("User-Agent", "discordboats.club (https://discordboats.club, 1.0.0) Manual API Request.")
-        .send();
-    user.discord = res.body;
-    delete user.discordAT;
-    
-    done(undefined, user);
+    done(undefined, await r.table("users").get(id).run());
 });
 
 const discordScopes = module.exports.discordScopes = ["identify"];
@@ -64,8 +53,9 @@ passport.use(new Discord({
     await r.table("users").insert(
         {
             id: profile.id, 
+            username: profile.username,
             discordAT: accessToken,
-            discordRT: refreshToken /* unused for now - this is for the future. */
+            discordRT: refreshToken
         }
         , {conflict: "update"}).run();
     done(undefined, profile);
