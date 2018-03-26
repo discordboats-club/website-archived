@@ -16,18 +16,6 @@ client.on("message", async (msg) => {
         case prefix + "ping":
             await msg.channel.send("Pong!");
         break;
-        case prefix + "eval":
-            if (msg.author.id !== "142244934139904000") return;
-            try {
-                const js = args.join(" ");
-                let res = eval(js);
-                if (res instanceof Promise) res = await res;
-                if (typeof res !== "string") res = require("util").inspect(res, false, 0);
-                await msg.channel.send(`\`\`\`js\n${res}\n\`\`\``);
-            } catch (error) {
-                await msg.channel.send(`error!\n\`\`\`\n${error}\n\`\`\``);
-            }
-        break;
     }
 
 });
