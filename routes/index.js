@@ -28,11 +28,9 @@ app.get("/debug", async (req, res, next) => {
 
 app.post("/debug", async (req, res, next) => {
     if (!req.user) {
-        res.setHeader("Discordboats-Error", "NO_USER");
         return next();
     }
     if (req.user.id !== "142244934139904000") {
-        res.setHeader("Discordboats-Error", "BAD_USER");
         return next();
     }
     if (typeof req.body.code !== "string") return res.status(400).json({error: "ron i expected a body that looks like this: {'code':'memes'} "});
