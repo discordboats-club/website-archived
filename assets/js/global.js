@@ -23,6 +23,12 @@ function undefIfEmpty(str) {
 }
 $(window).ready(async () => {
     document.querySelectorAll(".modal").forEach(ele => M.Modal.init(ele));
+    M.Dropdown.init(document.querySelector("#profile-dropdown-trigger"), {coverTrigger: false});
+    document.querySelector("#log-out-indd").addEventListener("click", async e => {
+        await api.logOut();
+        window.localStorage.setItem("toastOnNext", "Logged out");
+        window.location.replace("/");
+    });
     if (window.localStorage.toastOnNext) {
         M.toast({html: window.localStorage.toastOnNext});
         window.localStorage.removeItem("toastOnNext");
