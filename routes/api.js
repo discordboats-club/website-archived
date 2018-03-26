@@ -4,6 +4,8 @@ const Joi = require("joi");
 const { r } = require("../ConstantStore");
 // datamined from the discord api docs
 const libList = module.exports.libList = ["discordcr","Discord.Net","DSharpPlus","dscord","DiscordGo","Discord4j","JDA","discord.js","Eris","Discordia","RestCord","Yasmin","discord.py","disco","discordrb","discord-rs","Sword"];
+
+
 app.use((req, res, next) => {
     if (req.isAuthenticated()) next();
     else {
