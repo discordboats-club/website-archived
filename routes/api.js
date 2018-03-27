@@ -138,7 +138,7 @@ const modVerifyBotSchema = Joi.object.keys({
     verified: Joi.boolean().required(),
     botID: Joi.string().length(18).required()
 });
-app.get("/bot/mod/verify", (req, res) => {
+app.get("/bot/mod/verify", async (req, res) => {
     const client = require("../ConstantStore").bot;
     if (!(req.user.mod || req.user.admin)) return res.status(403).json({error: "No permission"});
     if (handleJoi(modVerifyBotSchema, req, res)) return;
