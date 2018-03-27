@@ -134,7 +134,7 @@ app.get("/me", (req, res) => {
         });
 });
 
-const modVerifyBotSchema = Joi.object.keys({
+const modVerifyBotSchema = Joi.object().keys({
     verified: Joi.boolean().required(),
     botID: Joi.string().length(18).required()
 });
