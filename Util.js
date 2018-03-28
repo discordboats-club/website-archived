@@ -1,5 +1,6 @@
 const marked = require("marked");
 const escapeHTML = require("escape-html");
+const moment = require("moment");
 module.exports = class Utils {
     /**
      * @param {Object} bot 
@@ -14,5 +15,20 @@ module.exports = class Utils {
         bot._markedDescription = marked(escapeHTML(bot.longDescription), {});
         bot._ownerViewing = user.id === bot.ownerID;
         return bot;
+    }
+    /**
+     * @param {Object} user
+     * @returns {Object} 
+     */
+    static async attachPropUser(user) {
+        const client = require("./ConstantStore").bot;
+        const { r } = require("./ConstantStore");
+        const discordUser = client.users.get(user.id) || client.userss.fetch(user.id);
+        user._discordAvatarURL = discordUser.avatarURL();
+        user._bots = await r.table("bots").filter({ownerID: user.id}).run(); // might call attachPropBot here if needed.
+        user._verifiedBots = user._bots.filter(bot => bot.verified);
+        user._fmtCreatedAt = moment(user.createdAt).fromNow();
+        console.log(user);
+        return user;
     }
 }

@@ -50,14 +50,17 @@ passport.use(new Discord({
     callbackURL: config.callbackURL
 }, async (accessToken, refreshToken, profile, done) => {
     // we'll enable storing extra user data here.
-    await r.table("users").insert(
-        {
+    let user = await r.table("users").get(profile.id);
+    if (!user) {
+        user = {
             id: profile.id, 
             username: profile.username,
             discordAT: accessToken,
-            discordRT: refreshToken
-        }
-        , {conflict: "update"}).run();
+            discordRT: refreshToken,
+            createdAt: new Date().getTime()
+        };
+    }
+    await r.table("users").insert(user, {conflict: "update"}).run();
     done(undefined, profile);
 }));
 

@@ -19,6 +19,13 @@ app.get("/bot/:id", async (req, res) => {
     res.render("botPage", {user: req.user, bot});
 });
 
+app.get("/user/:id", async (req, res) => {
+    let user = await r.table("users").get(req.params.id).run();
+    if (!user) return res.sendStatus(404);
+    user = await Util.attachPropUser(user);
+    res.render("userPage", {user: req.user, profile: user});
+});
+
 // debugging
 app.get("/debug", async (req, res, next) => {
     if (!req.user) return next();
