@@ -145,7 +145,7 @@ app.post("/bot/mod/verify", async (req, res) => {
     if (!(req.user.mod || req.user.admin)) return res.status(403).json({error: "No permission"});
     if (handleJoi(modVerifyBotSchema, req, res)) return;
     const data = filterUnexpectedData(req.body, {}, modVerifyBotSchema);
-    const bot = Util.attachPropBot(await r.table("bots").get(data.botID).run());
+    const bot = await Util.attachPropBot(await r.table("bots").get(data.botID).run());
     if (!bot) return res.status(404).json({error: "bot does not exist"});
     const discordOwner = client.users.get(bot.ownerID);
     const staffUser = client.users.get(req.user.id) || client.users.fetch(req.user.id);

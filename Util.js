@@ -6,7 +6,7 @@ module.exports = class Utils {
      * @param {Object} bot 
      * @returns {Object}
      */
-    static attachPropBot(bot, user = {}) {
+    static async attachPropBot(bot, user = {}) {
         const client = require("./ConstantStore").bot;
         const { r } = require("./ConstantStore");
         const botUser = client.users.get(bot.id) || client.users.fetch(bot.id);
