@@ -59,6 +59,7 @@ app.post("/bot", async (req, res) => {
 
     const botUser = client.users.get(data.id) || await client.users.fetch(data.id);
     if (!botUser) return res.status(404).json({error: "Invalid Bot ID"});
+    if (!botUser.bot) return res.status(418).json({error: "bot can only be a bot"});
     data.name = botUser.username;
 
     // does bot already exist?
