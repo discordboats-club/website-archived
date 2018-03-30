@@ -68,3 +68,7 @@ $(window).ready(async () => {
         });
     }
 });
+
+
+
+window.api = api
