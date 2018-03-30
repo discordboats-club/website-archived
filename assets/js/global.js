@@ -32,6 +32,9 @@ $(window).ready(async () => {
             window.location.replace("/");
         }
     });
+    $('#new-bot-form').submit(e => {
+        console.log(e.target);
+    });
     if (window.localStorage.getItem("toastOnNext")) {
         M.toast({html: window.localStorage.toastOnNext});
         window.localStorage.removeItem("toastOnNext");
