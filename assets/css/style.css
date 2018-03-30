@@ -1,6 +1,6 @@
 @import "https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-alpha.4/css/materialize.min.css";
 @import 'https://fonts.googleapis.com/css?family=Roboto|Material+Icons';
-body { display: flex; min-height: 100vh; flex-direction: column; font-family: 'Roboto', sans-serif; }
+body { display: flex; min-height: 100vh; flex-direction: column; font-family: 'Roboto', sans-serif; background-color: #f5f5f5; }
 subtitle { color: gray; }
 
 .main { flex: 1 0 auto; }
