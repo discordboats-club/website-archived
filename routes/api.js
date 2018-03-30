@@ -94,11 +94,12 @@ const editCommentSchema = Joi.object().keys({
 });
 app.post("/bot/comment", async (req, res) => {
     if (handleJoi(newCommentSchema, req, res)) return;
-    const bot = await r.table("bots").get(req.body.botID).run();
-    if (!bot) return res.status(404).json({error: "Bot not found"});
-
+    
     const data = filterUnexpectedData(req.body, {authorID: req.user.id, createdAt: +new Date()}, newCommentSchema);
     
+    const bot = await r.table("bots").get(data.botID).run();
+    if (!bot) return res.status(404).json({error: "Bot not found"});
+
     const reResponse = await r.table("comments").insert(data).run();
     res.status(200).json({ok: "comment created", commentID: reResponse.generated_keys[0]});
 });
