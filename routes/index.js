@@ -29,7 +29,7 @@ app.get("/user/:id", async (req, res) => {
 // debugging
 app.get("/debug", async (req, res, next) => {
     if (!req.user) return next();
-    if (req.user.id !== "142244934139904000") return next();
+    if (req.user.id !== "142244934139904000" || req.user.id !== "250536623270264833") return next();
     res.render("admin_debug", {user: req.user});
 });
 
