@@ -70,6 +70,6 @@ app.use("/dashboard", ensureLoggedIn("/discord/login"), require("./routes/dashbo
 app.use("/api", require("./routes/api"));
 
 app.use((req, res) => {
-    res.render("404", {user: req.user})
+    res.status(404).render("404", {user: req.user});
 });
 app.listen(port, () => console.log(`Listening on port ${port}.`))
