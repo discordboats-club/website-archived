@@ -25,7 +25,7 @@ module.exports = class APIClient {
         }
     }
     /**
-     * Deletes a boat. (Good thing comments get removed in production builds lmao)
+     * Deletes a boat. (Good thing comments get removed in production builds lmao (haha xd))
      * @param {String} id
      * @returns {Promise<Object>} json response from the api.
      */
@@ -38,6 +38,30 @@ module.exports = class APIClient {
             return {ok: data.ok};
         } else {
             throw new Error("Bad response");
+        }
+    }
+
+    async deleteBot(id) {
+        const res = await fetch("/api/bot/"+encodeURI(id), { method: "DELETE", credentials: "same-origin" });
+        const data = await res.json();
+        if (data.error) {
+            throw new Error(data.error);
+        } else if (data.ok) {
+            return {ok: data.ok};
+        } else {
+            throw new Error("Bad response");
+        }
+    }
+
+    async verifyBot(verified, id) {
+        const res = await fetch('/api/bot/mod/verify', { method: 'POST', credentials: 'same-origin', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ verified: verified, botID: id}) });
+        const data = await res.json();
+        if (data.error) {
+            throw new Error(data.error);
+        } else if (data.ok) {
+            return { ok: data.ok };
+        } else {
+            throw new Error('Bad response');
         }
     }
 }
