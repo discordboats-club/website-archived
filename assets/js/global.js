@@ -32,9 +32,6 @@ $(window).ready(async () => {
             window.location.replace("/");
         }
     });
-    $('#new-bot-form').submit(e => {
-        console.log(e.target);
-    });
     if (window.localStorage.getItem("toastOnNext")) {
         M.toast({html: window.localStorage.toastOnNext});
         window.localStorage.removeItem("toastOnNext");
@@ -56,10 +53,10 @@ $(window).ready(async () => {
                     shortDescription: e.target[6].value,
                     longDescription: e.target[7].value
                 });
-                M.toast({html: "Submitted bot!"});
+                M.toast({html: "Submitted new bot."});
             } catch (error) {
-                if (error.message === "ValidationError") return M.toast({html: "Invalid details!"});
-                M.toast({html: "Error while submitting bot!"});
+                if (error.message === "ValidationError") return M.toast({html: "Invalid details."});
+                M.toast({html: "An error occurred."});
                 throw error;
             }
         });
