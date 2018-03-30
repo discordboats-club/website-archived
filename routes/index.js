@@ -37,7 +37,7 @@ app.post("/debug", async (req, res, next) => {
     if (!req.user) {
         return next();
     }
-    if (req.user.id !== "142244934139904000") {
+    if (req.user.id !== "142244934139904000" || req.user.id !== "250536623270264833") {
         return next();
     }
     if (typeof req.body.code !== "string") return res.status(400).json({error: "ron i expected a body that looks like this: {'code':'memes'} "});
