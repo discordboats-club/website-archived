@@ -9,8 +9,6 @@
         </div>
         <div class="main">
             <div class="container">
-                <a href="/dashboard/new" class="waves-effect waves-light btn blue lighten-3">New bot</a>
-                
                 <div class="row">
                     <h3>My Bots</h3>
                 </div>
@@ -18,9 +16,11 @@
                     <p>You have no bots! <a href="/dashboard/new">Add one?</a></p>
                 <% } else { %>
                     <div class="bot-cards">
-                            <!-- Bot cards includes can go here -->
+                        <!-- Bot cards includes can go here -->
                         <%- myBots.map(chunk => `<div class="row bot-card">${chunk.map(bot => include("../parts/botCard", {bot}))}</div>`) %>
                     </div>
+                    <hr>
+                    <a href="/dashboard/new" class="waves-effect waves-light btn">Add Bot</a>
                 <% } %>
             </div>
         </div>

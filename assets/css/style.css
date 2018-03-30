@@ -25,6 +25,6 @@ subtitle { color: gray; }
 }
 
 /* bot avatars */
-.bp-heading > img {width: 30%} 
+.bp-heading > img { width: 30%; } 
 
-div.newbot-dd-wrap input.select-dropdown {color: grey; }
+div.newbot-dd-wrap input.select-dropdown { color: grey; }
