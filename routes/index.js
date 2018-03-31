@@ -11,17 +11,17 @@ app.get("/", async (req, res) => {
     res.render("index", {user: req.user, rawBots: bots, botChunks});
 });
 
-app.get("/bot/:id", async (req, res) => {
+app.get("/bot/:id", async (req, res, next) => {
     const rB = await r.table("bots").get(req.params.id).run();
-    if (!rB) return res.sendStatus(404);
-    const bot = Util.attachPropBot(rB, req.user);
+    if (!rB) return next();
+    const bot = await Util.attachPropBot(rB, req.user);
     if (!bot.verified && !(req.user && req.user.id === bot.ownerID)) return res.sendStatus(404); // pretend it doesnt exist lol
     res.render("botPage", {user: req.user, bot});
 });
 
-app.get("/user/:id", async (req, res) => {
+app.get("/user/:id", async (req, res, next) => {
     let user = await r.table("users").get(req.params.id).run();
-    if (!user) return res.sendStatus(404);
+    if (!user) return next();
     user = await Util.attachPropUser(user);
     res.render("userPage", {user: req.user, profile: user});
 });
