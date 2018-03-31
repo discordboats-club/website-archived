@@ -6,7 +6,7 @@ const r = require("../ConstantStore").r;
 const Util = require("../Util");
 
 app.get("/", async (req, res) => {
-    const myBots = (await r.table("bots").filter({ownerID: req.user.id}).run()).map(Util.attachPropBot);
+    const myBots = Promise.all((await r.table("bots").filter({ownerID: req.user.id}).run()).map(Util.attachPropBot));
     const botChunks = chunk(myBots, 4);
     res.render("dashboard/index", {user: req.user, myBots: botChunks, rawBots: myBots});
 });
