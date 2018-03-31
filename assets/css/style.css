@@ -20,9 +20,10 @@ subtitle { color: gray; }
     .bp-action-button { padding: 1%; display: inline-block; }
 }
 
-#footer-copyright-text {
-    margin: 0 auto;
-}
+#footer-copyright-text { margin: 0 auto; }
+
+ul#sm { text-align: center; }
+li#sm { display: inline-block;s}
 
 /* bot avatars */
 .bp-heading > img { width: 30%; } 

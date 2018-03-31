@@ -12,18 +12,26 @@
                     <h1>404</h1>
                     <hr>
                     <p>We could not find the page you were looking for.</p>
-                    <p>If you think this is an issue with one of our boats, please let us know <a href="https://u.ronthecookie.me/discordboatsguild">here.</a></p>
-                    <div id="404-sitemap">
-                        <ul>
-                            <li><h5><a href="/">Home</a></h5></li>
-                            <li><h5><a href="https://u.ronthecookie.me/discordboatsguild">Discord</a></h5></li>
-                        </ul>
+                    <p>If you think this is an issue with one of our server boats, please let us know <a href="https://u.ronthecookie.me/discordboatsguild">here.</a></p>
+                    <hr>
+                    <div id="sm">
+                        <h5>
+                            <a class="text-lighten-3" href="/">Home</a>
+                            -
+                            <a class="text-lighten-3" href="http://u.ronthecookie.me/discordboatsguild">Discord</a>              
+                            -
+                            <% if (user) { %>
+                            <a class="text-lighten-3" href="/user/<%= user.id %>">Profile</a>
+                            <% } else { %>
+                            <a class="text-lighten-3" href="/discord/login">Login</a>
+                            <% } %>
+                        </h5>
                     </div>
                 </div>
             </div>
         </div>
     </body>
     <footer>
-        <%- include("parts/footer") %>
+        <%- include("parts/scripts") %>
     </footer>
 </html>
