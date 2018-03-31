@@ -13,13 +13,6 @@ subtitle { color: gray; }
 
 .bp-heading { display: inline-block; }
 
-@media only screen and (min-width: 601px) {
-    .bp-action-button { padding-left: 5%; padding-right: 5%; display: inline-block; }
-}
-@media only screen and (max-width: 600px) {
-    .bp-action-button { padding: 1%; display: inline-block; }
-}
-
 #footer-copyright-text { margin: 0 auto; }
 
 ul#sm { text-align: center; }
