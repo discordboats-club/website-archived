@@ -1,2 +1,2 @@
 # discordboats.club
-Discord boats website
+Discordboats website! Yay, not dead yet.
