@@ -31,3 +31,6 @@ body.dark-theme .main {
 body.dark-theme .nav-wrapper, body.dark-theme .footer {
     background-color: #01579b !important; 
 }
+footer {
+    padding-top: 0px !important;
+}
