@@ -25,11 +25,11 @@ div.newbot-dd-wrap input.select-dropdown { color: grey; }
 
 /* Dark theme   */
 body.dark-theme .main {
-    background-color: #212121;
+    background-color: #252525;
     color: white;   
 }
 body.dark-theme .nav-wrapper, body.dark-theme .footer {
-    background-color: #01579b !important; 
+    background-color: #004379 !important;
 }
 footer {
     padding-top: 0px !important;
