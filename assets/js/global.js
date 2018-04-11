@@ -23,7 +23,8 @@ function undefIfEmpty(str) {
 $(window).ready(async () => {
     document.querySelectorAll(".modal").forEach(ele => M.Modal.init(ele));
     M.Dropdown.init(document.querySelector("#profile-dropdown-trigger"), {ecoverTrigger: false});
-    document.querySelector("#log-out-indd").addEventListener("click", async e => {
+    const logoutele = document.querySelector("#log-out-indd");
+    if (logoutele) document.querySelector("#log-out-indd").addEventListener("click", async e => {
         await api.logOut();
         window.localStorage.setItem("toastOnNext", "Logged out");
         if (window.location.pathname === "/") {
@@ -67,4 +68,23 @@ $(window).ready(async () => {
             document.location.replace("/");
         });
     }
+
+
+    // Theme control
+    const controlEle = document.querySelector("#themeControl");
+    let dark = localStorage.getItem("darkTheme") == "true";
+    controlEle.checked = dark;
+    function processThemeState() {
+        if (dark) {
+            $(document.body).addClass("dark-theme");
+        } else {
+            $(document.body).removeClass("dark-theme");
+        }
+    }
+    processThemeState();
+    controlEle.addEventListener("change", e => {
+        dark = e.target.checked;
+        localStorage.setItem("darkTheme", JSON.stringify(e.target.checked));
+        processThemeState();
+    });
 });
