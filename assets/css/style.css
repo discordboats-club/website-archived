@@ -22,3 +22,12 @@ li#sm { display: inline-block; }
 .bp-heading > img { width: 30%; } 
 
 div.newbot-dd-wrap input.select-dropdown { color: grey; }
+
+/* Dark theme   */
+body.dark-theme .main {
+    background-color: #212121;
+    color: white;   
+}
+body.dark-theme .nav-wrapper, body.dark-theme .footer {
+    background-color: #01579b !important; 
+}

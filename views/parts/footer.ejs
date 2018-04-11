@@ -11,17 +11,26 @@
                     <li><a class="grey-text text-lighten-3" href="/">Home</a></li>                    
                     <li><a class="grey-text text-lighten-3" href="https://u.ronthecookie.me/discordboatsguild">Discord</a></li>
                     <% if (!user) { %>
-                    <li><a class="grey-text text-lighten-3" href="/discord/login">Login</a></li>
-                    <% } else { %>
-                    <li><a class="grey-text text-lighten-3" href="/user/<%= user.id %>">Profile</a></li>
-                    <% } %>
-                </ul>
+                        <li><a class="grey-text text-lighten-3" href="/discord/login">Login</a></li>
+                        <% } else { %>
+                            <li><a class="grey-text text-lighten-3" href="/user/<%= user.id %>">Profile</a></li>
+                            <% } %>
+                            <div class="switch">
+                                <br>
+                                Dark Theme<br>
+                                <label>
+                                    <input type="checkbox" id="themeControl">
+                                    <span class="lever"></span>
+                                </label>
+                            </div>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-copyright">
+                <div class="center" id="footer-copyright-text">
+                    &copy; 2018 discordboats.club
+                </div>
             </div>
         </div>
-    </div>
-    <div class="footer-copyright">
-        <div class="center" id="footer-copyright-text">
-            &copy; 2018 discordboats.club
-        </div>
-    </div>
-</div>
+        
