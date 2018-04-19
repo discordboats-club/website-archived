@@ -10,10 +10,10 @@ module.exports = class Utils {
     static async attachPropBot(bot, user = {}) {
         const client = require("./ConstantStore").bot;
         const { r } = require("./ConstantStore");
-        const botUser = client.users.get(bot.id) || client.users.fetch(bot.id);
-        bot.online = typeof botUser !== "undefined" ? botUser.presence.status !== "offline" : undefined; 
+        const botUser = client.users.get(bot.id) || await client.users.fetch(bot.id);
+        bot.online = botUser.presence.status !== "offline";
         bot.servers = "N/A";
-        bot._discordAvatarURL = botUser.avatarURL();
+        bot._discordAvatarURL = botUser.avatarURL() || "https://discordboats.club/404.webp";
         bot._markedDescription = marked(escapeHTML(bot.longDescription), {});
         bot._ownerViewing = user.id === bot.ownerID;
         bot._comments = await r.table("comments").filter({botID: bot.id}).run();

@@ -33,6 +33,8 @@ app.use(minifyHTML({
 }));
 app.use(express.static("static"));
 app.use(express.json());
+app.use("/api", require("./routes/api"));
+app.use("/botapi", require("./routes/botapi"));
 app.use(session({saveUninitialized: true, resave: false, name: "discordboats_session", secret: require("./ConstantStore").secret, store: new RethinkStore(require("./ConstantStore").r)}));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -67,8 +69,6 @@ passport.use(new Discord({
 app.use(require("./routes/index"));
 app.use("/discord", require("./routes/discord"));
 app.use("/dashboard", ensureLoggedIn("/discord/login"), require("./routes/dashboard"));
-app.use("/api", require("./routes/api"));
-app.use("/botapi", require("./routes/botapi"));
 
 app.use((req, res) => {
     res.status(404).render("404", {user: req.user});
