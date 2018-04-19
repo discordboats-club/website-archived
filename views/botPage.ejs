@@ -5,7 +5,7 @@
 </head>
 <body>
     <div class="header">
-        <%- include("parts/header", { childBefore: bot.verified ? "" : `<div class="container"><div style="padding-bottom: 2.5%;"><center><h5 style="font-weight: bold;">This bot is currently unverified.</h5></center><center><h6>Only you can see it.</h6></center></div></div>` }) %>
+        <%- include("parts/header", { childBefore: bot.verified ? "" : `<div class="unverified-notice"><div class="container"><div style="padding-bottom: 2.5%;"><center><h5 style="font-weight: bold;">This bot is currently unverified.</h5></center><center><h6>Only you can see it.</h6></center></div></div></div>` }) %>
     </div>
     <div class="main">
         <div class="container">
