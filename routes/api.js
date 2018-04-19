@@ -19,13 +19,6 @@ app.get("/", (req, res) => {
     res.json({ok: "you found the api!"});
 });
 
-function filterUnexpectedData(orig, startingData, schema) {
-    const data = Object.assign({}, startingData);
-    Object.keys(schema.describe().children).forEach(key => {
-        data[key] = orig[key];
-    });
-    return data;
-}
 
 const newBotSchema = Joi.object().keys({
     shortDescription: Joi.string().max(200).required(),
@@ -37,25 +30,12 @@ const newBotSchema = Joi.object().keys({
     library: Joi.string()
 });
 
-function handleJoi(schema, req, res) {
-    const wdjt = Joi.validate(req.body, schema); // What Does Joi Think (wdjt)
-    if (wdjt.error) {
-        if (!wdjt.error.isJoi) {
-            console.error("Error while running Joi.", wdjt.error);+new Date()
-            res.status(500).json({error: "Internal Server Error"});
-            return true;+new Date()
-        }
-        res.status(400).json({error: wdjt.error.name, details: wdjt.error.details.map(item => item.message)});
-        return true;+new Date()
-    }
-    return false;
-}
 
 // bot resource
 app.post("/bot", async (req, res) => {
     const client = require("../ConstantStore").bot;
-    if (handleJoi(newBotSchema, req, res)) return;+new Date()
-    const data = filterUnexpectedData(req.body, {apiToken: randomString.generate(30), ownerID: req.user.id, createdAt: +new Date(), verified: false, verificationQueue: true}, newBotSchema);
+    if (Util.handleJoi(newBotSchema, req, res)) return;+new Date()
+    const data = Util.filterUnexpectedData(req.body, {apiToken: randomString.generate(30), ownerID: req.user.id, createdAt: +new Date(), verified: false, verificationQueue: true}, newBotSchema);
     if (data.library && !libList.includes(data.library)) return res.status(400).json({error: "Invalid Library"});
 
     const botUser = client.users.get(data.id) || await client.users.fetch(data.id);
@@ -95,9 +75,9 @@ const editCommentSchema = Joi.object().keys({
     content: Joi.string().max(500).required()
 });
 app.post("/bot/comment", async (req, res) => {
-    if (handleJoi(newCommentSchema, req, res)) return;
+    if (Util.handleJoi(newCommentSchema, req, res)) return;
     
-    const data = filterUnexpectedData(req.body, {authorID: req.user.id, createdAt: +new Date()}, newCommentSchema);
+    const data = Util.filterUnexpectedData(req.body, {authorID: req.user.id, createdAt: +new Date()}, newCommentSchema);
     
     const bot = await r.table("bots").get(data.botID).run();
     if (!bot) return res.status(404).json({error: "Bot not found"});
@@ -110,8 +90,8 @@ app.patch("/bot/comment/:id", async (req, res) => {
     const comment = await r.table("comments").get(req.params.id);
     if (!comment) return res.status(404).json({error: "comment not found"});
     if (comment.authorID !== req.user.id) return res.status(403).json({error: "no permission"});
-    if (handleJoi(editCommentSchema, req, res)) return;
-    const data = filterUnexpectedData(req.body, {editedAt: +new Date()}, newCommentSchema);
+    if (Util.handleJoi(editCommentSchema, req, res)) return;
+    const data = Util.filterUnexpectedData(req.body, {editedAt: +new Date()}, newCommentSchema);
     await r.table("comments").get(req.params.id).update(data).run();
     res.status(200).json({ok: "comment edited"});
 });
@@ -145,8 +125,8 @@ const modVerifyBotSchema = Joi.object().keys({
 app.post("/bot/mod/verify", async (req, res) => {
     const client = require("../ConstantStore").bot;
     if (!(req.user.mod || req.user.admin)) return res.status(403).json({error: "No permission"});
-    if (handleJoi(modVerifyBotSchema, req, res)) return;
-    const data = filterUnexpectedData(req.body, {}, modVerifyBotSchema);
+    if (Util.handleJoi(modVerifyBotSchema, req, res)) return;
+    const data = Util.filterUnexpectedData(req.body, {}, modVerifyBotSchema);
     const bot = await Util.attachPropBot(await r.table("bots").get(data.botID).run());
     const botUser = client.users.get(bot.id) || client.users.fetch(bot.id);
     if (!bot) return res.status(404).json({error: "bot does not exist"});

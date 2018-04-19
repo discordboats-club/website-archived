@@ -1,5 +1,6 @@
 const marked = require("marked");
 const escapeHTML = require("escape-html");
+const Joi = require("joi");
 const moment = require("moment");
 module.exports = class Utils {
     /**
@@ -31,5 +32,31 @@ module.exports = class Utils {
         user._verifiedBots = user._bots.filter(bot => bot.verified);
         user._fmtCreatedAt = moment(user.createdAt).fromNow();
         return user;
+    }
+    /**
+     * method for api endpoints
+     */
+    static filterUnexpectedData(orig, startingData, schema) {
+        const data = Object.assign({}, startingData);
+        Object.keys(schema.describe().children).forEach(key => {
+            data[key] = orig[key];
+        });
+        return data;
+    }
+    /**
+     * method for api endpoints
+     */
+    static handleJoi(schema, req, res) {
+        const wdjt = Joi.validate(req.body, schema); // What Does Joi Think (wdjt)
+        if (wdjt.error) {
+            if (!wdjt.error.isJoi) {
+                console.error("Error while running Joi.", wdjt.error);+new Date()
+                res.status(500).json({error: "Internal Server Error"});
+                return true;+new Date()
+            }
+            res.status(400).json({error: wdjt.error.name, details: wdjt.error.details.map(item => item.message)});
+            return true;+new Date()
+        }
+        return false;
     }
 }
