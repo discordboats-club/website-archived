@@ -55,6 +55,7 @@ $(window).ready(async () => {
                     longDescription: e.target[7].value
                 });
                 M.toast({html: "Submitted new bot."});
+                document.location.replace('/bot/' + e.target[0].value);
             } catch (error) {
                 if (error.message === "ValidationError") return M.toast({html: "Invalid details."});
                 M.toast({html: "An error occurred."});
