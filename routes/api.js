@@ -70,6 +70,7 @@ app.post("/bot", async (req, res) => {
     // everything looks good.
     await r.table("bots").insert(data).run();
     res.status(200).json({ok: "Created bot"});
+    client.channels.get("425170250548379664").send(`:thumbsup: \`${req.user.username}\` added \`${botUser.tag}\`.`);
 });
 
 app.delete("/bot/:id", async (req, res) => {
@@ -148,15 +149,18 @@ app.post("/bot/mod/verify", async (req, res) => {
     if (handleJoi(modVerifyBotSchema, req, res)) return;
     const data = filterUnexpectedData(req.body, {}, modVerifyBotSchema);
     const bot = await Util.attachPropBot(await r.table("bots").get(data.botID).run());
+    const botUser = client.users.get(bot.id) || client.users.fetch(bot.id);
     if (!bot) return res.status(404).json({error: "bot does not exist"});
     const discordOwner = client.users.get(bot.ownerID);
     const staffUser = client.users.get(req.user.id) || client.users.fetch(req.user.id);
     if (data.verified) {
         await discordOwner.send(`:tada: Your bot \`${bot.name}\` was verified by \`${staffUser.tag}\`.`);
+        client.channels.get("425170250548379664").send(`:thumbsup: \`${req.user.username}\` verified \`${botUser.tag}\` by \`${client.users.get(bot.ownerID).tag || client.users.fetch(bot.ownerID).tag || "UNKNOWN"}\`.`);
         bot.verified = true;
         bot.verificationQueue = false;
     } else {
-        await discordOwner.send(`): Your bot \`${bot.name}\` was denied verification by \`${staffUser.tag}\`.`);
+        await discordOwner.send(`): Your bot \`${bot.name}\` was rejected by \`${staffUser.tag}\`.`);
+        client.channels.get("425170250548379664").send(`:thumbsdown: \`${req.user.username}\` rejected \`${botUser.tag}\` by \`${client.users.get(bot.ownerID).tag || client.users.fetch(bot.ownerID).tag || "UNKNOWN"}\`.`);
         bot.verificationQueue = false; // we dont wanna keep them in the queue if they've been denied - though they will be able to trigger a resubmit to the queue.
     }
     await r.table("bots").get(bot.id).update(bot).run();
