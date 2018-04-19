@@ -28,7 +28,7 @@ body.dark-theme .main {
     background-color: #252525;
     color: white;   
 }
-body.dark-theme .nav-wrapper, body.dark-theme .footer, body.dark-theme .unverified-notice.container {
+body.dark-theme .nav-wrapper, body.dark-theme .footer, body.dark-theme .unverified-notice {
     background-color: #004379 !important;
 }
 footer {
