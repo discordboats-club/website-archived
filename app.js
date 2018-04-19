@@ -68,6 +68,7 @@ app.use(require("./routes/index"));
 app.use("/discord", require("./routes/discord"));
 app.use("/dashboard", ensureLoggedIn("/discord/login"), require("./routes/dashboard"));
 app.use("/api", require("./routes/api"));
+app.use("/botapi", require("./routes/botapi"));
 
 app.use((req, res) => {
     res.status(404).render("404", {user: req.user});

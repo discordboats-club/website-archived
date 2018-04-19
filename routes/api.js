@@ -2,6 +2,7 @@ const express = require("express");
 const app = module.exports = express.Router();
 const Joi = require("joi");
 const { r } = require("../ConstantStore");
+const randomString = require("randomstring");
 const Util = require("../Util");
 // datamined from the discord api docs
 const libList = module.exports.libList = ["discordcr","Discord.Net","DSharpPlus","dscord","DiscordGo","Discord4j","JDA","discord.js","Eris","Discordia","RestCord","Yasmin","discord.py","disco","discordrb","discord-rs","Sword"];
@@ -54,7 +55,7 @@ function handleJoi(schema, req, res) {
 app.post("/bot", async (req, res) => {
     const client = require("../ConstantStore").bot;
     if (handleJoi(newBotSchema, req, res)) return;+new Date()
-    const data = filterUnexpectedData(req.body, {ownerID: req.user.id, createdAt: +new Date(), verified: false, verificationQueue: true}, newBotSchema);
+    const data = filterUnexpectedData(req.body, {apiToken: randomString.generate(30), ownerID: req.user.id, createdAt: +new Date(), verified: false, verificationQueue: true}, newBotSchema);
     if (data.library && !libList.includes(data.library)) return res.status(400).json({error: "Invalid Library"});
 
     const botUser = client.users.get(data.id) || await client.users.fetch(data.id);
