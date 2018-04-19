@@ -70,6 +70,8 @@ $(window).ready(async () => {
         });
     }
 
+    
+
 
     // Theme control
     const controlEle = document.querySelector("#themeControl");

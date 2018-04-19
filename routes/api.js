@@ -10,7 +10,7 @@ const libList = module.exports.libList = ["discordcr","Discord.Net","DSharpPlus"
 app.use((req, res, next) => {
     if (req.isAuthenticated()) next();
     else {
-        res.status(403).json({error: "not_authenticated"});
+        res.status(401).json({error: "not_authenticated"});
     }
 });
 
@@ -59,11 +59,11 @@ app.post("/bot", async (req, res) => {
 
     const botUser = client.users.get(data.id) || await client.users.fetch(data.id);
     if (!botUser) return res.status(404).json({error: "Invalid Bot ID"});
-    if (!botUser.bot) return res.status(418).json({error: "bot can only be a bot"});
+    if (!botUser.bot) return res.status(400).json({error: "bot can only be a bot"});
     data.name = botUser.username;
 
     // does bot already exist?
-    const dbeBot = await r.table("bots").get(data.id);
+    const dbeBot = await r.table("bots").get(data.id).run();
     if (dbeBot) return res.status(302).json({error: "Bot already exists"});
 
 
@@ -93,6 +93,7 @@ const editCommentSchema = Joi.object().keys({
     content: Joi.string().max(500).required()
 });
 app.post("/bot/comment", async (req, res) => {
+    res.sendStatus(501);
     if (handleJoi(newCommentSchema, req, res)) return;
     
     const data = filterUnexpectedData(req.body, {authorID: req.user.id, createdAt: +new Date()}, newCommentSchema);
@@ -105,6 +106,7 @@ app.post("/bot/comment", async (req, res) => {
 });
 
 app.patch("/bot/comment/:id", async (req, res) => {
+    res.sendStatus(501);
     const comment = await r.table("comments").get(req.params.id);
     if (!comment) return res.status(404).json({error: "comment not found"});
     if (comment.authorID !== req.user.id) return res.status(403).json({error: "no permission"});
@@ -162,5 +164,5 @@ app.post("/bot/mod/verify", async (req, res) => {
 });
 
 app.use((req, res) => {
-    res.status(404).json({error: "endpoint_not_found"});
+    res.sendStatus(404);
 });
