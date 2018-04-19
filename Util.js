@@ -30,7 +30,6 @@ module.exports = class Utils {
         user._bots = await r.table("bots").filter({ownerID: user.id}).run(); // might call attachPropBot here if needed.
         user._verifiedBots = user._bots.filter(bot => bot.verified);
         user._fmtCreatedAt = moment(user.createdAt).fromNow();
-        console.log(user);
         return user;
     }
 }
