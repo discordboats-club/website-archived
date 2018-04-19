@@ -9,8 +9,12 @@
             <div class="chip lime lighten-2" style="display: inline-block;"><%= bot.servers %> servers</div>
         </div>
         <div class="card-action">
-            <a href="#">Invite</a>
+            <a href="<%= bot.invite %>">Invite</a>
             <a href="/bot/<%= bot.id %>">View</a>
+            <% if (typeof queue !== "undefined" && queue == true) { %>
+            <a style="color: lightgreen;" href="#"><strong>Accept</strong></a>
+            <a style="color: red;" href="#"><strong>Deny</strong></a>
+            <% } %>
         </div>
     </div>
 </div>
