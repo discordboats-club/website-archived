@@ -52,7 +52,7 @@ app.post("/bot", async (req, res) => {
     // everything looks good.
     await r.table("bots").insert(data).run();
     res.status(200).json({ok: "Created bot"});
-    client.channels.get("425170250548379664").send(`<:submitted:436830297175097345> <@${req.user.id}> added \`${botUser.tag}\` ${botUser} (⬅ <@&436737982737678346>).`);
+    client.channels.get("425170250548379664").send(`<:submitted:436830297175097345> <@${req.user.id}> added ${botUser.tag} (<@&436737982737678346>).`);
 });
 
 app.delete("/bot/:id", async (req, res) => {
@@ -135,13 +135,13 @@ app.post("/bot/mod/verify", async (req, res) => {
     const discordOwner = client.users.get(bot.ownerID);
     const staffUser = client.users.get(req.user.id) || client.users.fetch(req.user.id);
     if (data.verified) {
-        await discordOwner.send(`<:accepted:436824491470094337> Your bot \`${bot.name}\` was verified by \`${staffUser.tag}\`.`);
-        client.channels.get("425170250548379664").send(`<:accepted:436824491470094337> ${staffUser} verified \`${botUser.tag}\` ${botUser} by <@${bot.ownerID}>.`);
+        await discordOwner.send(`<:accepted:436824491470094337> Your bot, ${bot.name}, was verified by ${staffUser.tag}.`);
+        client.channels.get("425170250548379664").send(`<:accepted:436824491470094337> ${botUser.tag} by <@${bot.ownerID}> was verified by ${staffUser}.`);
         bot.verified = true;
         bot.verificationQueue = false;
     } else {
-        await discordOwner.send(`<:rejected:436824567898570763> Your bot \`${bot.name}\` was rejected by \`${staffUser.tag}\`.`);
-        client.channels.get("425170250548379664").send(`<:rejected:436824567898570763> ${staffUser} rejected \`${botUser.tag}\` ${botUser} by <@${bot.ownerID}>.`);
+        await discordOwner.send(`<:rejected:436824567898570763> Your bot, ${bot.name}, was rejected by ${staffUser.tag}.`);
+        client.channels.get("425170250548379664").send(`<:rejected:436824567898570763> ${botUser.tag} by <@${bot.ownerID}> was rejected by ${staffUser}.`);
         bot.verificationQueue = false; // we dont wanna keep them in the queue if they've been denied - though they will be able to trigger a resubmit to the queue.
     }
     await r.table("bots").get(bot.id).update(bot).run();
