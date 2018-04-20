@@ -52,7 +52,7 @@ app.post("/bot", async (req, res) => {
     // everything looks good.
     await r.table("bots").insert(data).run();
     res.status(200).json({ok: "Created bot"});
-    client.channels.get("425170250548379664").send(`:thumbsup: \`${req.user.username}\` added \`${botUser.tag}\`.`);
+    client.channels.get("425170250548379664").send(`<:submitted:436830297175097345> <@${req.user.id}> added \`${botUser.tag}\` ${botUser} (⬅ <@&436737982737678346>).`);
 });
 
 app.delete("/bot/:id", async (req, res) => {
