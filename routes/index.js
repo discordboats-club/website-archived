@@ -20,6 +20,7 @@ app.get("/bot/:id", async (req, res, next) => {
 });
 
 app.get("/user/:id", async (req, res, next) => {
+    res.status(501).send('User profiles coming soon!');
     let user = await r.table("users").get(req.params.id).run();
     if (!user) return next();
     user = await Util.attachPropUser(user);
