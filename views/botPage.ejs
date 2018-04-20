@@ -22,6 +22,7 @@
                             <h4><%= bot.name %></h4>
                         </div>
                         <div class="bp-chips" style="padding-bottom: 2%; display: inline-block;">
+                            <div class="row">
                                 <% if (bot.library) { %>
                                     <div class="chip red lighten-2" style="display: inline-block;"><%= bot.library %></div>
                                 <% } %>
@@ -34,11 +35,18 @@
                                 <% if (!bot.verified) { %>
                                     <div class="chip red lighten-3" style="display: inline-block;">unverified</div>
                                 <% } %>
+                            </div>
                         </div>
                     </div>
                     <subtitle><%= bot.shortDescription %></subtitle>
                     <hr />
-                    <em>Hi, jellz here - I removed the bot buttons for now since they're being mean and idfk whats wrong with them and neither does Ron so maybe we'll fix it another time (or if rebecca wants to that'd be nice)</em>
+                    <div class="row">
+                        <% bot.website ? webVal = '' : webVal = 'disabled' %>
+                        <% bot.github ? gitVal = '' : gitVal = 'disabled' %>
+                        <a style="margin-left: 6.2%;" target="_blank" href="<%= bot.invite %>" class="col s3 waves-effect waves-light btn orange">Invite</a>
+                        <a <%= webVal %> style="margin-left: 6.2%;" target="_blank" href="<%= bot.website %>" class="col s3 waves-effect waves-light btn">Website</a>
+                        <a <%= gitVal %> style="margin-left: 6.2%;" target="_blank" href="<%= bot.github %>" class="col s3 waves-effect waves-light btn">Github</a>
+                    </div>
                     <hr />
                     <p>
                         <%- bot._markedDescription %>
