@@ -1,4 +1,4 @@
-<div class="col s12 m3">
+<div class="col s12 m3" id="<%= bot.id %>">
     <div class="card hoverable blue-grey darken-1">
         <div class="card-image bot-image-container">
             <img src="<%= bot._discordAvatarURL %>" class="bot-image">
@@ -12,8 +12,8 @@
             <a href="<%= bot.invite %>">Invite</a>
             <a href="/bot/<%= bot.id %>">View</a>
             <% if (typeof queue !== "undefined" && queue == true) { %>
-            <a style="color: lightgreen;" href="#"><strong>Accept</strong></a>
-            <a style="color: red;" href="#"><strong>Deny</strong></a>
+            <a class="accept-button" style="color: lightgreen;" href="#"><strong>Accept</strong></a>
+            <a class="deny-button" style="color: red;" href="#"><strong>Deny</strong></a>
             <% } %>
         </div>
     </div>

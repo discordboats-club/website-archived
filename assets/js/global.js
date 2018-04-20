@@ -21,6 +21,18 @@ function undefIfEmpty(str) {
     return res;
 }
 $(window).ready(async () => {
+    $(".accept-button").click((e) => {
+        var card = e.target.parentElement.parentElement.parentElement.parentElement;
+        var id = card.getAttribute("id");
+        api.verifyBot(true, id);
+        card.remove();
+    });
+    $(".deny-button").click((e) => {
+        var card = e.target.parentElement.parentElement.parentElement.parentElement;
+        var id = card.getAttribute("id");
+        api.verifyBot(false, id);
+        card.remove();
+    });
     document.querySelectorAll(".modal").forEach(ele => M.Modal.init(ele));
     M.Dropdown.init(document.querySelector("#profile-dropdown-trigger"), {ecoverTrigger: false});
     const logoutele = document.querySelector("#log-out-indd");
