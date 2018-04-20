@@ -1,4 +1,4 @@
-module.exports = class APIClient {
+window.APIClient = class APIClient {
     async logOut() {
         await fetch("/api/logout", {credentials: "same-origin", method: "POST"});
     }
