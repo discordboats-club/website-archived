@@ -141,7 +141,7 @@ app.post("/bot/mod/verify", async (req, res) => {
         bot.verificationQueue = false;
     } else {
         await discordOwner.send(`): Your bot \`${bot.name}\` was rejected by \`${staffUser.tag}\`.`);
-        client.channels.get("425170250548379664").send(`:thumbsdown: \`${req.user.username}\` rejected \`${botUser.tag}\` by \`${client.users.get(bot.ownerID).tag || client.users.fetch(bot.ownerID).tag || "UNKNOWN"}\`.`);
+        client.channels.get("425170250548379664").send(`:thumbsdown: \`${staffUser.tag}\` rejected \`${botUser.tag}\` by \`${client.users.get(bot.ownerID).tag || client.users.fetch(bot.ownerID).tag || "UNKNOWN"}\`.`);
         bot.verificationQueue = false; // we dont wanna keep them in the queue if they've been denied - though they will be able to trigger a resubmit to the queue.
     }
     await r.table("bots").get(bot.id).update(bot).run();
