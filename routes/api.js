@@ -136,7 +136,7 @@ app.post("/bot/mod/verify", async (req, res) => {
     const staffUser = client.users.get(req.user.id) || client.users.fetch(req.user.id);
     if (data.verified) {
         await discordOwner.send(`:tada: Your bot \`${bot.name}\` was verified by \`${staffUser.tag}\`.`);
-        client.channels.get("425170250548379664").send(`:thumbsup: \`${req.user.username}\` verified \`${botUser.tag}\` by \`${client.users.get(bot.ownerID).tag || client.users.fetch(bot.ownerID).tag || "UNKNOWN"}\`.`);
+        client.channels.get("425170250548379664").send(`:thumbsup: \`${staffUser.tag}\` verified \`${botUser.tag}\` by \`${client.users.get(bot.ownerID).tag || client.users.fetch(bot.ownerID).tag || "UNKNOWN"}\`.`);
         bot.verified = true;
         bot.verificationQueue = false;
     } else {
