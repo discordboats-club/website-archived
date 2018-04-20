@@ -136,12 +136,12 @@ app.post("/bot/mod/verify", async (req, res) => {
     const staffUser = client.users.get(req.user.id) || client.users.fetch(req.user.id);
     if (data.verified) {
         await discordOwner.send(`<:accepted:436824491470094337> Your bot \`${bot.name}\` was verified by \`${staffUser.tag}\`.`);
-        client.channels.get("425170250548379664").send(`<:accepted:436824491470094337> ${staffUser} verified \`${botUser.tag}\` ${botUser} by ${client.users.get(bot.ownerID) || client.users.fetch(bot.ownerID) || 'an unknown user'}\`.`);
+        client.channels.get("425170250548379664").send(`<:accepted:436824491470094337> ${staffUser} verified \`${botUser.tag}\` ${botUser} by <@${bot.ownerID}>.`);
         bot.verified = true;
         bot.verificationQueue = false;
     } else {
         await discordOwner.send(`<:rejected:436824567898570763> Your bot \`${bot.name}\` was rejected by \`${staffUser.tag}\`.`);
-        client.channels.get("425170250548379664").send(`<:rejected:436824567898570763> ${staffUser} rejected \`${botUser.tag}\` ${botUser} by ${client.users.get(bot.ownerID) || client.users.fetch(bot.ownerID) || 'an unknown user'}\`.`);
+        client.channels.get("425170250548379664").send(`<:rejected:436824567898570763> ${staffUser} rejected \`${botUser.tag}\` ${botUser} by <@${bot.ownerID}>.`);
         bot.verificationQueue = false; // we dont wanna keep them in the queue if they've been denied - though they will be able to trigger a resubmit to the queue.
     }
     await r.table("bots").get(bot.id).update(bot).run();
