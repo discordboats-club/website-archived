@@ -5,8 +5,6 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "NODE_ENV=production webpack --progress",
-    "postinstall": "cp post-commit-git-hook .git/hooks/post-commit && chmod +x .git/hooks/post-commit && cp pre-push-git-hook .git/hooks/pre-push && chmod +x .git/hooks/pre-push"
   },
   "author": "discordboats.club",
   "license": "Apache-2.0",
@@ -33,13 +31,5 @@
     "session-rethinkdb": "^2.0.1",
     "snekfetch": "^3.6.4"
   },
-  "devDependencies": {
-    "css-loader": "^0.28.11",
-    "extract-loader": "RONTheCookie/extract-loader",
-    "file-loader": "^1.1.11",
-    "materialize-css": "^1.0.0-alpha.4",
-    "uglifyjs-webpack-plugin": "^1.2.4",
-    "webpack": "^4.1.1",
-    "webpack-cli": "^2.0.12"
-  }
+  "devDependencies": {}
 }
