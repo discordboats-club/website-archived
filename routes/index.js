@@ -19,6 +19,18 @@ app.get("/bot/:id", async (req, res, next) => {
     res.render("botPage", {user: req.user, bot});
 });
 
+app.get('/bot/:id/key', async (req, res, next) => {
+    const rB = await r.table("bots").get(req.params.id).run();
+    if (!rB) return next();
+    const bot = await Util.attachPropBot(rB, req.user);
+    if (bot.verified) {
+        if (req.user) {
+            if (req.user.id !== bot.ownerID) res.sendStatus(403)
+            else return res.send('You are authorised to the key page!!');
+        } else return res.sendStatus(401);
+    } else return res.sendStatus(403);
+})
+
 app.get("/user/:id", async (req, res, next) => {
     res.status(501).send('User profiles coming soon!');
     let user = await r.table("users").get(req.params.id).run();
