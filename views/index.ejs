@@ -9,8 +9,11 @@
         </div>
         <div class="main">
             <div class="container">
-                <h3>Top Bots</h3>
-                <hr>
+                <div class="container">
+                    <h3>Browse</h3>
+                    <subtitle>Randomly selected Discord bots.</subtitle>
+                    <hr>
+                </div>
                 <% if (rawBots.length == 0) { %>
                     <p>There's no bots on this site at the moment. <a href="/dashboard/new">Add one?</a></p>
                 <% } else { %>
@@ -19,10 +22,6 @@
                         <%- botChunks.map(chunk => `<div class="row bot-card">${chunk.map(bot => include("parts/botCard", {bot}))}</div>`) %>
                     </div>
                 <% } %>
-                <h3>Recent Bots</h3>
-                <hr>
-                <h3>Featured Bots</h3>
-                <hr>
             </div>
         </div>
     </body>
