@@ -38,25 +38,25 @@
                             </div>
                         </div>
                     </div>
-                    <subtitle><%= bot.shortDescription %></subtitle>
-                    <hr />
-                    <div class="row">
-                        <% bot.website ? webVal = '' : webVal = 'disabled' %>
-                        <% bot.github ? gitVal = '' : gitVal = 'disabled' %>
-                        <a style="margin-left: 6.2%;" target="_blank" href="<%= bot.invite %>" class="col s3 waves-effect waves-light btn orange">Invite</a>
-                        <a <%= webVal %> style="margin-left: 6.2%;" target="_blank" href="<%= bot.website %>" class="col s3 waves-effect waves-light btn">Website</a>
-                        <a <%= gitVal %> style="margin-left: 6.2%;" target="_blank" href="<%= bot.github %>" class="col s3 waves-effect waves-light btn">Github</a>
+                    <div class="bp-info">
+                        <subtitle><%= bot.shortDescription %></subtitle>
+                        <hr />
+                        <div class="row">
+                            <% bot.website ? webVal = '' : webVal = 'disabled' %>
+                            <% bot.github ? gitVal = '' : gitVal = 'disabled' %>
+                            <a style="margin-left: 6.2%;" target="_blank" href="<%= bot.invite %>" class="col s3 waves-effect waves-light btn orange">Invite</a>
+                            <a <%= webVal %> style="margin-left: 6.2%;" target="_blank" href="<%= bot.website %>" class="col s3 waves-effect waves-light btn">Website</a>
+                            <a <%= gitVal %> style="margin-left: 6.2%;" target="_blank" href="<%= bot.github %>" class="col s3 waves-effect waves-light btn">Github</a>
+                        </div>
+                        <hr />
+                        <p><%- bot._markedDescription %></p>
                     </div>
+                </div>
+                <!-- <div class="bp-comments">
                     <hr />
-                    <p>
-                        <%- bot._markedDescription %>
-                    </p>
-                    
-                    <hr />
-                    
                     <h4>Comments</h4>
                     <p>This bot has no comments yet.</p>
-                </div>
+                </div> -->
             </div>
         </div>
         <div id="delete-bot-modal" class="modal" data-bot-id="<%= bot.id %>">
