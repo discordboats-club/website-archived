@@ -11,7 +11,7 @@ const config = require("./config");
 const minifyHTML = require("express-minify-html");
 const RethinkStore = require("session-rethinkdb")(session);
 const port = process.env.PORT || require("./config.json").listeningPort || 3000;
-require("./elasticrdbsync");
+// require("./elasticrdbsync");
 
 const app = module.exports = express();
 // const client = require("./bot");
