@@ -25,8 +25,8 @@ const newBotSchema = Joi.object().keys({
     id: Joi.string().length(18).required(),
     longDescription: Joi.string().max(1500).required(),
     prefix: Joi.string().max(50).required(),
-    invite: Joi.string().uri({scheme: ["https"]}).required(),
-    website: Joi.string().uri({scheme: ["https"]}),
+    invite: Joi.string().uri({scheme: ["https", "http"]}).required(),
+    website: Joi.string().uri({scheme: ["https", "http"]}),
     library: Joi.string()
 });
 
