@@ -4,13 +4,15 @@ const client = module.exports = new Client({disableEveryone: true, presence: {ac
 const config = require("./config.json");
 client.login(config.token);
 
-client.once("ready", () => console.log(`[discord] Logged in as ${client.user.tag}.`));
+client.once("ready", () => {
+    console.log(`[discord] Logged in as ${client.user.tag}.`)
+});
 
 client.on("message", async (msg) => {
     if (msg.author.bot || msg.author.id === client.user.id) return;
     const cmd = msg.content.split(" ")[0].toLowerCase();
     const args = msg.content.split(" ").slice(1);
-    const prefix = "discordboats";
+    const prefix = "db, ";
 
     switch(cmd) {
         case prefix + "ping":
