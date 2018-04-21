@@ -34,7 +34,7 @@ app.use(minifyHTML({
 }));
 app.use(express.static("static"));
 app.use(express.json());
-app.use("/api/bot", require("./routes/botapi"));
+app.use("/api/public/bot", require("./routes/botapi"));
 app.use(session({saveUninitialized: true, resave: false, name: "discordboats_session", secret: require("./ConstantStore").secret, store: new RethinkStore(require("./ConstantStore").r)}));
 app.use(passport.initialize());
 app.use(passport.session());
