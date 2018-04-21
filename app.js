@@ -21,7 +21,7 @@ app.set("view engine", "ejs");
 
 app.use(logger('dev'));
 app.use((req, res, next) => {
-    const { bot } = requrie("./ConstantStore");
+    const { bot } = require("./ConstantStore");
     if (!bot.readyTimestamp) {
         bot.once("ready", () => {
             next();
