@@ -26,12 +26,12 @@ client.on('guildMemberRemove', async (member) => {
     const loadedBots = await r.table('bots').filter({ ownerID: member.user.id }).run();
     if (loadedBots.length !== 0) {
         const modChannel = client.channels.find('name', 'mod-chat');
-        modChannel.send(`<@&436737982737678346> **${member.user.tag}** (\`${member.user.id}\`) left the guild, but they have **${loadedBots.length}** bots on the list. They consist of: **${loadedBots.map(b => b.name).join(', ')}**.`);
+        modChannel.send(`<@&437212621540818944> **${member.user.tag}** (\`${member.user.id}\`) left the guild, but they have **${loadedBots.length}** bots on the list. They consist of: **${loadedBots.map(b => b.name).join(', ')}**.`);
     }
     if (member.bot) {
         if (!loadedBots.map(b => b.id).includes(member.user.id)) return;
         const bot = loadedBots[member.user.id];
         const modChannel = client.channels.find('name', 'mod-chat');
-        modChannel.send(`<@&436737982737678346> **${member.user.tag}** (\`${member.user.id}\`) left the guild, but they are a bot currently on the list. Their owner is **${bot.ownerID}** (<@${bot.ownerID}>).)`);        
+        modChannel.send(`<@&437212621540818944> **${member.user.tag}** (\`${member.user.id}\`) left the guild, but they are a bot currently on the list. Their owner is **${bot.ownerID}** (<@${bot.ownerID}>).)`);        
     }
 });
