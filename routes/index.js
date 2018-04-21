@@ -8,7 +8,6 @@ const app = module.exports = express.Router();
 app.get("/", async (req, res) => {
     const bots = await Promise.all((await r.table("bots").filter({verified: true}).sample(4 * 2).run()).map(bot => Util.attachPropBot(bot, req.user)));
     const botChunks = chunk(bots, 4); // 4 bots per 
-    console.log(bots);
     res.render("index", {user: req.user, rawBots: bots, botChunks});
 });
 

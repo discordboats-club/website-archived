@@ -142,7 +142,7 @@ app.post("/bot/mod/verify", async (req, res) => {
     } else {
         await discordOwner.send(`<:rejected:436824567898570763> Your bot, ${bot.name}, was rejected by ${staffUser.tag}.`);
         client.channels.get("425170250548379664").send(`<:rejected:436824567898570763> ${botUser.tag} by <@${bot.ownerID}> was rejected by ${staffUser}.`);
-        await r.table("bots").delete(bot.id).run();
+        await r.table("bots").get(bot.id).delete().run();
     }
     res.status(200).json({ok: "applied actions"});
 });
