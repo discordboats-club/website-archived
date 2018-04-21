@@ -6,7 +6,6 @@ client.login(config.token);
 
 client.once("ready", () => {
     console.log(`[discord] Logged in as ${client.user.tag}.`)
-    client.user.setActivity('db, help');
 });
 
 client.on("message", async (msg) => {
