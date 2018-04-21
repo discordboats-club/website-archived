@@ -20,6 +20,17 @@ app.use(require("helmet")())
 app.set("view engine", "ejs");
 
 app.use(logger('dev'));
+app.use((req, res, next) => {
+    const { bot } = requrie("./ConstantStore");
+    if (!bot.readyTimestamp) {
+        bot.once("ready", () => {
+            next();
+        });
+    } else {
+        next();
+    }
+}); 
+
 app.use(compress());
 app.use(minifyHTML({
     override: true,
