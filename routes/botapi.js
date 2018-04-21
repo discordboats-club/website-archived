@@ -19,16 +19,31 @@ app.use(async (req, res, next) => {
     }
 });
 app.get("/", (req, res) => {
-    res.json({ok: "You found the Bot API!"});
+    res.json({ok: "You found the Public API!"});
 });
-app.get("/me", (req, res) => {
+app.get("/bot/me", (req, res) => {
     res.json({ok: "View data property", data: req.bot});
+});
+
+app.get("/bot/:id", async (req, res) => {
+    let bot = await r.table("bots").get(req.params.id).run();   
+    if (!bot || !bot.verified) return res.status(404).json({error: "Bot not found"});
+    if (bot) bot = Util.hidePropsBot(await Util.attachPropBot(bot));
+    res.status(200).json({ok: "View data property", data: bot});
+});
+
+app.get("/user/:id", async (req, res) => {
+    let user = await r.table("users").get(req.params.id).run();
+    if (!user) return res.status(404).json({error: "Users not found"});
+    if (user) user = Util.hidePropsUser(await Util.attachPropUser(user), false);
+    user._bots = (await Promise.all(user._bots.map(bot => Util.attachPropBot(bot)))).map(bot => Util.hidePropsBot(bot));
+    res.status(200).json({ok: "View data property", data: user});
 });
 
 const botPostServersSchema = Joi.object().keys({
     server_count: Joi.number().max(10000000) // Just to make sure they arent super crazy.
 });
-app.post("/stats", async (req, res) => {
+app.post("/bot/stats", async (req, res) => {
     if (Util.handleJoi(botPostServersSchema, req, res)) return;
     const { server_count } = req.body;
     await r.table("bots").get(req.bot.id).update({servers: server_count});
@@ -36,5 +51,5 @@ app.post("/stats", async (req, res) => {
 });
 
 app.use((req, res) => {
-    res.json({error: "Invalid Endpoint"});
+    res.status(404).json({error: "Invalid Endpoint"});
 });

@@ -19,6 +19,29 @@ module.exports = class Utils {
         return bot;
     }
     /**
+     * Hides sensetive and internal data from bots.
+     * @param {Object} bot 
+     */
+    static hidePropsBot(bot) {
+        delete bot._discordAvatarURL;
+        delete bot._markedDescription;
+        delete bot._ownerViewing;
+        delete bot.apiToken;
+        return bot;
+    }
+    /**
+     * Hides sensetive and internal data from bots.
+     * @param {Object} bot 
+     */
+    static hidePropsUser(user, hideBots = true) {
+        delete user.discordAT;
+        delete user.discordRT;
+        delete user._fmtCreatedAt;
+        if (hideBots) user._bots = user._bots.map(Utils.hidePropsBot);
+        delete user._verifiedBots;
+        return user;
+    }
+    /**
      * @param {Object} user
      * @returns {Object} 
      */
