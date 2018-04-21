@@ -21,4 +21,3 @@ We've only tested this on Linux at the moment, feel free to make a PR editing th
 `discordboatsclub.bots`
 * Rename the `config.json.example` to `config.json` and fill in the required fields with your Discord application details.
 * Run the app, `node .`
-* You may also run the webpack build watcher thing using `npx webpack -w`.
