@@ -12,7 +12,7 @@ module.exports = class Utils {
         const { r } = require("./ConstantStore");
         const botUser = client.users.get(bot.id) || await client.users.fetch(bot.id);
         bot.online = botUser.presence.status !== "offline";
-        bot._discordAvatarURL = botUser.avatarURL() || "https://discordboats.club/404.webp";
+        bot._discordAvatarURL = botUser.avatarURL({format: "png"}) || "https://discordboats.club/404.png";
         bot._markedDescription = marked(escapeHTML(bot.longDescription), {});
         bot._ownerViewing = user.id === bot.ownerID;
         bot._comments = await r.table("comments").filter({botID: bot.id}).run();
