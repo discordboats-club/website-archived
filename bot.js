@@ -10,7 +10,7 @@ client.on("message", async (msg) => {
     if (msg.author.bot || msg.author.id === client.user.id) return;
     const cmd = msg.content.split(" ")[0].toLowerCase();
     const args = msg.content.split(" ").slice(1);
-    const prefix = "discordboats";
+    const prefix = "db, ";
 
     switch(cmd) {
         case prefix + "ping":
