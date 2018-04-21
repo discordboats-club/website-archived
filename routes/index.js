@@ -15,7 +15,7 @@ app.get("/bot/:id", async (req, res, next) => {
     const rB = await r.table("bots").get(req.params.id).run();
     if (!rB) return next();
     const bot = await Util.attachPropBot(rB, req.user);
-    if (!bot.verified && !((req.user && (req.user.mod || req.user.admin)) || req.user.id == rB.ownerID)) return res.sendStatus(404); // pretend it doesnt exist lol
+    if (!bot.verified && !((req.user ? (req.user.mod || req.user.admin) : false) || req.user.id == rB.ownerID)) return res.sendStatus(404); // pretend it doesnt exist lol
     res.render("botPage", {user: req.user, bot});
 });
 
