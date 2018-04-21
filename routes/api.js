@@ -35,7 +35,7 @@ const newBotSchema = Joi.object().keys({
 app.post("/bot", async (req, res) => {
     const client = require("../ConstantStore").bot;
     if (Util.handleJoi(newBotSchema, req, res)) return;
-    const data = Util.filterUnexpectedData(req.body, {apiToken: randomString.generate(30), ownerID: req.user.id, createdAt: +new Date(), verified: false, verificationQueue: true}, newBotSchema);
+    const data = Util.filterUnexpectedData(req.body, {apiToken: randomString.generate(30), ownerID: req.user.id, createdAt: +new Date(), verified: false}, newBotSchema);
     if (data.library && !libList.includes(data.library)) return res.status(400).json({error: "Invalid Library"});
 
     const botUser = client.users.get(data.id) || await client.users.fetch(data.id);
@@ -114,9 +114,9 @@ app.post("/logout", (req, res) => {
 
 app.get("/me", (req, res) => {
     res.json({id: req.user.id,
-             discord: {
+            discord: {
                 username: req.user.username
-             }
+            }
         });
 });
 
@@ -138,13 +138,12 @@ app.post("/bot/mod/verify", async (req, res) => {
         await discordOwner.send(`<:accepted:436824491470094337> Your bot, ${bot.name}, was verified by ${staffUser.tag}.`);
         client.channels.get("425170250548379664").send(`<:accepted:436824491470094337> ${botUser.tag} by <@${bot.ownerID}> was verified by ${staffUser}.`);
         bot.verified = true;
-        bot.verificationQueue = false;
+        await r.table("bots").get(bot.id).update(bot).run();
     } else {
         await discordOwner.send(`<:rejected:436824567898570763> Your bot, ${bot.name}, was rejected by ${staffUser.tag}.`);
         client.channels.get("425170250548379664").send(`<:rejected:436824567898570763> ${botUser.tag} by <@${bot.ownerID}> was rejected by ${staffUser}.`);
-        bot.verificationQueue = false; // we dont wanna keep them in the queue if they've been denied - though they will be able to trigger a resubmit to the queue.
+        await r.table("bots").delete(bot.id).run();
     }
-    await r.table("bots").get(bot.id).update(bot).run();
     res.status(200).json({ok: "applied actions"});
 });
 

@@ -17,7 +17,7 @@ app.get("/new", (req, res) => {
 
 app.get("/queue", async (req, res) => {
     if (!(req.user.mod || req.user.admin)) return res.status(403).json({error: "No permission"});
-    const bots = await Promise.all((await r.table("bots").filter({verificationQueue: true}).run()).map(bot => Util.attachPropBot(bot, req.user)));
+    const bots = await Promise.all((await r.table("bots").filter({verified: false}).run()).map(bot => Util.attachPropBot(bot, req.user)));
     const botChunks = chunk(bots, 4);
     res.render("dashboard/queue", {user: req.user, chunks: botChunks, rawBots: bots});
 });
