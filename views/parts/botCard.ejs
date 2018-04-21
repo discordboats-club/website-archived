@@ -6,7 +6,9 @@
         </div>
         <div class="card-content white-text">
             <p style="padding-bottom: 5%;"><%= bot.shortDescription %></p>
+            <% if (bot.servers) { %>
             <div class="chip lime lighten-2" style="display: inline-block;"><%= bot.servers %> servers</div>
+            <% } %>
         </div>
         <div class="card-action">
             <a href="<%= bot.invite %>">Invite</a>
