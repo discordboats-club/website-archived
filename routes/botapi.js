@@ -19,10 +19,20 @@ app.use(async (req, res, next) => {
     }
 });
 app.get("/", (req, res) => {
-    res.json({ok: "You found the API!"});
+    res.json({ok: "You found the Bot API!"});
 });
 app.get("/me", (req, res) => {
     res.json({ok: "View data property", data: req.bot});
+});
+
+const botPostServersSchema = Joi.object().keys({
+    server_count: Joi.number().max(10000000) // Just to make sure they arent super crazy.
+});
+app.post("/stats", async (req, res) => {
+    if (Util.handleJoi(botPostServersSchema, req, res)) return;
+    const { server_count } = req.body;
+    await r.table("bots").get(req.bot.id).update({servers: server_count});
+    res.status(200).json({ok: "updated server count"});
 });
 
 app.use((req, res) => {

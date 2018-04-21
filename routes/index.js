@@ -19,20 +19,20 @@ app.get("/bot/:id", async (req, res, next) => {
     res.render("botPage", {user: req.user, bot});
 });
 
-app.get('/bot/:id/key', async (req, res, next) => {
+app.get("/bot/:id/key", async (req, res, next) => {
     const rB = await r.table("bots").get(req.params.id).run();
     if (!rB) return next();
     const bot = await Util.attachPropBot(rB, req.user);
     if (bot.verified) {
         if (req.user) {
             if (req.user.id !== bot.ownerID) res.sendStatus(403)
-            else return res.render('botKey');
+            else return res.render("botKey", {bot: rB});
         } else return res.sendStatus(401);
     } else return res.sendStatus(403);
 })
 
 app.get("/user/:id", async (req, res, next) => {
-    res.status(501).send('User profiles coming soon!');
+    res.status(501).send("User profiles coming soon!");
     let user = await r.table("users").get(req.params.id).run();
     if (!user) return next();
     user = await Util.attachPropUser(user);
@@ -53,7 +53,7 @@ app.get("/user/:id", async (req, res, next) => {
 //     if (req.user.id !== "142244934139904000" || req.user.id !== "250536623270264833") {
 //         return next();
 //     }
-//     if (typeof req.body.code !== "string") return res.status(400).json({error: "ron i expected a body that looks like this: {'code':'memes'} "});
+//     if (typeof req.body.code !== "string") return res.status(400).json({error: "ron i expected a body that looks like this: {"code":"memes"} "});
 //     try {
 //         const js = req.body.code;
 //         let result = eval(js);
