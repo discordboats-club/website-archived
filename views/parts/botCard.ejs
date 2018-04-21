@@ -14,7 +14,7 @@
             <a href="<%= bot.invite %>">Invite</a>
             <a href="/bot/<%= bot.id %>">View</a>
             <% if (typeof queue !== "undefined" && queue == true) { %>
-            <a class="accept-button" style="color: lightgreen;" href="#"><strong>Accept</strong></a>
+            <a class="accept-button" style="color: lightgreen;" href="<%= bot.invite %>" target="_blank"><strong>Accept</strong></a>
             <a class="deny-button" style="color: red;" href="#"><strong>Deny</strong></a>
             <% } %>
             <% if (typeof api !== "undefined" && api == true) { %>
