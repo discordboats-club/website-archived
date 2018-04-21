@@ -15,6 +15,9 @@
             <a class="accept-button" style="color: lightgreen;" href="#"><strong>Accept</strong></a>
             <a class="deny-button" style="color: red;" href="#"><strong>Deny</strong></a>
             <% } %>
+            <% if (typeof api !== "undefined" && api == true) { %>
+            <a style="color: lightgreen;" href="/bot/<%= bot.id %>/key">View API key</a>
+            <% } %>
         </div>
     </div>
 </div>

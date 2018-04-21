@@ -26,7 +26,7 @@ app.get('/bot/:id/key', async (req, res, next) => {
     if (bot.verified) {
         if (req.user) {
             if (req.user.id !== bot.ownerID) res.sendStatus(403)
-            else return res.send('You are authorised to the key page!!');
+            else return res.render('botKey');
         } else return res.sendStatus(401);
     } else return res.sendStatus(403);
 })
