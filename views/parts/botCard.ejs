@@ -5,20 +5,20 @@
             <span class="card-title"><%= bot.name %></span>
         </div>
         <div class="card-content white-text">
-            <p style="padding-bottom: 5%;"><%= bot.shortDescription %></p>
+            <p class="bot-card-desc"><%= bot.shortDescription %></p>
             <% if (bot.servers) { %>
-            <div class="chip lime lighten-2" style="display: inline-block;"><%= bot.servers %> servers</div>
+            <div class="card-server-count chip lime lighten-2"><%= bot.servers %> servers</div>
             <% } %>
         </div>
         <div class="card-action">
             <a href="<%= bot.invite %>">Invite</a>
             <a href="/bot/<%= bot.id %>">View</a>
             <% if (typeof queue !== "undefined" && queue == true) { %>
-            <a class="accept-button" style="color: lightgreen;" href="<%= bot.invite %>" target="_blank"><strong>Accept</strong></a>
-            <a class="deny-button" style="color: red;" href="#"><strong>Deny</strong></a>
+            <a class="accept-button" href="<%= bot.invite %>" target="_blank"><strong>Accept</strong></a>
+            <a class="deny-button" href="#"><strong>Deny</strong></a>
             <% } %>
             <% if (typeof api !== "undefined" && api == true) { %>
-            <a style="color: lightgreen;" href="/bot/<%= bot.id %>/key">View API key</a>
+            <a class="api-key-button" href="/bot/<%= bot.id %>/key">View API key</a>
             <% } %>
         </div>
     </div>
