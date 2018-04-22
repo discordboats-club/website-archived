@@ -39,7 +39,7 @@ app.post("/bot", async (req, res) => {
     if (data.library && !libList.includes(data.library)) return res.status(400).json({error: "Invalid Library"});
 
     const botUser = client.users.get(data.id) || await client.users.fetch(data.id);
-    // if (!client.users.get(data.ownerID) || !await client.users.fetch(data.ownerID)) return res.status(403).json({ error: "Owner is not in Discord guild" });
+    if (!client.users.get(data.ownerID) || !await client.users.fetch(data.ownerID)) return res.status(403).json({ error: "Owner is not in Discord guild" });
     if (!botUser) return res.status(404).json({error: "Invalid Bot ID"});
     if (!botUser.bot) return res.status(400).json({error: "bot can only be a bot"});
     data.name = botUser.username;
