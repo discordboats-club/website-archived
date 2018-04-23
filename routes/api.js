@@ -158,7 +158,7 @@ app.get("/search", async (req, res) => {
     const bots = (await r.table("bots").filter(bot => {
         return bot("name").downcase().match(text)
     }).orderBy(bot => {
-        return bot("name").downcase().split(text).coerceTo("number")
+        return bot("name").downcase().split(text).count()
     }).run()).map(bot => Util.hidePropsBot(bot));
     res.json({ok: "View data property", data: bots});
 })
