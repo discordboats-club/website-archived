@@ -153,6 +153,7 @@ app.post("/bot/mod/verify", async (req, res) => {
 
 
 app.get("/search/autocomplete", async (req, res) => {
+    return;
     const q = req.query.q;
     if (typeof q !== "string") return res.sendStatus(400);
     const bots = await r.table("bots").filter(bot => bot("name").match("^"+q)).limit(5).run();
