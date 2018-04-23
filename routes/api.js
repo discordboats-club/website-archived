@@ -155,7 +155,7 @@ app.post("/bot/mod/verify", async (req, res) => {
 app.get("/search/autocomplete", async (req, res) => {
     const q = req.query.q;
     if (typeof q !== "string") return res.sendStatus(400);
-    const bots = (await r.table("bots").filter(bot => bot("name").downcase().match("^"+q.toLowerCase())).pluck("name").limit(5).run()).map(bot => Util.hidePropsBot(bot));
+    const bots = (await r.table("bots").filter(bot => bot("name").downcase().match("^"+q.toLowerCase())).pluck("name").limit(5).run()).map(bot => bot.name);
     res.json({ok: "View data property", data: bots});
 });
 
