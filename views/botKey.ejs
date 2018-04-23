@@ -10,10 +10,28 @@
         <div class="main">
             <div class="container center-align">
                 <h2>API</h2>
-                <p>Documentation coming soon!</p>
+                <p>
+                    For Discord bots using the Node.js language, we have an <a href="https://npmjs.org/package/dboats-api">NPM module</a> to make your experience easier! <br>
+                    We're working on creating more modules for more languages. Feel free to create one in your language &amp; tell us about it in our Discord! <br>
+                    <br>
+                    However, if you prefer to make raw requests, here are the endpoints: <br>
+                    All requests must contain an "Authorization" header with your API key that can be found at the bottom of the page.<br>
+                    <br>
+                    <code class="red-text">POST /api/public/bot/stats</code> - set your bot statistics, currently does not support sharding (must be owner of bot).<br>
+                    <code class="red-text">GET /api/public/bot/:id</code> - get public bot info.<br>
+                    <code class="red-text">GET /api/public/bot/me</code> - get private bot info (must be owner of bot).<br>
+                    <code class="red-text">GET /api/public/user/:id</code> - get public user info.<br>
+                    <br>
+                    The POST body for the stats endpoint should look like this, replacing 1337 with your bot's server count.<br>
+                    <code>
+                        {<br>
+                            "server_count": 1337<br>
+                        }<br>
+                    </code>
+                </p>
                 <hr />
                 <p>Do not share your API key. Your API key is...</p>
-                <code><%= bot.apiToken %></code>
+                <code class="red-text"><%= bot.apiToken %></code>
             </div>
         </div>
     </body>
