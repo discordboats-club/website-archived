@@ -35,7 +35,7 @@ $(window).ready(async () => {
 
     const searchBoxM = M.Autocomplete.init(document.querySelector("#searchbox"), {data: {}, limit: 10});
     document.querySelector("#searchbox").addEventListener("input", $.throttle(1000, async e => {
-        const res = await fetch("/api/search/autocomplete?q="+encodeURI(e.target.value), {credentials: "same-origin"});
+        const res = await fetch("/api/search/autocomplete?q="+encodeURI(e.target.value));
         const body = await res.json();
         if (!body.data) {
             M.toast("Could not get autocomplete data");
