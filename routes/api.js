@@ -8,6 +8,15 @@ const Util = require("../Util");
 const libList = module.exports.libList = ["discordcr","Discord.Net","DSharpPlus","dscord","DiscordGo","Discord4j","JDA","discord.js","Eris","Discordia","RestCord","Yasmin","discord.py","disco","discordrb","discord-rs","Sword"];
 
 
+app.get("/search/autocomplete", async (req, res) => {
+    const q = req.query.q;
+    if (typeof q !== "string") return res.sendStatus(400);
+    const bots = (await r.table("bots").filter(bot => bot("name").downcase().match("^"+q.toLowerCase())).pluck("name").limit(5).run()).map(bot => bot.name);
+    res.json({ok: "View data property", data: bots});
+});
+
+
+
 app.use((req, res, next) => {
     if (req.isAuthenticated()) next();
     else {
@@ -151,13 +160,6 @@ app.post("/bot/mod/verify", async (req, res) => {
     res.status(200).json({ok: "applied actions"});
 });
 
-
-app.get("/search/autocomplete", async (req, res) => {
-    const q = req.query.q;
-    if (typeof q !== "string") return res.sendStatus(400);
-    const bots = (await r.table("bots").filter(bot => bot("name").downcase().match("^"+q.toLowerCase())).pluck("name").limit(5).run()).map(bot => bot.name);
-    res.json({ok: "View data property", data: bots});
-});
 
 app.use((req, res) => {
     res.sendStatus(404);
