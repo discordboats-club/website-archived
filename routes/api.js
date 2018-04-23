@@ -152,17 +152,6 @@ app.post("/bot/mod/verify", async (req, res) => {
 });
 
 
-app.get("/search", async (req, res) => {
-    const text = req.query.q.toLowerCase();
-    if (typeof req.query.q !== "string") return res.status(403).json({error: "expected query q"});
-    const bots = (await r.table("bots").filter(bot => {
-        return bot("name").downcase().match(text)
-    }).orderBy(bot => {
-        return bot("name").downcase().split(text).count()
-    }).run()).map(bot => Util.hidePropsBot(bot));
-    res.json({ok: "View data property", data: bots});
-})
-
 app.use((req, res) => {
     res.sendStatus(404);
 });
