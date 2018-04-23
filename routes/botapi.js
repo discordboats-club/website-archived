@@ -41,7 +41,7 @@ app.get("/user/:id", async (req, res) => {
 });
 
 const botPostServersSchema = Joi.object().keys({
-    server_count: Joi.number().max(10000000) // Just to make sure they arent super crazy.
+    server_count: Joi.number().max(10000000).required() // Just to make sure they arent super crazy.
 });
 app.post("/bot/stats", async (req, res) => {
     if (Util.handleJoi(botPostServersSchema, req, res)) return;
