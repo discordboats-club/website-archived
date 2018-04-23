@@ -35,6 +35,9 @@
                                 <% if (!bot.verified) { %>
                                     <div class="chip red lighten-3 bp-chip">unverified</div>
                                 <% } %>
+                                <% if (bot.prefix) { %>
+                                    <div class="chip  purple lighten-3 bp-chip"><%= bot.prefix %> prefix</div>
+                                <% } %>    
                             </div>
                         </div>
                     </div>
