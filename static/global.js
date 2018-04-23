@@ -32,6 +32,23 @@ $(window).ready(async () => {
     });
     document.querySelectorAll(".modal").forEach(ele => M.Modal.init(ele));
     M.Dropdown.init(document.querySelector("#profile-dropdown-trigger"), {ecoverTrigger: false});
+
+    const searchBoxM = M.Autocomplete.init(document.querySelector("#searchbox"), {data: {memes: null}, limit: 10});
+    document.querySelector("#searchbox").addEventListener("input", $.throttle(1000, async e => {
+        const res = await fetch("/api/search/autocomplete?q="+encodeURI(e.target.value), {credentials: "same-origin"});
+        const body = await res.json();
+        if (!body.data) {
+            M.toast("Could not get autocomplete data");
+            return;
+        }
+        searchBoxM.options.data = {};
+        console.log("autocompleter is ready", searchBoxM);
+        console.log("got autocomplete data", body.data);
+        body.data.forEach(bot => {
+            searchBoxM.options.data[bot] = null;
+        });
+    }));
+
     const logoutele = document.querySelector("#log-out-indd");
     if (logoutele) document.querySelector("#log-out-indd").addEventListener("click", async e => {
         await api.logOut();
