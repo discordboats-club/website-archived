@@ -10,14 +10,6 @@
     <div class="nav-wrapper">
         <span class="tt"><a href="/" class="brand-logo">discordboats.club</a></span>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
-            <li>
-                <form action="/search" method="get">
-                    <div class="input-field col s12">
-                        <input type="text" id="searchbox" class="autocomplete" name="q" <%- typeof searchQuery !== "undefined" ? `value="${searchQuery}"` : "" %>>
-                        <label for="searchbox">Search here</label>
-                    </div>
-                </form>
-            </li>
             <li><a href="http://u.ronthecookie.me/discordboatsguild">Our Discord</a></li>
             <!-- <li><a href="#">F.A.Q.</a></li> -->
             <% if (!user) { %>

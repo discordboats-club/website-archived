@@ -9,11 +9,12 @@
         </div>
         <div class="main">
             <div class="container">
+                <%- include("parts/searchBar") %>
                 <h3>Search results for "<%= searchQuery %>"</h3>
                 <subtitle><%= bots.length %> found.</subtitle>
                 <hr>
                 <% if (bots.length == 0) { %>
-                    <p>No bots found.</p>
+                    <p>We couldn't find any bots for <strong><%= searchQuery %></strong>.</p>
                 <% } else { %>
                     <div class="bot-cards">
                             <!-- Bot cards includes can go here -->
