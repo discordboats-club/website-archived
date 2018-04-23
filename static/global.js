@@ -33,20 +33,22 @@ $(window).ready(async () => {
     document.querySelectorAll(".modal").forEach(ele => M.Modal.init(ele));
     M.Dropdown.init(document.querySelector("#profile-dropdown-trigger"), {ecoverTrigger: false});
 
-    const searchBoxM = M.Autocomplete.init(document.querySelector("#searchbox"), {data: {}, limit: 10});
-    document.querySelector("#searchbox").addEventListener("input", $.throttle(1000, async e => {
-        const res = await fetch("/api/search/autocomplete?q="+encodeURI(e.target.value));
-        const body = await res.json();
-        if (!body.data) {
-            M.toast("Could not get autocomplete data");
-            return;
-        }
-        let newData = {}; 
-        body.data.forEach(bot => {
-            newData[bot] = null;
-        });
-        searchBoxM.options.data = newData;
-    }));
+    if (document.querySelector("#searchbox")) {
+        const searchBoxM = M.Autocomplete.init(document.querySelector("#searchbox"), {data: {}, limit: 10});
+        document.querySelector("#searchbox").addEventListener("input", $.throttle(1000, async e => {
+            const res = await fetch("/api/search/autocomplete?q="+encodeURI(e.target.value));
+            const body = await res.json();
+            if (!body.data) {
+                M.toast("Could not get autocomplete data");
+                return;
+            }
+            let newData = {}; 
+            body.data.forEach(bot => {
+                newData[bot] = null;
+            });
+            searchBoxM.options.data = newData;
+        }));
+    }
 
     const logoutele = document.querySelector("#log-out-indd");
     if (logoutele) document.querySelector("#log-out-indd").addEventListener("click", async e => {
