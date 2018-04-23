@@ -1,5 +1,5 @@
 # discordboats.club
-Community maintained, open-source discord bot list.
+Community oriented, open-source Discord bot list.
 
 
 ### Self hosting the bot list for development
