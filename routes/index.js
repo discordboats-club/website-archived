@@ -53,6 +53,13 @@ app.get("/search", async (req, res) => {
     res.render("search", {bots, botChunks, user: req.user, searchQuery: text});
 });
 
+app.get("/invite_url/:id", async (req, res) => {
+    const bot = await r.table("bots").get(req.params.id).run();
+    if (!bot) return res.status(404).json({error: "bot does not exist"});
+    res.redirect(bot.invite);
+    await r.table("bots").get(bot.id).update({inviteClicks: r.row("inviteClicks").add(1)}).run();
+});
+
 // debugging -- currently commented out due to security issues.
 // app.get("/debug", async (req, res, next) => {
 //     if (!req.user) return next();

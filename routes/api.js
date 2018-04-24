@@ -44,7 +44,7 @@ const newBotSchema = Joi.object().required().keys({
 app.post("/bot", async (req, res) => {
     const client = require("../ConstantStore").bot;
     if (Util.handleJoi(newBotSchema, req, res)) return;
-    const data = Util.filterUnexpectedData(req.body, {pageViews: 0, apiToken: randomString.generate(30), ownerID: req.user.id, createdAt: +new Date(), verified: false}, newBotSchema);
+    const data = Util.filterUnexpectedData(req.body, {inviteClicks: 0, pageViews: 0, apiToken: randomString.generate(30), ownerID: req.user.id, createdAt: +new Date(), verified: false}, newBotSchema);
     if (data.library && !libList.includes(data.library)) return res.status(400).json({error: "Invalid Library"});
 
     const botUser = client.users.get(data.id) || await client.users.fetch(data.id);

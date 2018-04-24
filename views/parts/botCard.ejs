@@ -11,13 +11,13 @@
             <% } %>
         </div>
         <div class="card-action">
-            <a href="<%= bot.invite %>">Invite</a>
+            <a href="/invite_url/<%=bot.id%>">Invite</a>
             <a href="/bot/<%= bot.id %>">View</a>
-            <% if (typeof queue !== "undefined" && queue == true) { %>
-            <a class="accept-button" href="<%= bot.invite %>" target="_blank"><strong>Accept</strong></a>
+            <% if (typeof queue !== "undefined") { %>
+            <a class="accept-button" href="/invite_url/<%=bot.id%>" target="_blank"><strong>Accept</strong></a>
             <a class="deny-button" href="#"><strong>Deny</strong></a>
             <% } %>
-            <% if (typeof api !== "undefined" && api == true) { %>
+            <% if (typeof api !== "undefined") { %>
             <a class="api-key-button" href="/bot/<%= bot.id %>/key">View API key</a>
             <% } %>
         </div>
