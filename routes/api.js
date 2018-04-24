@@ -29,7 +29,7 @@ app.get("/", (req, res) => {
 });
 
 
-const newBotSchema = Joi.object().keys({
+const newBotSchema = Joi.object().required().keys({
     shortDescription: Joi.string().max(200).required(),
     id: Joi.string().length(18).required(),
     longDescription: Joi.string().max(1500).required(),
@@ -77,11 +77,11 @@ app.patch("/bot", async (req, res) => {
 });
 
 // bot comment resource
-const newCommentSchema = Joi.object().keys({
+const newCommentSchema = Joi.object().required().keys({
     content: Joi.string().max(500).required(),
     botID: Joi.string().length(36).required()
 });
-const editCommentSchema = Joi.object().keys({
+const editCommentSchema = Joi.object().required().keys({
     content: Joi.string().max(500).required()
 });
 app.post("/bot/comment", async (req, res) => {
@@ -129,7 +129,7 @@ app.get("/me", (req, res) => {
         });
 });
 
-const modVerifyBotSchema = Joi.object().keys({
+const modVerifyBotSchema = Joi.object().required().keys({
     verified: Joi.boolean().required(),
     botID: Joi.string().length(18).required()
 });

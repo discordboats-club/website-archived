@@ -40,7 +40,7 @@ app.get("/user/:id", async (req, res) => {
     res.status(200).json({ok: "View data property", data: user});
 });
 
-const botPostServersSchema = Joi.object().keys({
+const botPostServersSchema = Joi.object().required().keys({
     server_count: Joi.number().max(10000000).required() // Just to make sure they arent super crazy.
 });
 app.post("/bot/stats", async (req, res) => {
