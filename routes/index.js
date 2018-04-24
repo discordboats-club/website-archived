@@ -51,7 +51,7 @@ app.get("/search", async (req, res) => {
     }).limit(2*4).run()).map(bot => Util.attachPropBot(bot, req.user)));
     const botChunks = chunk(bots, 4);
     res.render("search", {bots, botChunks, user: req.user, searchQuery: text});
-})
+});
 
 // debugging -- currently commented out due to security issues.
 // app.get("/debug", async (req, res, next) => {
