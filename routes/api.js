@@ -148,8 +148,7 @@ app.post("/bot/mod/verify", async (req, res) => {
             await discordOwner.send(`<:accepted:436824491470094337> Your bot, ${bot.name}, was verified by ${staffUser.tag}.`);
         } catch (e) {}
         client.channels.get("425170250548379664").send(`<:accepted:436824491470094337> ${botUser.tag} by <@${bot.ownerID}> was verified by ${staffUser}.`);
-        bot.verified = true;
-        await r.table("bots").get(bot.id).update(bot).run();
+        await r.table("bots").get(bot.id).update({verified: true}).run();
     } else {
         try { 
             await discordOwner.send(`<:rejected:436824567898570763> Your bot, ${bot.name}, was rejected by ${staffUser.tag}.`);
