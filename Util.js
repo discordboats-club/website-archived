@@ -1,5 +1,4 @@
 const marked = require("marked");
-const escapeHTML = require("escape-html");
 const Joi = require("joi");
 const moment = require("moment");
 module.exports = class Utils {
@@ -13,7 +12,7 @@ module.exports = class Utils {
         const botUser = client.users.get(bot.id) || await client.users.fetch(bot.id);
         bot.online = botUser.presence.status !== "offline";
         bot._discordAvatarURL = botUser.avatarURL({format: "png"}) || "https://discordboats.club/404.png";
-        bot._markedDescription = marked(escapeHTML(bot.longDescription), {});
+        bot._markedDescription = marked(bot.longDescription, {sanitize: true});
         bot._ownerViewing = user.id === bot.ownerID;
         bot._comments = await r.table("comments").filter({botID: bot.id}).run();
         return bot;
