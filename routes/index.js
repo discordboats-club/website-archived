@@ -1,6 +1,8 @@
 const express = require("express");
 const passport = require("passport");
 const chunk = require("chunk");
+const ejs = require("ejs");
+const webshot = require("webshot");
 const Util = require("../Util");
 const { r } = require("../ConstantStore");
 const app = module.exports = express.Router();
@@ -58,6 +60,18 @@ app.get("/invite_url/:id", async (req, res) => {
     if (!bot) return res.status(404).json({error: "bot does not exist"});
     res.redirect(bot.invite);
     await r.table("bots").get(bot.id).update({inviteClicks: r.row("inviteClicks").add(1)}).run();
+});
+
+app.get("/bot/:id/widget.png", async (req, res) => {
+    const client = require("../ConstantStore").bot;
+    const bot = await Util.attachPropBot(await r.table("bots").get(req.params.id).run());
+    if (!bot) return res.status(404).json({error: "bot does not exist"});
+    bot.ownerTag = (client.users.get(bot.ownerID) || client.users.fetch(bot.ownerID) || {}).tag;
+    res.set("Content-Type", "image/png");
+    ejs.renderFile("views/botWidget.ejs", {bot},  (err, html) => {
+        if (err) throw err;
+        webshot(html, undefined, {siteType: "html", windowSize: {width:"400", height: "250"}}).pipe(res);
+    });
 });
 
 // debugging -- currently commented out due to security issues.

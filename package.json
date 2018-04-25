@@ -28,7 +28,8 @@
     "randomstring": "^1.1.5",
     "rethinkdbdash": "^2.3.31",
     "session-rethinkdb": "^2.0.1",
-    "snekfetch": "^3.6.4"
+    "snekfetch": "^3.6.4",
+    "webshot": "^0.18.0"
   },
   "devDependencies": {}
 }
