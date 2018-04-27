@@ -1,12 +1,20 @@
 const express = require("express");
 const app = module.exports = express.Router();
 const Joi = require("joi");
+const snekfetch = require("snekfetch");
+let badBots = [];
 const { r } = require("../ConstantStore");
 const randomString = require("randomstring");
 const Util = require("../Util");
 // datamined from the discord api docs
 const libList = module.exports.libList = ["discordcr","Discord.Net","DSharpPlus","dscord","DiscordGo","Discord4j","JDA","discord.js","Eris","Discordia","RestCord","Yasmin","discord.py","disco","discordrb","discord-rs","Sword"];
 
+
+snekfetch.get("https://gist.githubusercontent.com/RONTheCookie/c209f333d14fd85b3b6ae00243bff2cd/raw/dd5a159320ea5faa54c8616315b3deccfd601b3e/badbots.txt").then(res => {
+    let raw = res.text.toString();
+    badBots = raw.split("\n").map(bt => bt.split(" ")[0]);
+    console.log(`[api-route] loaded ${badBots.length} bad bots.`);
+});
 
 app.get("/search/autocomplete", async (req, res) => {
     const q = req.query.q;
@@ -46,6 +54,8 @@ app.post("/bot", async (req, res) => {
     if (Util.handleJoi(newBotSchema, req, res)) return;
     const data = Util.filterUnexpectedData(req.body, {inviteClicks: 0, pageViews: 0, apiToken: randomString.generate(30), ownerID: req.user.id, createdAt: +new Date(), verified: false}, newBotSchema);
     if (data.library && !libList.includes(data.library)) return res.status(400).json({error: "Invalid Library"});
+
+    if (badBots.includes(data.id)) res.status(403).json({error: "Blacklisted bot."});
 
     const botUser = client.users.get(data.id) || await client.users.fetch(data.id);
     if (!client.users.get(data.ownerID) || !await client.users.fetch(data.ownerID)) return res.status(403).json({ error: "Owner is not in Discord guild" });
