@@ -59,7 +59,6 @@ $(window).ready(async () => {
         M.FormSelect.init($("select#newbot"), {classes: "newbot-dd-wrap"});
         $("form").submit(async e => {
             e.preventDefault();
-            console.log(e);
             let lib = M.FormSelect.getInstance($("select")).getSelectedValues()[0];
             if (lib === "none") lib = undefined;
             try {
@@ -75,9 +74,8 @@ $(window).ready(async () => {
                 M.toast({html: "Submitted new bot."});
                 document.location.replace('/bot/' + e.target[0].value);
             } catch (error) {
-                if (error.message === "ValidationError") return M.toast({html: "Invalid details."});
-                M.toast({html: "An error occurred."});
-                throw error;
+                M.toast({html: error.message});
+                console.error(error);
             }
         });
     } else if (document.location.href.includes("/bot/")) {

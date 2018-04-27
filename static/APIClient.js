@@ -16,8 +16,10 @@ window.APIClient = class APIClient {
         credentials: "same-origin"
         });
         const data = await res.json();
-        if (data.error) {
+        if (data.error && !data.details) {
             throw new Error(data.error);
+        } else if (data.error && data.details) {
+            throw new Error(`${data.error} ${data.details.join(", ")}`)
         } else if (data.ok) {
             return {ok: data.ok};
         } else {
