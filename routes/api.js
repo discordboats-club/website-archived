@@ -1,11 +1,28 @@
 const express = require("express");
 const app = module.exports = express.Router();
 const Joi = require("joi");
+const snekfetch = require("snekfetch");
+let badBots = [];
 const { r } = require("../ConstantStore");
 const randomString = require("randomstring");
 const Util = require("../Util");
 // datamined from the discord api docs
 const libList = module.exports.libList = ["discordcr","Discord.Net","DSharpPlus","dscord","DiscordGo","Discord4j","JDA","discord.js","Eris","Discordia","RestCord","Yasmin","discord.py","disco","discordrb","discord-rs","Sword"];
+
+
+snekfetch.get("https://gist.githubusercontent.com/RONTheCookie/c209f333d14fd85b3b6ae00243bff2cd/raw/dd5a159320ea5faa54c8616315b3deccfd601b3e/badbots.txt").then(res => {
+    let raw = res.text.toString();
+    badBots = raw.split("\n").map(bt => bt.split(" ")[0]);
+    console.log(`[api-route] loaded ${badBots.length} bad bots.`);
+});
+
+app.get("/search/autocomplete", async (req, res) => {
+    const q = req.query.q;
+    if (typeof q !== "string") return res.sendStatus(400);
+    const bots = (await r.table("bots").filter(bot => bot("name").downcase().match("^"+q.toLowerCase())).pluck("name").limit(5).run()).map(bot => bot.name);
+    res.json({ok: "View data property", data: bots});
+});
+
 
 
 app.use((req, res, next) => {
@@ -20,7 +37,7 @@ app.get("/", (req, res) => {
 });
 
 
-const newBotSchema = Joi.object().keys({
+const newBotSchema = Joi.object().required().keys({
     shortDescription: Joi.string().max(200).required(),
     id: Joi.string().length(18).required(),
     longDescription: Joi.string().max(1500).required(),
@@ -35,8 +52,10 @@ const newBotSchema = Joi.object().keys({
 app.post("/bot", async (req, res) => {
     const client = require("../ConstantStore").bot;
     if (Util.handleJoi(newBotSchema, req, res)) return;
-    const data = Util.filterUnexpectedData(req.body, {apiToken: randomString.generate(30), ownerID: req.user.id, createdAt: +new Date(), verified: false}, newBotSchema);
+    const data = Util.filterUnexpectedData(req.body, {inviteClicks: 0, pageViews: 0, apiToken: randomString.generate(30), ownerID: req.user.id, createdAt: +new Date(), verified: false}, newBotSchema);
     if (data.library && !libList.includes(data.library)) return res.status(400).json({error: "Invalid Library"});
+
+    if (badBots.includes(data.id)) res.status(403).json({error: "Blacklisted bot."});
 
     const botUser = client.users.get(data.id) || await client.users.fetch(data.id);
     if (!client.users.get(data.ownerID) || !await client.users.fetch(data.ownerID)) return res.status(403).json({ error: "Owner is not in Discord guild" });
@@ -68,11 +87,11 @@ app.patch("/bot", async (req, res) => {
 });
 
 // bot comment resource
-const newCommentSchema = Joi.object().keys({
+const newCommentSchema = Joi.object().required().keys({
     content: Joi.string().max(500).required(),
     botID: Joi.string().length(36).required()
 });
-const editCommentSchema = Joi.object().keys({
+const editCommentSchema = Joi.object().required().keys({
     content: Joi.string().max(500).required()
 });
 app.post("/bot/comment", async (req, res) => {
@@ -120,7 +139,7 @@ app.get("/me", (req, res) => {
         });
 });
 
-const modVerifyBotSchema = Joi.object().keys({
+const modVerifyBotSchema = Joi.object().required().keys({
     verified: Joi.boolean().required(),
     botID: Joi.string().length(18).required()
 });
@@ -139,8 +158,7 @@ app.post("/bot/mod/verify", async (req, res) => {
             await discordOwner.send(`<:accepted:436824491470094337> Your bot, ${bot.name}, was verified by ${staffUser.tag}.`);
         } catch (e) {}
         client.channels.get("425170250548379664").send(`<:accepted:436824491470094337> ${botUser.tag} by <@${bot.ownerID}> was verified by ${staffUser}.`);
-        bot.verified = true;
-        await r.table("bots").get(bot.id).update(bot).run();
+        await r.table("bots").get(bot.id).update({verified: true}).run();
     } else {
         try { 
             await discordOwner.send(`<:rejected:436824567898570763> Your bot, ${bot.name}, was rejected by ${staffUser.tag}.`);
@@ -151,13 +169,6 @@ app.post("/bot/mod/verify", async (req, res) => {
     res.status(200).json({ok: "applied actions"});
 });
 
-
-app.get("/search/autocomplete", async (req, res) => {
-    const q = req.query.q;
-    if (typeof q !== "string") return res.sendStatus(400);
-    const bots = (await r.table("bots").filter(bot => bot("name").downcase().match("^"+q.toLowerCase())).pluck("name").limit(5).run()).map(bot => bot.name);
-    res.json({ok: "View data property", data: bots});
-});
 
 app.use((req, res) => {
     res.sendStatus(404);

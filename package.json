@@ -14,7 +14,6 @@
     "connect-ensure-login": "^0.1.1",
     "discord.js": "github:hydrabolt/discord.js",
     "ejs": "^2.5.7",
-    "escape-html": "^1.0.3",
     "express": "^4.16.2",
     "express-minify-html": "^0.12.0",
     "express-session": "^1.15.6",
@@ -29,7 +28,8 @@
     "randomstring": "^1.1.5",
     "rethinkdbdash": "^2.3.31",
     "session-rethinkdb": "^2.0.1",
-    "snekfetch": "^3.6.4"
+    "snekfetch": "^3.6.4",
+    "webshot": "^0.18.0"
   },
   "devDependencies": {}
 }

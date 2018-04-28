@@ -50,7 +50,7 @@
                         <div class="row">
                             <% bot.website ? webVal = '' : webVal = 'disabled' %>
                             <% bot.github ? gitVal = '' : gitVal = 'disabled' %>
-                            <a target="_blank" href="<%= bot.invite %>" class="col s3 waves-effect waves-light btn orange bp-button">Invite</a>
+                            <a target="_blank" href="/invite_url/<%=bot.id%>" class="col s3 waves-effect waves-light btn orange bp-button">Invite</a>
                             <a <%= webVal %> target="_blank" href="<%= bot.website %>" class="col s3 waves-effect waves-light btn bp-button">Website</a>
                             <a <%= gitVal %> target="_blank" href="<%= bot.github %>" class="col s3 waves-effect waves-light btn bp-button">Github</a>
                         </div>

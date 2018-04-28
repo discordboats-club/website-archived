@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-alpha.4/css/materialize.min.css">
+</head>
+<body>
+    <div class="card">
+        <div class="card-content white-text">
+            <span class="card-title inline">
+                <img src="<%= bot._discordAvatarURL %>" class="circle bot-image inline">
+                <%= bot.name %>
+                <% if (bot.servers) { %>
+                    <div class="card-server-count chip lime lighten-2 inline"><%= bot.servers %> servers</div>
+                <% } %>
+            </span>
+            <p class="bot-card-desc"><%= bot.shortDescription %><br></p>
+            <hr>
+            <p style="text-align: center;"><b><%=bot.ownerTag%></b> made this bot.<br>learn more @ discordboats.club</p>
+        </div>
+    </div>
+</body>
+<style>
+    body {
+        font-family: 'Roboto', sans-serif;
+    }
+    .card, body {
+        background: #252525
+    }
+    .bot-image {
+        width: 40vh;
+        margin-left: -5vh;
+        margin-top: -10vh;
+    }
+    .inline {
+        display: inline-block;
+    }
+</style>
+</html>
