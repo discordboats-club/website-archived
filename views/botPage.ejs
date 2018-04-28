@@ -36,7 +36,10 @@
                                     <div class="chip red lighten-3 bp-chip">unverified</div>
                                 <% } %>
                                 <% if (bot.prefix) { %>
-                                    <div class="chip  purple lighten-3 bp-chip"><%= bot.prefix %> prefix</div>
+                                    <div class="chip purple lighten-3 bp-chip"><%= bot.prefix %> prefix</div>
+                                <% } %>
+                                <% if (bot._ownerTag) { %>
+                                    <div class="chip cyan lighten-5 bp-chip">owned by <%= bot._ownerTag %></div>
                                 <% } %>
                             </div>
                         </div>
