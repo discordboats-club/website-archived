@@ -15,6 +15,7 @@ module.exports = class Utils {
         bot._markedDescription = marked(bot.longDescription, {sanitize: true});
         bot._ownerViewing = user.id === bot.ownerID;
         bot._comments = await r.table("comments").filter({botID: bot.id}).run();
+        bot._ownerTag = client.users.get(bot.ownerID).tag;
         return bot;
     }
     /**
