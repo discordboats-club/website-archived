@@ -135,7 +135,8 @@ app.get("/me", (req, res) => {
     res.json({id: req.user.id,
             discord: {
                 username: req.user.username
-            }
+            },
+            warning: "this api endpoint is a legacy one and does not provide all info about the user."
         });
 });
 
