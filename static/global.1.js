@@ -74,7 +74,7 @@ $(window).ready(async () => {
                 M.toast({html: "Submitted new bot."});
                 document.location.replace('/bot/' + e.target[0].value);
             } catch (error) {
-                M.toast({html: error.message});
+                M.toast({html: 'Error: ' + error.message});
                 console.error(error);
             }
         });
