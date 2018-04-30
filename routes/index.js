@@ -78,7 +78,9 @@ app.get("/stats", async (req, res) => {
     res.render("stats", {
         botCount: await r.table("bots").count().run(),
         userCount: await r.table("users").count().run(),
-        likeCount: 0
+        likeCount: 0,
+        botsInvited: await r.table("bots").map(doc => doc("inviteClicks")).default(0).count().run(),
+        user: req.user
     });
 });
 
