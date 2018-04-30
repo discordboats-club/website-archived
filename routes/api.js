@@ -74,6 +74,32 @@ app.post("/bot", async (req, res) => {
     client.channels.get("425170250548379664").send(`<:submitted:436830297175097345> <@${req.user.id}> added ${botUser.tag} (<@&436737982737678346>).`);
 });
 
+const editBotSchema = Joi.object().required().keys({
+    shortDescription: Joi.string().max(200),
+    longDescription: Joi.string().max(1500),
+    prefix: Joi.string().max(50),
+    invite: Joi.string().uri({scheme: ["https", "http"]}),
+    website: Joi.string().uri({scheme: ["https", "http"]}),
+    library: Joi.string()
+});
+
+app.patch("/bot/:id", async (req, res) => {
+    const client = require("../ConstantStore").bot;
+    if (Util.handleJoi(editBotSchema, req, res)) return;
+    const bot = await r.table("bots").get(req.params.id).run();
+    if (!bot) return res.status(404).json({error: "unknown bot"});
+    if (bot.ownerID !== req.user.id) return res.status(403).json({error: "you dont own this bot"});
+    console.log(editBotSchema.describe().children)
+    const data = Util.filterUnexpectedData(req.body, {editedAt: +new Date(), verified: false}, editBotSchema);
+    if (data.library && !libList.includes(data.library)) return res.status(400).json({error: "Invalid Library"});
+    
+    const botUser = client.users.get(bot.id) || await client.users.fetch(bot.id);
+    
+    console.log(req.body);
+    await r.table("bots").get(bot.id).update(data).run();
+    client.channels.get("425170250548379664").send(`:thinking: <@${req.user.id}> edited ${botUser.tag} (reverify, <@&4  36737982737678346>).`);
+    res.json({ok: "edited bot"});
+})
 app.delete("/bot/:id", async (req, res) => {
     const bot = await r.table("bots").get(req.params.id).run();
     if (!bot) return await res.status(404).json({error: "bot does not exist"});

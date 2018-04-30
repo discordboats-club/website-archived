@@ -54,4 +54,18 @@ window.APIClient = class APIClient {
             throw new Error('Bad response');
         }
     }
+
+    async editBot(bot) {
+        let botNoId = Object.assign({}, bot);
+        delete botNoId.id;
+        const res = await fetch("/api/bot/"+bot.id, {method: "PATCH", credentials: "same-origin", headers: { "Content-Type": "application/json"}, body: JSON.stringify(botNoId)});
+        const data = await res.json();
+        if (data.error) {
+            throw new Error(data.error);
+        } else if (data.ok) {
+            return {ok: data.ok};
+        } else {
+            throw new Error("Bad response");
+        }
+    }
 }
