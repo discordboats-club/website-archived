@@ -96,7 +96,7 @@ app.patch("/bot/:id", async (req, res) => {
     const botUser = client.users.get(bot.id) || await client.users.fetch(bot.id);
     
     await r.table("bots").get(bot.id).update(data).run();
-    client.channels.get("425170250548379664").send(`:thinking: <@${req.user.id}> edited ${botUser.tag} (reverify, <@&4  36737982737678346>).`);
+    client.channels.get("425170250548379664").send(`:thinking: <@${req.user.id}> edited ${botUser.tag} (reverify, <@&436737982737678346>).`);
     res.json({ok: "edited bot"});
 })
 app.delete("/bot/:id", async (req, res) => {
