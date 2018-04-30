@@ -74,8 +74,12 @@ app.get("/bot/:id/widget.png", async (req, res) => {
     });
 });
 
-app.get('/stats', async (req, res) => {
-    res.status(200).render('stats');
+app.get("/stats", async (req, res) => {
+    res.render("stats", {
+        botCount: await r.table("bots").count().run(),
+        userCount: await r.table("users").count().run(),
+        likeCount: 0
+    });
 });
 
 // debugging -- currently commented out due to security issues.
