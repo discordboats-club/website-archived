@@ -1,19 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <%- include("parts/head") %>
+        <%- include("../parts/head") %>
     </head>
     <body>
         <div class="header">
-            <%- include("parts/header") %>
+            <%- include("../parts/header") %>
         </div>
         <div class="main">
             <div class="container">
                 <img src="<%=bot._discordAvatarURL%>" class="circle">
                 <h3 class="manage-bot-pfp">Manage "<%= bot.name %>"</h3><br>
-                <subtitle>Delete your bot and get API keys. (Also bot editing and analytics soon)</subtitle>
+                <subtitle>Delete your bot, edit it and get it's API Key. (analytics soon)</subtitle>
                 <hr>
                 <a class="waves-effect waves-light btn-large" target="_blank" href="/bot/<%= bot.id %>/key">View API key</a>
+                <a class="waves-effect waves-light btn-large bp-button" href="/dashboard/bot/<%= bot.id %>/edit">Edit Bot</a>
                 <button class="waves-effect waves-red btn-large red bp-button modal-trigger" data-target="delete-bot-modal"><i class="material-icons left">delete_forever</i>Delete Bot</button>
             </div>
         </div>
@@ -28,7 +29,7 @@
         </div>
     </body>
     <footer>
-        <%- include("parts/footer") %>
-        <%- include("parts/scripts") %>
+        <%- include("../parts/footer") %>
+        <%- include("../parts/scripts") %>
     </footer>
 </html>

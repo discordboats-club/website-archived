@@ -84,6 +84,29 @@ $(window).ready(async () => {
             window.localStorage.setItem("toastOnNext", "Deleted bot.");
             document.location.replace("/");
         });
+    } else if (document.location.href.includes("/dashboard/bot") && document.location.href.endsWith("/edit")) {
+        M.FormSelect.init($("select#newbot"), {classes: "newbot-dd-wrap"});
+        $("form").submit(async e => {
+            e.preventDefault();
+            let lib = M.FormSelect.getInstance($("select")).getSelectedValues()[0];
+            if (lib === "none") lib = undefined;
+            try {
+                await api.editBot({
+                    id: e.target.getAttribute("data-bot-id"),
+                    library: lib,
+                    prefix: e.target[2].value,
+                    website: undefIfEmpty(e.target[3].value),
+                    invite: e.target[4].value || `https://discordapp.com/oauth2/authorize?client_id=${encodeURI(e.target[0].value)}&scope=bot&permissions=0`,
+                    shortDescription: e.target[5].value,
+                    longDescription: e.target[6].value
+                });
+                localStorage.setItem("toastOnNext", "Edited bot");
+                document.location.replace(`/bot/${e.target.getAttribute("data-bot-id")}`);
+            } catch (error) {
+                M.toast({html: error.message});
+                console.error(error);
+            }
+        });
     }
 
     
