@@ -78,7 +78,7 @@ $(window).ready(async () => {
                 console.error(error);
             }
         });
-    } else if (document.location.href.includes("/bot/")) {
+    } else if (document.location.href.includes("/bot/") && document.location.href.endsWith("/manage")) {
         $("#delete-bot-action").click(async e => {
             await api.deleteBot(document.querySelector("#delete-bot-modal").getAttribute("data-bot-id"));
             window.localStorage.setItem("toastOnNext", "Deleted bot.");

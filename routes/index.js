@@ -82,6 +82,14 @@ app.get("/stats", async (req, res) => {
     });
 });
 
+app.get("/bot/:id/manage", async (req, res, next) => {
+    let bot = await r.table("bots").get(req.params.id).run();
+    if (!bot) return next(); // 404 them (^:
+    if (!req.user || bot.ownerID !== req.user.id) return res.json({error: "this is not your bot"}); 
+    bot = await Util.attachPropBot(bot, req.user);
+    res.render("botManage", {bot, user: req.user});
+});
+
 // debugging -- currently commented out due to security issues.
 // app.get("/debug", async (req, res, next) => {
 //     if (!req.user) return next();
