@@ -169,6 +169,18 @@ app.post("/bot/mod/verify", async (req, res) => {
     res.status(200).json({ok: "applied actions"});
 });
 
+app.post("/bot/:id/like", async (req, res) => {
+    const bot = await r.table("bots").get(req.params.id).run();
+    if (!bot) return res.status(404).json({error: "Bot does not exist"});
+    let existingLike = (await r.table("likes").filter({userID: req.user.id, botID: bot.id}).run())[0];
+    if (existingLike) {
+        await r.table("likes").get(existingLike.id).delete().run();
+        res.json({ok: "deleted like"});
+    } else {
+        await r.table("likes").insert({userID: req.user.id, botID: bot.id}).run();
+        res.json({ok: "liked bot"});
+    }
+});
 
 app.use((req, res) => {
     res.sendStatus(404);
