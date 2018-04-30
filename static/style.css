@@ -28,6 +28,7 @@ div.newbot-dd-wrap input.select-dropdown { color: grey; }
 .bp-avatar { vertical-align: middle; display: inline-block; }
 .unverified { padding-bottom: 2.5%; }
 .unverified h5 { font-weight: bold; }
+.stat-value { color: gray; }
 
 /* Dark theme   */
 body.dark-theme .main { background-color: #252525; color: white; }

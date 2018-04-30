@@ -74,6 +74,10 @@ app.get("/bot/:id/widget.png", async (req, res) => {
     });
 });
 
+app.get('/stats', async (req, res) => {
+    res.status(200).render('stats');
+});
+
 // debugging -- currently commented out due to security issues.
 // app.get("/debug", async (req, res, next) => {
 //     if (!req.user) return next();
