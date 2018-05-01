@@ -102,9 +102,10 @@ app.patch("/bot/:id", async (req, res) => {
 app.delete("/bot/:id", async (req, res) => {
     const bot = await r.table("bots").get(req.params.id).run();
     if (!bot) return await res.status(404).json({error: "bot does not exist"});
-    if (bot.ownerID !== req.user.id) return res.status(403).json({error: "You can't delete a bot you don't own!"});
-    await r.table("bots").get(req.params.id).delete().run();
-    res.status(200).json({ok: "Deleted bot."});
+    if (req.user.id == bot.ownerID || req.user.admin || req.user.mod) {
+        await r.table("bots").get(req.params.id).delete().run();
+        res.status(200).json({ok: "Deleted bot."});
+    } else res.status(403).json({error: "you do not own this bot"});
 });
 
 app.patch("/bot", async (req, res) => {
