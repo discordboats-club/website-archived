@@ -13,8 +13,9 @@
                     <% if (typeof user !== 'object') { %>
                         <li><a class="grey-text text-lighten-3" href="/discord/login">Login</a></li>
                         <% } else { %>
-                            <li><a class="grey-text text-lighten-3" href="/user/<%= user.id %>">Profile</a></li>
+                            <li><a class="grey-text text-lighten-3" href="/dashboard">Dashboard</a></li>
                             <% } %>
+                            <li><a class="grey-text text-lighten-3" href="/stats">Stats</a></li>
                             <div class="switch">
                                 <br>
                                 Dark Theme<br>
