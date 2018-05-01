@@ -30,7 +30,8 @@ div.newbot-dd-wrap input.select-dropdown { color: grey; }
 .unverified h5 { font-weight: bold; }
 .stat-value { color: gray; }
 .manage-bot-pfp { display: inline-block; }
-
+#like-btn {background-color: transparent !important; width: 15%; margin: 1vh 40%; padding: 0 0 !important;}
+#like-btn p { position: absolute; margin-left: 6vh; margin-top: 0.46vh; }
 /* Dark theme   */
 body.dark-theme .main { background-color: #252525; color: white; }
 body.dark-theme .nav-wrapper, body.dark-theme .footer, body.dark-theme .unverified-notice { background-color: #004379 !important; }

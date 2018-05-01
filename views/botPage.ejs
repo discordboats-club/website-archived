@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
     <%- include("parts/head", { title: bot.name }) %>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <script>window.IS_BOT_PAGE = true;</script>
 </head>
 <body>
     <div class="header">
@@ -47,6 +49,8 @@
                     <div class="bp-info">
                         <subtitle><%= bot.shortDescription %></subtitle>
                         <hr />
+                        <a class="btn-large btn-flat" data-bot-id="<%=bot.id%>" id="like-btn" href="#"><p class="white-text"><%=bot.likeCount%></p><i class="fas fa-heart red-text" style="width:100%;height: 100%;"></i></a>
+                        
                         <div class="row">
                             <% bot.website ? webVal = '' : webVal = 'disabled' %>
                             <% bot.github ? gitVal = '' : gitVal = 'disabled' %>
@@ -69,6 +73,7 @@
 </body>
 <footer class="blue lighten-3 page-footer">
     <%- include("parts/footer") %>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mo-js/0.288.2/mo.min.js"></script>
     <%- include("parts/scripts") %>
 </footer>
 </html>

@@ -1,5 +1,5 @@
 const api = new APIClient();
-console.log('Welcome to discordboats.club! Why are you looking here? :P');
+console.log("Welcome to discordboats.club! Why are you looking here? :P");
 
 console.log("%c🚫 Warning! 🚫", "color: red; font-weight: bold; font-size: x-large");
 console.log("%cTyping anything here could make bad stuff happen!", "color: #e91e63; font-size: large");
@@ -72,9 +72,9 @@ $(window).ready(async () => {
                     longDescription: e.target[7].value
                 });
                 M.toast({html: "Submitted new bot."});
-                document.location.replace('/bot/' + e.target[0].value);
+                document.location.replace("/bot/" + e.target[0].value);
             } catch (error) {
-                M.toast({html: 'Error: ' + error.message});
+                M.toast({html: "Error: " + error.message});
                 console.error(error);
             }
         });
@@ -106,6 +106,40 @@ $(window).ready(async () => {
                 M.toast({html: error.message});
                 console.error(error);
             }
+        });
+    } else if (window.IS_BOT_PAGE && window.mojs) {
+        const burst = new mojs.Burst({
+            parent: $("#like-btn"),
+            radius: { 25 : 75 },
+            count: 15,
+            top: "55%",
+            duration: 500,
+            children: {
+                shape: [ "circle", "polygon" ],
+                fill: [ "#333", "magenta", "purple" ],
+                angle: { 0: 180 },
+                degreeShift: "rand(-360, 360)",
+                delay: "stagger(0, 25)",
+            }
+        });
+        $("#like-btn").click(async e => {
+            e.preventDefault();
+            burst.play();
+            $("#like-btn").addClass("animated tada");
+            setTimeout(() => $("#like-btn").removeClass("animated tada"), 1000);
+            try {
+                const likeRes = await api.likeBot($("#like-btn").data("bot-id"));
+                const likeText = $("#like-btn p");
+                if (likeRes.ok == "liked bot") {
+                    likeText.html(parseInt(likeText.html())+1);
+                } else if (likeRes.ok == "deleted like") {
+                    likeText.html(parseInt(likeText.html())-1);
+                }
+            } catch (error) {
+                M.toast({html: error.message});
+                console.error(error);
+            }
+            
         });
     }
 
