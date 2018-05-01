@@ -18,16 +18,18 @@ app.get("/new", (req, res) => {
 app.get("/bot/:id/edit", async (req, res, next) => {
     const bot = await r.table("bots").get(req.params.id).run();
     if (!bot) return next();
-    if (req.user && (!req.user.mod || !req.user.admin || req.user.id == bot.ownerID)) return res.status(403).json({error: "you do not own this bot"});
-    res.render("dashboard/editBot", {libs: require("./api").libList, bot, user: req.user});
+    if (req.user.id == bot.ownerID || req.user.admin || req.user.mod) {
+        res.render("dashboard/editBot", {libs: require("./api").libList, bot, user: req.user});
+    } else res.status(403).json({error: "you do not own this bot"});
 });
 
 app.get("/bot/:id/manage", async (req, res, next) => {
     let bot = await r.table("bots").get(req.params.id).run();
     if (!bot) return next(); // 404 them (^:
-    if (req.user && (!req.user.mod || !req.user.admin || req.user.id == bot.ownerID)) return res.json({error: "this is not your bot"}); 
-    bot = await Util.attachPropBot(bot, req.user);
-    res.render("dashboard/botManage", {bot, user: req.user});
+    if (req.user.id == bot.ownerID || req.user.admin || req.user.mod) {
+        bot = await Util.attachPropBot(bot, req.user);
+        res.render("dashboard/botManage", {bot, user: req.user});
+    } else res.status(403).json({error: "you do not own this bot"});
 });
 
 app.get("/queue", async (req, res) => {
