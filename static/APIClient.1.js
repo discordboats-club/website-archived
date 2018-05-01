@@ -68,4 +68,15 @@ window.APIClient = class APIClient {
             throw new Error("Bad response");
         }
     }
+    async likeBot(botID) {
+        const res = await fetch(`/api/bot/${botID}/like`, {method: "POST", credentials: "same-origin"});
+        const data = await res.json();
+        if (data.error) {
+            throw new Error(data.error);
+        } else if (data.ok) {
+            return {ok: data.ok};
+        } else {
+            throw new Error("Bad response");
+        }
+    }
 }
