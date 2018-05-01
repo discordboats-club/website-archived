@@ -204,7 +204,7 @@ app.post("/bot/:id/like", async (req, res) => {
         await r.table("likes").get(existingLike.id).delete().run();
         res.json({ok: "deleted like"});
     } else {
-        await r.table("likes").insert({userID: req.user.id, botID: bot.id}).run();
+        await r.table("likes").insert({userID: req.user.id, botID: bot.id, createdAt: Date.now()}).run();
         res.json({ok: "liked bot"});
     }
 });
