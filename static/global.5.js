@@ -133,8 +133,12 @@ $(window).ready(async () => {
                 setTimeout(() => $("#like-btn").removeClass("animated tada"), 1000);
                 if (likeRes.ok == "liked bot") {
                     likeText.html(parseInt(likeText.html())+1);
+                    $("#like-btn svg").removeClass("grey-text");
+                    $("#like-btn svg").addClass("red-text");
                 } else if (likeRes.ok == "deleted like") {
                     likeText.html(parseInt(likeText.html())-1);
+                    $("#like-btn svg").removeClass("red-text");
+                    $("#like-btn svg").addClass("grey-text");
                 }
             } catch (error) {
                 M.toast({html: error.message});

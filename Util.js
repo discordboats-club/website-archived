@@ -16,6 +16,10 @@ module.exports = class Utils {
         bot._ownerViewing = user.id === bot.ownerID;
         bot._comments = await r.table("comments").filter({botID: bot.id}).run();
         bot._ownerTag = client.users.get(bot.ownerID).tag;
+        if (user.id) {
+            const like = (await r.table("likes").filter({userID: user.id, botID: bot.id}).run())[0];
+            bot._userLikes = !!like;
+        }
         bot.likeCount = await r.table("likes").filter({botID: bot.id}).count().run();
         return bot;
     }
