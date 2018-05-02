@@ -21,7 +21,7 @@ div.newbot-dd-wrap input.select-dropdown { color: grey; }
 .accept-button { color: lightgreen; }
 .bot-card-desc { padding-bottom: 5%; }
 .card-server-count { display: inline-block; }
-.bp-button { margin-left: 6.2%; }
+.bp-button { margin-left: 5%; margin-top: 10% !important; padding-left: 33%; padding-right: 33%; }
 .bp-chip { display: inline-block; }
 .bp-chips { padding-bottom: 2%; display: inline-block; }
 .bp-title { padding-left: 2%; padding-right: 2%; vertical-align: middle; display: inline-block; }
@@ -30,9 +30,9 @@ div.newbot-dd-wrap input.select-dropdown { color: grey; }
 .unverified h5 { font-weight: bold; }
 .stat-value { color: gray; }
 .manage-bot-pfp { display: inline-block; }
-#like-btn {background-color: transparent !important; width: 15%; margin: 1vh 40%; padding: 0 0 !important;}
-#like-btn p { position: absolute; margin-left: 6vh; margin-top: 0.46vh; }
+#like-btn { float: right !important; }
 /* Dark theme   */
-body.dark-theme .main { background-color: #252525; color: white; }
+body.dark-theme .main, body.dark-theme .modal, body.dark-theme, .modal-footer { background-color: #252525 !important; color: white; }
 body.dark-theme .nav-wrapper, body.dark-theme .footer, body.dark-theme .unverified-notice { background-color: #004379 !important; }
 footer { padding-top: 0px !important; }
+body.dark-theme .modal-footer a { color: white; }

@@ -124,12 +124,13 @@ $(window).ready(async () => {
         });
         $("#like-btn").click(async e => {
             e.preventDefault();
-            burst.play();
-            $("#like-btn").addClass("animated tada");
-            setTimeout(() => $("#like-btn").removeClass("animated tada"), 1000);
             try {
+                if ($("#like-btn").hasClass("modal-trigger")) return;
                 const likeRes = await api.likeBot($("#like-btn").data("bot-id"));
                 const likeText = $("#like-btn p");
+                burst.play();
+                $("#like-btn").addClass("animated tada");
+                setTimeout(() => $("#like-btn").removeClass("animated tada"), 1000);
                 if (likeRes.ok == "liked bot") {
                     likeText.html(parseInt(likeText.html())+1);
                 } else if (likeRes.ok == "deleted like") {
