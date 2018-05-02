@@ -17,7 +17,10 @@
                         <img src="/boat.jpg" class="bot-image">
                     </div> -->
                     <div class="bp-head">
-                        <a id="like-btn" href="#" data-bot-id="<%=bot.id%>" style="width: 20vh; height: 20vh;"><i class="fas fa-heart <%=bot._userLikes?`red-text`:`grey-text`%>" style="width: 20vh; height: 20vh;"></i></a>
+                        <a id="like-btn" href="#" data-bot-id="<%=bot.id%>" style="width: 20vh; height: 20vh;">
+                            <p class="toast center" id="like-btn-text"><%=bot.likeCount%></p>
+                            <i class="fas fa-heart <%=bot._userLikes?`red-text`:`grey-text`%>" style="width: 20vh; height: 20vh;"></i>
+                        </a>
                         <div class="bp-avatar">
                             <img class="responsive-img circle" alt="Bot Avatar" src="<%= bot._discordAvatarURL %>">
                         </div>
