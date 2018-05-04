@@ -22,6 +22,7 @@ div.newbot-dd-wrap input.select-dropdown { color: grey; }
 .bot-card-desc { padding-bottom: 5%; }
 .card-server-count { display: inline-block; }
 .bp-button { margin-left: 5%; margin-top: 10% !important; padding-left: 33%; padding-right: 33%; }
+.bpm-button { margin-left: 6.2% };
 .bp-chip { display: inline-block; }
 .bp-chips { padding-bottom: 2%; display: inline-block; }
 .bp-title { padding-left: 2%; padding-right: 2%; vertical-align: middle; display: inline-block; }

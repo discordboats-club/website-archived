@@ -14,8 +14,8 @@
                 <subtitle>Delete your bot, edit it and get its API Key. (analytics soon)</subtitle>
                 <hr>
                 <a class="waves-effect waves-light btn-large <%= bot._ownerViewing ? `` : `disabled` %>" target="_blank" href="/bot/<%= bot.id %>/key">View API key</a>
-                <a class="waves-effect waves-light btn-large bp-button" href="/dashboard/bot/<%= bot.id %>/edit">Edit Bot</a>
-                <button class="waves-effect waves-red btn-large red bp-button modal-trigger" data-target="delete-bot-modal"><i class="material-icons left">delete_forever</i>Delete Bot</button>
+                <a class="waves-effect waves-light btn-large bpm-button" href="/dashboard/bot/<%= bot.id %>/edit">Edit Bot</a>
+                <button class="waves-effect waves-red btn-large red bpm-button modal-trigger" data-target="delete-bot-modal"><i class="material-icons left">delete_forever</i>Delete Bot</button>
             </div>
         </div>
         <div id="delete-bot-modal" class="modal" data-bot-id="<%= bot.id %>">
