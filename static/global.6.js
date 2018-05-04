@@ -73,7 +73,7 @@ $(window).ready(async () => {
                     longDescription: $('#bot_description-full').val()
                 });
                 M.toast({html: "Submitted new bot."});
-                document.location.replace("/bot/" + e.target[0].value);
+                // document.location.replace("/bot/" + e.target[0].value);
             } catch (error) {
                 M.toast({html: "Error: " + error.message});
                 console.error(error);
