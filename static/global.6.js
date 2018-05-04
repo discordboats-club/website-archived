@@ -57,7 +57,7 @@ $(window).ready(async () => {
     }
     if (document.location.href.includes("/dashboard/new")) {
         M.FormSelect.init($("select#newbot"), {classes: "newbot-dd-wrap"});
-        $("form").sub250536623270264833mit(async e => {
+        $("form").submit(async e => {
             e.preventDefault();
             let lib = M.FormSelect.getInstance($("select")).getSelectedValues()[0];
             if (lib === "none") lib = undefined;
