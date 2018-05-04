@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include("parts/head", { title: profile.username }) %>
+</head>
+<body>
+    <div class="header">
+        <%- include("parts/header") %>
+    </div>
+    <div class="main">
+        <div class="container">
+            <div class="profile-page">
+                <div class="bp-top-info">
+                    <div class="bp-head-section">
+                        <h4 class="bp-heading">
+                            <img class="responsive-img circle" alt="User Avatar" src="<%=profile._discordAvatarURL%>">
+                            <%= profile.username %>
+                        </h4>
+                        <% if (profile._verifiedBots.length !== 0) { %>
+                            <div class="chip lime lighten-2" style="display: inline-block;">owns <%= profile._verifiedBots.length %> verified bot<%= profile._verifiedBots.length == 1? '' : 's'%></div>
+                        <% } %>
+                    </div>
+                    <hr />
+                    <p>
+                        <%- profile._markedDescription %>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<footer class="blue lighten-3 page-footer">
+    <%- include("parts/scripts") %>
+    <%- include("parts/footer") %>
+</footer>
+</html>
