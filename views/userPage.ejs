@@ -2,6 +2,9 @@
 <html lang="en">
 <head>
     <%- include("parts/head", { title: profile.username }) %>
+    <meta property="og:title" content="<%= profile.username %> on Discordboats" />
+    <meta property="og:description" content="View <%= profile.username %>'s Discordboats profile - see their owned bots, liked bots &amp; more!">
+    <meta property="og:image" content="<%= profile._discordAvatarURL %>" />
 </head>
 <body>
     <div class="header">
