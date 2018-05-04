@@ -57,19 +57,20 @@ $(window).ready(async () => {
     }
     if (document.location.href.includes("/dashboard/new")) {
         M.FormSelect.init($("select#newbot"), {classes: "newbot-dd-wrap"});
-        $("form").submit(async e => {
+        $("form").sub250536623270264833mit(async e => {
             e.preventDefault();
             let lib = M.FormSelect.getInstance($("select")).getSelectedValues()[0];
             if (lib === "none") lib = undefined;
             try {
                 await api.createBot({
-                    id: e.target[0].value,
+                    id: $('#client_id').val(),
                     library: lib,
-                    prefix: e.target[3].value,
+                    prefix: $('#bot_prefix').val(),
                     website: undefIfEmpty(e.target[4].value),
-                    invite: e.target[5].value || `https://discordapp.com/oauth2/authorize?client_id=${encodeURI(e.target[0].value)}&scope=bot&permissions=0`,
-                    shortDescription: e.target[6].value,
-                    longDescription: e.target[7].value
+                    invite: $('#bot_invite').val() || `https://discordapp.com/oauth2/authorize?client_id=${encodeURI(e.target[0].value)}&scope=bot&permissions=0`,
+                    github: $('#bot_github').val(),
+                    shortDescription: $('#bot_description').val(), 
+                    longDescription: $('#bot_description-full').val()
                 });
                 M.toast({html: "Submitted new bot."});
                 document.location.replace("/bot/" + e.target[0].value);
@@ -94,11 +95,12 @@ $(window).ready(async () => {
                 await api.editBot({
                     id: e.target.getAttribute("data-bot-id"),
                     library: lib,
-                    prefix: e.target[2].value,
-                    website: undefIfEmpty(e.target[3].value),
-                    invite: e.target[4].value || `https://discordapp.com/oauth2/authorize?client_id=${encodeURI(e.target[0].value)}&scope=bot&permissions=0`,
-                    shortDescription: e.target[5].value,
-                    longDescription: e.target[6].value
+                    prefix: $('#bot_prefix').val(),
+                    website: undefIfEmpty(e.target[4].value),
+                    invite: $('#bot_invite').val() || `https://discordapp.com/oauth2/authorize?client_id=${encodeURI(e.target[0].value)}&scope=bot&permissions=0`,
+                    github: $('#bot_github').val(),
+                    shortDescription: $('#bot_description').val(), 
+                    longDescription: $('#bot_description-full').val()
                 });
                 localStorage.setItem("toastOnNext", "Edited bot");
                 document.location.replace(`/bot/${e.target.getAttribute("data-bot-id")}`);
