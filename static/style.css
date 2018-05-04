@@ -37,3 +37,4 @@ body.dark-theme .main, body.dark-theme .modal, body.dark-theme, body.dark-theme 
 body.dark-theme .nav-wrapper, body.dark-theme .footer, body.dark-theme .unverified-notice { background-color: #004379 !important; }
 footer { padding-top: 0px !important; }
 body.dark-theme .modal-footer a { color: white; }
+body.dark-theme input { color: white; };
