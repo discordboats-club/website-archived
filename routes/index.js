@@ -35,8 +35,8 @@ app.get("/bot/:id/key", async (req, res, next) => {
 })
 
 app.get("/user/:id", async (req, res, next) => {
-    res.status(501).send("User profiles coming soon!");
-    return;
+    // res.status(501).send("User profiles coming soon!");
+    // return;
     let user = await r.table("users").get(req.params.id).run();
     if (!user) return next();
     user = await Util.attachPropUser(user);
@@ -47,7 +47,7 @@ app.get("/search", async (req, res) => {
     if (typeof req.query.q !== "string") return res.status(403).json({error: "expected query q"});
     const text = req.query.q.toLowerCase();
     const bots = await Promise.all((await r.table("bots").filter(bot => {
-        return bot("name").downcase().match(text)
+        return bot("name").downcase().match(text).and(bot("verified"))
     }).orderBy(bot => {
         return bot("name").downcase().split(text).count()
     }).limit(2*4).run()).map(bot => Util.attachPropBot(bot, req.user)));

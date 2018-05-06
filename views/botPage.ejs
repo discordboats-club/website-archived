@@ -4,6 +4,9 @@
     <%- include("parts/head", { title: bot.name }) %>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
     <script>window.IS_BOT_PAGE = true;</script>
+    <meta property="og:title" content="<%= bot.name %> on discordboats.club" />
+    <meta property="og:description" content="View <%= bot.name %> on discordboats.club &bullet; <%= bot.shortDescription %>">
+    <meta property="og:image" content="<%= bot._discordAvatarURL %>" />
 </head>
 <body>
     <div class="header">

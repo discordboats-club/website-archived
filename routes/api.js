@@ -19,7 +19,7 @@ snekfetch.get("https://gist.githubusercontent.com/RONTheCookie/c209f333d14fd85b3
 app.get("/search/autocomplete", async (req, res) => {
     const q = req.query.q;
     if (typeof q !== "string") return res.sendStatus(400);
-    const bots = (await r.table("bots").filter(bot => bot("name").downcase().match("^"+q.toLowerCase())).pluck("name").limit(5).run()).map(bot => bot.name);
+    const bots = (await r.table("bots").filter(bot => bot("name").downcase().match("^"+q.toLowerCase()).and(bot("verified"))).pluck("name").limit(5).run()).map(bot => bot.name);
     res.json({ok: "View data property", data: bots});
 });
 
@@ -44,7 +44,8 @@ const newBotSchema = Joi.object().required().keys({
     prefix: Joi.string().max(50).required(),
     invite: Joi.string().uri({scheme: ["https", "http"]}).required(),
     website: Joi.string().uri({scheme: ["https", "http"]}),
-    library: Joi.string()
+    library: Joi.string(),
+    github: Joi.string().uri({scheme: ["https"]}) // gh is just https
 });
 
 
@@ -54,7 +55,7 @@ app.post("/bot", async (req, res) => {
     if (Util.handleJoi(newBotSchema, req, res)) return;
     const data = Util.filterUnexpectedData(req.body, {inviteClicks: 0, pageViews: 0, apiToken: randomString.generate(30), ownerID: req.user.id, createdAt: +new Date(), verified: false}, newBotSchema);
     if (data.library && !libList.includes(data.library)) return res.status(400).json({error: "Invalid Library"});
-
+    if (data.github && !data.github.startsWith("https://github.com/")) return res.status(400).json({error: "Invalid Github URL"});
     if (badBots.includes(data.id)) res.status(403).json({error: "Blacklisted bot."});
 
     const botUser = client.users.get(data.id) || await client.users.fetch(data.id);
@@ -80,7 +81,8 @@ const editBotSchema = Joi.object().required().keys({
     prefix: Joi.string().max(50),
     invite: Joi.string().uri({scheme: ["https", "http"]}),
     website: Joi.string().uri({scheme: ["https", "http"]}),
-    library: Joi.string()
+    library: Joi.string(),
+    github: Joi.string().uri({scheme: ["https"]})
 });
 
 app.patch("/bot/:id", async (req, res) => {
@@ -91,7 +93,7 @@ app.patch("/bot/:id", async (req, res) => {
     if (req.user.id == bot.ownerID || req.user.admin || req.user.mod) {
         const data = Util.filterUnexpectedData(req.body, {editedAt: +new Date(), verified: false}, editBotSchema);
         if (data.library && !libList.includes(data.library)) return res.status(400).json({error: "Invalid Library"});
-        
+        if (data.github && !data.github.startsWith("https://github.com/")) return res.status(400).json({error: "Invalid Github URL"});
         const botUser = client.users.get(bot.id) || await client.users.fetch(bot.id);
         
         await r.table("bots").get(bot.id).update(data).run();

@@ -57,7 +57,6 @@ module.exports = class Utils {
         user._discordAvatarURL = discordUser.avatarURL();
         user._bots = await r.table("bots").filter({ownerID: user.id}).run(); // might call attachPropBot here if needed.
         user._verifiedBots = user._bots.filter(bot => bot.verified);
-        user._fmtCreatedAt = moment(user.createdAt).fromNow();
         if (user.mod) user.badges.push("Moderator");
         if (user.admin) user.badges.push("Administrator");
         return user;
