@@ -15,3 +15,22 @@
 
 <!-- mobile viewing -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Cookie consent -->
+<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js"></script>
+<script>
+window.addEventListener("load", function(){
+window.cookieconsent.initialise({
+  "palette": {
+    "popup": {
+      "background": localStorage.getItem("darkTheme") == "true" ? "#004379" : "#90CAF9"
+    },
+    "button": {
+      "background": "#f44336"
+    }
+  },
+  "position": "top",
+  "static": true
+})});
+</script>
