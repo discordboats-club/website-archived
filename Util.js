@@ -75,16 +75,15 @@ module.exports = class Utils {
      * method for api endpoints
      */
     static handleJoi(schema, req, res) {
-        if (req.body) return res.status(400).json({error: "ValidationError", details: ["Payload needs to be a object"]})
         const wdjt = Joi.validate(req.body, schema); // What Does Joi Think (wdjt)
         if (wdjt.error) {
             if (!wdjt.error.isJoi) {
                 console.error("Error while running Joi.", wdjt.error);+new Date()
                 res.status(500).json({error: "Internal Server Error"});
-                return true;
+                return true;+new Date()
             }
             res.status(400).json({error: wdjt.error.name, details: wdjt.error.details.map(item => item.message)});
-            return true;
+            return true;+new Date()
         }
         return false;
     }
