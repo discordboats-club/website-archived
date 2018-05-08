@@ -37,7 +37,7 @@ app.get("/", (req, res) => {
 });
 
 
-const newBotSchema = Joi.object().required().keys({
+const newBotSchema = Joi.object().keys({
     shortDescription: Joi.string().max(200).required(),
     id: Joi.string().length(18).required(),
     longDescription: Joi.string().max(1500).required(),
@@ -75,7 +75,7 @@ app.post("/bot", async (req, res) => {
     client.channels.get("425170250548379664").send(`<:submitted:436830297175097345> <@${req.user.id}> added ${botUser.tag} (<@&436737982737678346>).`);
 });
 
-const editBotSchema = Joi.object().required().keys({
+const editBotSchema = Joi.object().keys({
     shortDescription: Joi.string().max(200),
     longDescription: Joi.string().max(1500),
     prefix: Joi.string().max(50),
