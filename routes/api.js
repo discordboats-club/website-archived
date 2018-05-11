@@ -124,7 +124,7 @@ const editCommentSchema = Joi.object().required().keys({
 });
 app.post("/bot/comment", async (req, res) => {
     if (Util.handleJoi(newCommentSchema, req, res)) return;
-    res.sendStatus(501);
+    return res.sendStatus(501);
     const data = Util.filterUnexpectedData(req.body, {authorID: req.user.id, createdAt: +new Date()}, newCommentSchema);
     
     const bot = await r.table("bots").get(data.botID).run();
@@ -135,7 +135,7 @@ app.post("/bot/comment", async (req, res) => {
 });
 
 app.patch("/bot/comment/:id", async (req, res) => {
-    res.sendStatus(501);
+    return res.sendStatus(501);
     const comment = await r.table("comments").get(req.params.id);
     if (!comment) return res.status(404).json({error: "comment not found"});
     if (comment.authorID !== req.user.id) return res.status(403).json({error: "no permission"});
@@ -146,6 +146,7 @@ app.patch("/bot/comment/:id", async (req, res) => {
 });
 
 app.delete("/bot/comment/:id", async (req, res) => {
+    return res.sendStatus(501);
     const comment = await r.table("comments").get(req.params.id);
     if (!comment) return res.status(404).json({error: "comment not found"});
     if (comment.authorID !== req.user.id) return res.status(403).json({error: "no permission"});
