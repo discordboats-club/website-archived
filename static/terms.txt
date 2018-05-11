@@ -7,6 +7,7 @@ By using the site, you agree to the following terms of service, you may stop agr
     * Deleting your account.
     * Stopping to visit the site.
 
+We may refuse to serve you this service for any reason, at any time.
 
 Our Intellectual property rights:
     You may use our Intellectual property for personal-use only, if you'd like to use our Intellectual property for any other kind of use, you may contact our support team.
@@ -32,6 +33,10 @@ Your Data:
 
     Notices:
         Any illegal content and/or copyright infringing content uploaded to our servers are your responsibility. We will work with appropriate authorities to terminate all infringing data and/or take appropriate action with no guarantee of prior notice.
+
+
+Support Team:
+    You may contact our support team via Discord: Send a private message to RONTheCookie#1337
 
 We may revise this document at any time, without notifying you - though we will attempt to notify you before we update this document.
 
