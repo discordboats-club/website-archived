@@ -4,6 +4,7 @@ const moment = require("moment");
 module.exports = class Utils {
     /**
      * @param {Object} bot 
+     * @param user
      * @returns {Object}
      */
     static async attachPropBot(bot, user = {}) {
@@ -34,9 +35,11 @@ module.exports = class Utils {
         delete bot.apiToken;
         return bot;
     }
+
     /**
      * Hides sensetive and internal data from bots.
-     * @param {Object} bot 
+     * @param user
+     * @param hideBots
      */
     static hidePropsUser(user, hideBots = true) {
         delete user.discordAT;
@@ -53,8 +56,8 @@ module.exports = class Utils {
     static async attachPropUser(user) {
         const client = require("./ConstantStore").bot;
         const { r } = require("./ConstantStore");
-        const discordUser = client.users.get(user.id) || client.userss.fetch(user.id);
-        user._discordAvatarURL = discordUser.avatarURL();
+        const discordUser = client.users.get(user.id) || client.users.fetch(user.id);
+        user._discordAvatarURL = discordUser.displayAvatarURL;
         user._bots = await r.table("bots").filter({ownerID: user.id}).run(); // might call attachPropBot here if needed.
         user._verifiedBots = user._bots.filter(bot => bot.verified);
         if (user.mod) user.badges.push("Moderator");
@@ -78,13 +81,13 @@ module.exports = class Utils {
         const wdjt = Joi.validate(req.body, schema); // What Does Joi Think (wdjt)
         if (wdjt.error) {
             if (!wdjt.error.isJoi) {
-                console.error("Error while running Joi.", wdjt.error);+new Date()
+                console.error("Error while running Joi.", wdjt.error);
                 res.status(500).json({error: "Internal Server Error"});
-                return true;+new Date()
+                return true;
             }
             res.status(400).json({error: wdjt.error.name, details: wdjt.error.details.map(item => item.message)});
-            return true;+new Date()
+            return true;
         }
         return false;
     }
-}
+};

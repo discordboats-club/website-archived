@@ -1,5 +1,4 @@
 const express = require("express");
-const passport = require("passport");
 const chunk = require("chunk");
 const ejs = require("ejs");
 const webshot = require("webshot");
@@ -17,7 +16,7 @@ app.get("/bot/:id", async (req, res, next) => {
     const rB = await r.table("bots").get(req.params.id).run();
     if (!rB) return next();
     const bot = await Util.attachPropBot(rB, req.user);
-    if (!bot.verified && !((req.user ? (req.user.mod || req.user.admin) : false) || req.user.id == rB.ownerID)) return res.sendStatus(404); // pretend it doesnt exist lol
+    if (!bot.verified && !((req.user ? (req.user.mod || req.user.admin) : false) || req.user.id === rB.ownerID)) return res.sendStatus(404); // pretend it doesnt exist lol
     res.render("botPage", {user: req.user, bot});
     await r.table("bots").get(req.params.id).update({pageViews: r.row("pageViews").add(1)}).run();
 });
@@ -28,15 +27,13 @@ app.get("/bot/:id/key", async (req, res, next) => {
     const bot = await Util.attachPropBot(rB, req.user);
     if (bot.verified) {
         if (req.user) {
-            if (req.user.id !== bot.ownerID) res.sendStatus(403)
+            if (req.user.id !== bot.ownerID) res.sendStatus(403);
             else return res.render("botKey", {bot: rB});
         } else return res.sendStatus(401);
     } else return res.sendStatus(403);
-})
+});
 
 app.get("/user/:id", async (req, res, next) => {
-    // res.status(501).send("User profiles coming soon!");
-    // return;
     let user = await r.table("users").get(req.params.id).run();
     if (!user) return next();
     user = await Util.attachPropUser(user);
@@ -51,6 +48,7 @@ app.get("/search", async (req, res) => {
     }).orderBy(bot => {
         return bot("name").downcase().split(text).count()
     }).limit(2*4).run()).map(bot => Util.attachPropBot(bot, req.user)));
+
     const botChunks = chunk(bots, 4);
     res.render("search", {bots, botChunks, user: req.user, searchQuery: text});
 });
@@ -59,6 +57,7 @@ app.get("/invite_url/:id", async (req, res) => {
     const bot = await r.table("bots").get(req.params.id).run();
     if (!bot) return res.status(404).json({error: "bot does not exist"});
     res.redirect(bot.invite);
+
     await r.table("bots").get(bot.id).update({inviteClicks: r.row("inviteClicks").add(1)}).run();
 });
 

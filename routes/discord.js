@@ -3,7 +3,7 @@ const passport = require("passport");
 const app = module.exports = express.Router();
 const scopes = require("../app").discordScopes;
 const discord = require("passport-discord");
-const { ensureLoggedIn, ensureLoggedOut } = require("connect-ensure-login");
+const { ensureLoggedOut } = require("connect-ensure-login");
 
 app.get("/login", ensureLoggedOut("/dashboard"), passport.authenticate("discord", { scope: scopes }));
 

@@ -3,10 +3,9 @@ const session = require("express-session");
 const passport = require("passport");
 const Discord = require("passport-discord");
 const logger = require('morgan');
-const {ensureLoggedIn, ensureLoggedOut} = require("connect-ensure-login");
+const {ensureLoggedIn} = require("connect-ensure-login");
 const compress = require("compression");
-const request = require("snekfetch");
-const { r } = require("./ConstantStore")
+const { r } = require("./ConstantStore");
 const config = require("./config");
 const minifyHTML = require("express-minify-html");
 const RethinkStore = require("session-rethinkdb")(session);
@@ -15,7 +14,7 @@ const port = process.env.PORT || require("./config.json").listeningPort || 3000;
 const app = module.exports = express();
 // const client = require("./bot");
 
-app.use(require("helmet")())
+app.use(require("helmet")());
 app.set("view engine", "ejs");
 
 app.use(logger('dev'));
@@ -42,6 +41,7 @@ app.use(minifyHTML({
         removeEmptyAttributes: true
     }
 }));
+
 app.use(express.static("static"));
 app.use(express.json());
 app.use("/api/public", require("./routes/botapi"));
@@ -85,4 +85,5 @@ app.use("/api", require("./routes/api"));
 app.use((req, res) => {
     res.status(404).render("404", {user: req.user});
 });
-app.listen(port, () => console.log(`Listening on port ${port}.`))
+
+app.listen(port, () => console.log(`Listening on port ${port}.`));

@@ -22,7 +22,7 @@ div.newbot-dd-wrap input.select-dropdown { color: grey; }
 .bot-card-desc { padding-bottom: 5%; }
 .card-server-count { display: inline-block; }
 .bp-button { margin-left: 5%; margin-top: 10% !important; padding-left: 33%; padding-right: 33%; }
-.bpm-button { margin-left: 10vw; };
+.bpm-button { margin-left: 10vw; }
 .bp-chip { display: inline-block; }
 .bp-chips { padding-bottom: 2%; display: inline-block; }
 .bp-title { padding-left: 2%; padding-right: 2%; vertical-align: middle; display: inline-block; }
@@ -33,9 +33,10 @@ div.newbot-dd-wrap input.select-dropdown { color: grey; }
 .manage-bot-pfp { display: inline-block; }
 #like-btn { float: right !important; }
 #like-btn-text { width: fit-content; margin: 0 5vw;}
+
 /* Dark theme   */
-body.dark-theme .main, body.dark-theme .modal, body.dark-theme, body.dark-theme .modal-footer { background-color: #252525 !important; color: white; }
-body.dark-theme .nav-wrapper, body.dark-theme .footer, body.dark-theme .unverified-notice { background-color: #004379 !important; }
-footer { padding-top: 0px !important; }
+body.dark-theme .main, body.dark-theme .modal, body.dark-theme, body.dark-theme .modal-footer { background-color: #303030 !important; color: white; }
+body.dark-theme .nav-wrapper, body.dark-theme .footer, body.dark-theme .unverified-notice { background-color: #212121 !important; }
+footer { padding-top: 0 !important; }
 body.dark-theme .modal-footer a { color: white; }
-body.dark-theme input, body.dark-theme textarea { color: white; };
+body.dark-theme input, body.dark-theme textarea { color: white; }

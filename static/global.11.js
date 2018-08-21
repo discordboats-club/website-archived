@@ -1,23 +1,41 @@
-const api = new APIClient();
+const api = APIClient;
 console.log("Welcome to discordboats.club! Why are you looking here? :D");
 
 console.log("%c🚫 Warning! 🚫", "color: red; font-weight: bold; font-size: x-large");
 console.log("%cTyping anything here could make bad stuff happen!", "color: #e91e63; font-size: large");
 
 function undefIfEmpty(str) {
-    const res = str.trim() === "" ? undefined : str;
-    return res;
+    return str.trim() === "" ? undefined : str;
 }
+
+// Theme control
+const controlEle = document.querySelector("#themeControl");
+let dark = localStorage.getItem("darkTheme") === "true";
+controlEle.checked = dark;
+function processThemeState() {
+    if (dark) {
+        $(document.body).addClass("dark-theme");
+    } else {
+        $(document.body).removeClass("dark-theme");
+    }
+}
+processThemeState();
+controlEle.addEventListener("change", e => {
+    dark = e.target.checked;
+    localStorage.setItem("darkTheme", JSON.stringify(e.target.checked));
+    processThemeState();
+});
+
 $(window).ready(async () => {
     $(".accept-button").click((e) => {
-        var card = e.target.parentElement.parentElement.parentElement.parentElement;
-        var id = card.getAttribute("id");
+        let card = e.target.parentElement.parentElement.parentElement.parentElement;
+        let id = card.getAttribute("id");
         api.verifyBot(true, id);
         card.remove();
     });
     $(".deny-button").click((e) => {
-        var card = e.target.parentElement.parentElement.parentElement.parentElement;
-        var id = card.getAttribute("id");
+        let card = e.target.parentElement.parentElement.parentElement.parentElement;
+        let id = card.getAttribute("id");
         api.verifyBot(false, id);
         card.remove();
     });
@@ -110,8 +128,9 @@ $(window).ready(async () => {
             }
         });
     } else if (window.IS_BOT_PAGE && window.mojs) {
+        let like = $("like-btn");
         const burst = new mojs.Burst({
-            parent: $("#like-btn"),
+            parent: like,
             radius: { 25 : 75 },
             count: 15,
             top: "55%",
@@ -124,23 +143,25 @@ $(window).ready(async () => {
                 delay: "stagger(0, 25)",
             }
         });
-        $("#like-btn").click(async e => {
+        like.click(async e => {
             e.preventDefault();
             try {
-                if ($("#like-btn").hasClass("modal-trigger")) return;
-                const likeRes = await api.likeBot($("#like-btn").data("bot-id"));
+                if (like.hasClass("modal-trigger")) return;
+                const likeRes = await api.likeBot(like.data("bot-id"));
                 const likeText = $("#like-btn p");
                 burst.play();
-                $("#like-btn").addClass("animated tada");
+                like.addClass("animated tada");
                 setTimeout(() => $("#like-btn").removeClass("animated tada"), 1000);
-                if (likeRes.ok == "liked bot") {
+                const svg = $("#like-btn svg");
+
+                if (likeRes.ok === "liked bot") {
                     likeText.html(parseInt(likeText.html())+1);
-                    $("#like-btn svg").removeClass("grey-text");
-                    $("#like-btn svg").addClass("red-text");
-                } else if (likeRes.ok == "deleted like") {
+                    svg.removeClass("grey-text");
+                    svg.addClass("red-text");
+                } else if (likeRes.ok === "deleted like") {
                     likeText.html(parseInt(likeText.html())-1);
-                    $("#like-btn svg").removeClass("red-text");
-                    $("#like-btn svg").addClass("grey-text");
+                    svg.removeClass("red-text");
+                    svg.addClass("grey-text");
                 }
             } catch (error) {
                 M.toast({html: error.message});
@@ -150,24 +171,4 @@ $(window).ready(async () => {
         });
     }
 
-    
-
-
-    // Theme control
-    const controlEle = document.querySelector("#themeControl");
-    let dark = localStorage.getItem("darkTheme") == "true";
-    controlEle.checked = dark;
-    function processThemeState() {
-        if (dark) {
-            $(document.body).addClass("dark-theme");
-        } else {
-            $(document.body).removeClass("dark-theme");
-        }
-    }
-    processThemeState();
-    controlEle.addEventListener("change", e => {
-        dark = e.target.checked;
-        localStorage.setItem("darkTheme", JSON.stringify(e.target.checked));
-        processThemeState();
-    });
 });

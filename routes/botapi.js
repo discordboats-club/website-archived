@@ -11,7 +11,7 @@ app.use(async (req, res, next) => {
         res.status(403).json({error: "not_authenticated"});
     } else {
         req.bot = await Util.attachPropBot(bot);
-        if (req.bot.servers == "N/A") req.bot.servers = null;
+        if (req.bot.servers === "N/A") req.bot.servers = null;
         delete req.bot._markedDescription;
         delete req.bot._discordAvatarURL;
         delete req.bot._ownerViewing;

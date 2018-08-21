@@ -90,7 +90,7 @@ app.patch("/bot/:id", async (req, res) => {
     if (Util.handleJoi(editBotSchema, req, res)) return;
     const bot = await r.table("bots").get(req.params.id).run();
     if (!bot) return res.status(404).json({error: "unknown bot"});
-    if (req.user.id == bot.ownerID || req.user.admin || req.user.mod) {
+    if (req.user.id === bot.ownerID || req.user.admin || req.user.mod) {
         const data = Util.filterUnexpectedData(req.body, {editedAt: +new Date(), verified: false}, editBotSchema);
         if (data.library && !libList.includes(data.library)) return res.status(400).json({error: "Invalid Library"});
         if (data.github && !data.github.startsWith("https://github.com/")) return res.status(400).json({error: "Invalid Github URL"});
@@ -100,11 +100,12 @@ app.patch("/bot/:id", async (req, res) => {
         client.channels.get("425170250548379664").send(`:thinking: <@${req.user.id}> edited ${botUser.tag} (reverify, <@&436737982737678346>).`);
         res.json({ok: "edited bot"});
     } else res.status(403).json({error: "you do not own this bot"});
-})
+});
+
 app.delete("/bot/:id", async (req, res) => {
     const bot = await r.table("bots").get(req.params.id).run();
     if (!bot) return await res.status(404).json({error: "bot does not exist"});
-    if (req.user.id == bot.ownerID || req.user.admin || req.user.mod) {
+    if (req.user.id === bot.ownerID || req.user.admin || req.user.mod) {
         await r.table("bots").get(req.params.id).delete().run();
         res.status(200).json({ok: "Deleted bot."});
     } else res.status(403).json({error: "you do not own this bot"});
@@ -125,33 +126,33 @@ const editCommentSchema = Joi.object().required().keys({
 app.post("/bot/comment", async (req, res) => {
     if (Util.handleJoi(newCommentSchema, req, res)) return;
     return res.sendStatus(501);
-    const data = Util.filterUnexpectedData(req.body, {authorID: req.user.id, createdAt: +new Date()}, newCommentSchema);
+    /*const data = Util.filterUnexpectedData(req.body, {authorID: req.user.id, createdAt: +new Date()}, newCommentSchema);
     
     const bot = await r.table("bots").get(data.botID).run();
     if (!bot) return res.status(404).json({error: "Bot not found"});
 
     const reResponse = await r.table("comments").insert(data).run();
-    res.status(200).json({ok: "comment created", commentID: reResponse.generated_keys[0]});
+    res.status(200).json({ok: "comment created", commentID: reResponse.generated_keys[0]});*/
 });
 
 app.patch("/bot/comment/:id", async (req, res) => {
     return res.sendStatus(501);
-    const comment = await r.table("comments").get(req.params.id);
+    /*const comment = await r.table("comments").get(req.params.id);
     if (!comment) return res.status(404).json({error: "comment not found"});
     if (comment.authorID !== req.user.id) return res.status(403).json({error: "no permission"});
     if (Util.handleJoi(editCommentSchema, req, res)) return;
     const data = Util.filterUnexpectedData(req.body, {editedAt: +new Date()}, newCommentSchema);
     await r.table("comments").get(req.params.id).update(data).run();
-    res.status(200).json({ok: "comment edited"});
+    res.status(200).json({ok: "comment edited"});*/
 });
 
 app.delete("/bot/comment/:id", async (req, res) => {
     return res.sendStatus(501);
-    const comment = await r.table("comments").get(req.params.id);
+    /*const comment = await r.table("comments").get(req.params.id);
     if (!comment) return res.status(404).json({error: "comment not found"});
     if (comment.authorID !== req.user.id) return res.status(403).json({error: "no permission"});
     await r.table("comments").get(req.params.id).delete().run();
-    res.status(200).json({ok: "deleted comment"});
+    res.status(200).json({ok: "deleted comment"});*/
 });
 
 // user resource
@@ -173,6 +174,7 @@ const modVerifyBotSchema = Joi.object().required().keys({
     verified: Joi.boolean().required(),
     botID: Joi.string().length(18).required()
 });
+
 app.post("/bot/mod/verify", async (req, res) => {
     const client = require("../ConstantStore").bot;
     if (!(req.user.mod || req.user.admin)) return res.status(403).json({error: "No permission"});
