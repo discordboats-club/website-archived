@@ -3,5 +3,6 @@
     "clientSecret": "",
     "token": "",
     "callbackURL": "",
-    "assetURL": ""
+    "assetURL": "",
+    "apiURL": ""
 }
