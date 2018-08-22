@@ -1,5 +1,12 @@
 {
   "dependencies": {
-    "express": "^4.16.3"
+    "btoa": "^1.2.1",
+    "express": "^4.16.3",
+    "express-jwt": "^5.3.1",
+    "helmet": "^3.13.0",
+    "jsonwebtoken": "^8.3.0",
+    "morgan": "^1.9.0",
+    "node-fetch": "^2.2.0",
+    "rethinkdbdash": "^2.3.31"
   }
 }
