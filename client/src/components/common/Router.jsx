@@ -1,11 +1,12 @@
-import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import React, {Component} from 'react';
 
 export default class Router extends Component {
     render() {
         return (
             <BrowserRouter>
                 <Switch>
-                    <Router/>
+                    <Route/>
                 </Switch>
             </BrowserRouter>
         );

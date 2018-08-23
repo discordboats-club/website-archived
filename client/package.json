@@ -1,5 +1,7 @@
 {
-  "name": "client",
+  "name": "discordboats.club",
+  "description": "Discord bot list",
+  "author": "Robert Westbury <haxified1@gmail.com>",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
