@@ -1,0 +1,12 @@
+const Joi = require('joi');
+
+module.exports = Joi.object().required().keys({
+    id: Joi.string().min(10).max(26).regex(/\d./g),
+    prefix: Joi.string().max(10).required(),
+    library: Joi.string(),
+    invite: Joi.string().uri({ scheme: ['https'] }).required(),
+    website: Joi.string().uri({ scheme: ['https'] }),
+    github: Joi.string().uri({ scheme: ['https'] }),
+    shortDescription: Joi.string().max(200).required(),
+    longDescription: Joi.string().max(2000).required()
+});
