@@ -26,5 +26,6 @@ app.use(require('express-jwt')({ secret: jwtKey, credentialsRequired: false }), 
 
 app.use('/api/auth', require('./routes/auth.js'));
 app.use('/api/bots', require('./routes/bots.js'));
+app.use('/api/users', require('./routes/users.js'));
 
 app.listen(port, () => console.log('[web] listening on port ' + port));

@@ -22,3 +22,9 @@ exports.filterUnexpectedData = (subject, stuffToAdd, schema) => {
     });
     return data;
 }
+
+exports.publicifyUser = user => {
+    delete user.discordAT;
+    delete user.discordRT;
+    return user;
+}
