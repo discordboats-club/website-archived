@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@material-ui/core": "^1.5.1",
+    "@material-ui/icons": "^2.0.3"
+  }
+}
