@@ -1,12 +1,20 @@
 import React, {Component} from 'react';
 
+import Button from '@material-ui/core/Button';
+
 import './Header.css';
 
 export default class Header extends Component {
     render() {
         return (
             <div className="header">
-                <h1>Header</h1>
+                <img src={require('../../../assets/white_boat.png')} alt=""/>
+
+                <div className="leftbuttons">
+                    <Button variant="contained" className="discordbtn">
+                        Our Discord
+                    </Button>
+                </div>
             </div>
         );
     }
