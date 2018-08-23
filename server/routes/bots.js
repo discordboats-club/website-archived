@@ -16,7 +16,8 @@ router.post('/', async (req, res) => {
     if (req.body.library && !libraries.includes(req.body.library)) return res.status(400).json({ error: 'ValidationError', details: ['Invalid library'] });
 
     const botUser = client.users.get(req.body.id) || await client.users.fetch(req.body.id);
-    if (!client.users.get(req.user.id) || !await client.users.fetch(req.user.id)) return res.status(400).json({ error: 'ValidationError', details: ['Owner is not in discordboats discord guild'] });
+    const ownerUser = client.users.get(req.user.id) || await client.users.fetch(req.user.id);
+    if (!ownerUser) return res.status(400).json({ error: 'ValidationError', details: ['Owner is not in discordboats discord guild'] });
     if (!botUser) return res.status(404).json({ error: 'ValidationError', details: ['Invalid bot'] });
     if (!botUser.bot) return res.status(400).json({ error: 'ValidationError', details: ['Bot must be a bot'] });
 
