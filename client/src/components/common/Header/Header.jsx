@@ -11,7 +11,7 @@ export default class Header extends Component {
                 <img src={require('../../../assets/white_boat.png')} alt=""/>
 
                 <div className="leftbuttons">
-                    <Button variant="contained" className="discordbtn">
+                    <Button color="white" className="discordbtn">
                         Our Discord
                     </Button>
                 </div>

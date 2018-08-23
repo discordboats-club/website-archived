@@ -52,7 +52,8 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js --env=jsdom"
+    "test": "node scripts/test.js --env=jsdom",
+    "ngrok": "ngrok http 3000"
   },
   "jest": {
     "collectCoverageFrom": [
