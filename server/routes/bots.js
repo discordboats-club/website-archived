@@ -2,7 +2,8 @@ const express = require('express');
 const router = module.exports = express.Router();
 const newBotSchema = require('../schemas/new-bot.js');
 const randomString = require('randomstring');
-const { handleJoi, libraries } = require('../util.js');
+const { handleJoi, libraries, filterUnexpectedData } = require('../util.js');
+const { r } = require('../');
 const client = require('../client.js');
 
 router.post('/', async (req, res) => {
@@ -15,7 +16,7 @@ router.post('/', async (req, res) => {
     if (req.body.library && !libraries.includes(req.body.library)) return res.status(400).json({ error: 'ValidationError', details: ['Invalid library'] });
 
     const botUser = client.users.get(req.body.id) || await client.users.fetch(req.body.id);
-    if (!client.users.get(req.user.id) || !await client.users.fetch(req.user.id)) return res.status(400).json({ error: 'ValidationError', details: ['Owner is not in discordboats discord guild'] });
+    // if (!client.users.get(req.user.id) || !await client.users.fetch(req.user.id)) return res.status(400).json({ error: 'ValidationError', details: ['Owner is not in discordboats discord guild'] });
     if (!botUser) return res.status(404).json({ error: 'ValidationError', details: ['Invalid bot'] });
     if (!botUser.bot) return res.status(400).json({ error: 'ValidationError', details: ['Bot must be a bot'] });
 
@@ -33,8 +34,6 @@ router.post('/', async (req, res) => {
             verified: false
         }, newBotSchema
     );
-
-    console.log(bot);
 
     await r.table('bots').insert(bot);
     res.sendStatus(200);
