@@ -13,6 +13,8 @@ import store from '../../../store';
 
 import './Header.css';
 
+import { Link } from 'react-router-dom';
+
 @observer
 export default class Header extends Component {
     @observable
@@ -87,7 +89,9 @@ export default class Header extends Component {
     render() {
         return (
             <div className="header">
-                <img src={require('../../../assets/white_boat.png')} alt=""/>
+                <Link to="/">
+                    <img src={require('../../../assets/white_boat.png')} alt=""/>
+                </Link>
 
                 {this.getSearchInput()}
 
