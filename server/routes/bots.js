@@ -27,9 +27,11 @@ router.post('/', async (req, res) => {
     const bot = filterUnexpectedData(req.body, 
         { 
             username: botUser.username,
-            avatarUrl: botUser.avatarURL(), 
-            views: 0, 
-            inviteClicks: 0, 
+            discrim: botUser.discriminator,
+            tag: botUser.tag,
+            avatarUrl: botUser.avatarURL(),
+            views: 0,
+            inviteClicks: 0,
             apiKey: randomString.generate(30),
             ownerId: req.user.id,
             createdAt: new Date(),
@@ -43,6 +45,22 @@ router.post('/', async (req, res) => {
     const botLogChannel = client.guilds.get(config.mainGuild).channels.find(c => c.name == 'bot-log');
     const modRole = client.guilds.get(config.mainGuild).roles.find(r => r.name == 'Moderator');
     await botLogChannel.send(`📥 <@${req.user.id}> added ${botUser.tag} (<@&${modRole.id}>)`);
+
+    res.sendStatus(200);
+});
+
+router.delete('/', async (req, res) => {
+    if (!req.user) return res.sendStatus(401);
+    if (!req.body.id) return res.status(400).json({ error: 'ValidationError', details: ['"id" is required'] });
+    const bot = await r.table('bots').get(req.body.id).run();
+    if (!bot) return res.status(404).json({ error: 'ValidationError', details: ['Invalid bot'] });
+    // TODO: allow moderators to delete bots (i need to make a permission system first)
+    if (bot.ownerId !== req.user.id) return res.sendStatus(403);
+
+    await r.table('bots').get(req.body.id).delete().run();
+
+    const botLogChannel = client.guilds.get(config.mainGuild).channels.find(c => c.name == 'bot-log');
+    await botLogChannel.send(`📤 <@${req.user.id}> deleted ${bot.tag}`);
 
     res.sendStatus(200);
 });
