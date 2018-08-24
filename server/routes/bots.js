@@ -2,7 +2,7 @@ const express = require('express');
 const router = module.exports = express.Router();
 const newBotSchema = require('../schemas/new-bot.js');
 const randomString = require('randomstring');
-const { handleJoi, libraries, filterUnexpectedData } = require('../util.js');
+const { handleJoi, libraries, filterUnexpectedData, safeBot } = require('../util.js');
 const { r } = require('../');
 const client = require('../client.js');
 const config = require('../config.json');
@@ -65,4 +65,9 @@ router.delete('/:id', async (req, res) => {
     await botLogChannel.send(`📤 <@${req.user.id}> deleted ${bot.tag}`);
 
     res.sendStatus(200);
+});
+
+router.get('/', async (req, res) => {
+    const botsFromDatabase = await r.table('bots').run();
+    res.json(botsFromDatabase.map(bot => safeBot(bot)));
 });

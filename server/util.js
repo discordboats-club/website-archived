@@ -28,3 +28,8 @@ exports.safeUser = (user) => {
     delete user.discordRT;
     return user;
 }
+
+exports.safeBot = (bot) => {
+    delete bot.apiKey;
+    return bot;
+}
