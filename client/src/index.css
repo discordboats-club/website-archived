@@ -3,3 +3,22 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+/* div[class^="MuiPaper-root"] {
+  box-shadow: none;
+  right: 0;
+  left: 90% !important;
+  top: 50px !important;
+}
+
+div[class^="MuiPaper-root"] ul[class^="MuiList-root"] {
+  padding: 0 0 0 0;
+}
+
+div[class^="MuiPaper-root"] ul[class^="MuiList-root"] li[class^="Mui"] {
+  border: 1px solid rgb(197, 206, 212);
+} */
+
+/*
+  LIGHT GRAYPLE
+*/
