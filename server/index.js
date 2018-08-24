@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(require('morgan')('dev'));
 
 app.use(require('express-jwt')({ secret: jwtKey, credentialsRequired: false }), async (err, req, res, next) => {
-    if (err.name == "UnauthorizedError") return res.status(403).json({error: err.message, details: [err.code]});
+    if (err.name == 'UnauthorizedError') return res.status(403).json({ error: err.message, details: [err.code] });
     else throw err;
     const id = parseInt(req.user, 10);
     if (!id) return next();
