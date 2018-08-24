@@ -14,10 +14,8 @@ client.login(config.token);
 app.use(express.json());
 app.use(require('morgan')('dev'));
 
-app.use(require('express-jwt')({ secret: jwtKey, credentialsRequired: false }), async (err, req, res, next) => {
-    if (err.name == "UnauthorizedError") return res.status(403).json({error: err.message, details: [err.code]});
-    else throw err;
-    const id = parseInt(req.user, 10);
+app.use(require('express-jwt')({ secret: jwtKey, credentialsRequired: false }), async (req, res, next) => {
+    const id = req.user;
     if (!id) return next();
     const user = await r.table('users').get(id).run();
     req.user = user;
@@ -26,5 +24,6 @@ app.use(require('express-jwt')({ secret: jwtKey, credentialsRequired: false }), 
 
 app.use('/api/auth', require('./routes/auth.js'));
 app.use('/api/bots', require('./routes/bots.js'));
+app.use('/api/users', require('./routes/users.js'));
 
 app.listen(port, () => console.log('[web] listening on port ' + port));
