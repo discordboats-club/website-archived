@@ -2,7 +2,7 @@ import {observable, action} from 'mobx';
 
 class Store {
     @observable
-    loggedIn = false;
+    loggedIn = true;
 
     @observable
     token = null;
