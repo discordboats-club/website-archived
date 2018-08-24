@@ -9,23 +9,9 @@ import MenuItem from '@material-ui/core/MenuItem';
 import {observer} from 'mobx-react';
 import {observable, action} from 'mobx';
 
+import store from '../../../store';
+
 import './Header.css';
-
-const loggedIn = true; // temp
-
-/*
-    -------------------------
-        AMAZING CHAT ROOM
-            v5.13
-    -------------------------
-
-draem: hello
-haxified: hi
-draem: i'm going to work on the bot cards
-haxified: ok cool but make trello things
-draem: ok
-haxified: cool
-*/
 
 @observer
 export default class Header extends Component {
@@ -70,7 +56,7 @@ export default class Header extends Component {
     
 
     getLeftButtons() {
-        if(!loggedIn) {
+        if(!store.loggedIn) {
             return (
                 <Button className="loginbtn btn">
                     Login
