@@ -31,8 +31,9 @@ router.post('/', async (req, res) => {
             inviteClicks: 0, 
             apiKey: randomString.generate(30),
             ownerId: req.user.id,
-            submittedAt: new Date(),
-            verified: false
+            createdAt: new Date(),
+            verified: false,
+            verifiedAt: null
         }, newBotSchema
     );
 
