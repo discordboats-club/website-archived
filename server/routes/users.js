@@ -9,3 +9,12 @@ router.get('/:id', async (req, res) => {
     const user = await r.table('users').get(id).run();
     res.json({ user: req.params.id == 'me' ? user : safeUser(user) });
 });
+
+router.delete('/me', async (req, res) => {
+    if (!req.user) return res.status(403).json({error: 'UnauthorizedError', details: ['Cannot delete nonexistant user']});
+    req.user.bots.forEach(async bot => {
+        await r.table('bots').delete(bot.id).run();
+    });
+    await r.table('users').delete(req.user.id).run();
+    res.sendStatus(200);
+})
