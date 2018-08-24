@@ -3,7 +3,7 @@ const { r } = require('../');
 const { safeUser } = require('../util');
 const router = module.exports = express.Router();
 
-router.get('/user/:id', async (req, res) => {
+router.get('/:id', async (req, res) => {
     let id = req.params.id;
     if (id == 'me' && req.user) id = req.user.id;
     const user = await r.table('users').get(id).run();
