@@ -23,8 +23,13 @@ exports.filterUnexpectedData = (subject, stuffToAdd, schema) => {
     return data;
 }
 
-exports.publicifyUser = user => {
+exports.safeUser = (user) => {
     delete user.discordAT;
     delete user.discordRT;
     return user;
+}
+
+exports.safeBot = (bot) => {
+    delete bot.apiKey;
+    return bot;
 }

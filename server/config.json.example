@@ -4,5 +4,8 @@
     "token": "",
     "callbackURL": "",
     "assetURL": "",
-    "apiURL": ""
+    "apiURL": "",
+
+    "mainGuild": "",
+    "secondaryGuild": ""
 }
