@@ -82,3 +82,13 @@ router.get('/:id', async (req, res) => {
     if (!bot) return res.status(404).json({ error: 'BotRetrievalError', details: ['Invalid bot'] });
     res.json(safeBot(bot));
 });
+
+router.post('/:id/stats', async (req, res) => {
+    if (!handleJoi(req, res, newBotSchema)) return;
+    const bot = await r.table('bots').get(req.params.id).run();
+    if (!bot) return res.status(404).json({ error: 'BotUpdateError', details: ['Invalid bot'] });
+    if (!req.headers.authorization) return res.sendStatus(401);
+    if (bot.apiKey !== req.headers.authorization.split(' ')[1]) return res.sendStatus(403);
+    await r.table('bots').get(req.params.id).update({ guildCount: req.body.guildCount });
+    res.sendStatus(200);
+});
