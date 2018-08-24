@@ -4,11 +4,14 @@ import './App.css';
 import Header from './components/common/Header/Header';
 import Router from './components/common/Router';
 
+import Card from './components/common/BotCard/BotCardSmall';
+
 class App extends Component {
   render() {
     return (
       <div className="App">
         <Header/>
+        <Card />
         <Router/>
       </div>
     );
