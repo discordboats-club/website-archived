@@ -1,6 +1,6 @@
-import {observable, action, computed} from 'mobx';
+import {observable, action} from 'mobx';
 
-export default class Store {
+class Store {
     @observable
     loggedIn = false;
 
@@ -19,3 +19,5 @@ export default class Store {
         this.loggedIn = false;
     }
 }
+
+export default new Store();
