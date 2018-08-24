@@ -51,15 +51,15 @@ router.post('/', async (req, res) => {
     res.sendStatus(200);
 });
 
-router.delete('/', async (req, res) => {
+router.delete('/:id', async (req, res) => {
     if (!req.user) return res.sendStatus(401);
-    if (!req.body.id) return res.status(400).json({ error: 'ValidationError', details: ['"id" is required'] });
-    const bot = await r.table('bots').get(req.body.id).run();
+    if (!req.params.id) return res.sendStatus(400);
+    const bot = await r.table('bots').get(req.params.id).run();
     if (!bot) return res.status(404).json({ error: 'ValidationError', details: ['Invalid bot'] });
     // TODO: allow moderators to delete bots (i need to make a permission system first)
     if (bot.ownerId !== req.user.id) return res.sendStatus(403);
 
-    await r.table('bots').get(req.body.id).delete().run();
+    await r.table('bots').get(req.params.id).delete().run();
 
     const botLogChannel = client.guilds.get(config.mainGuild).channels.find(c => c.name == 'bot-log');
     await botLogChannel.send(`📤 <@${req.user.id}> deleted ${bot.tag}`);
