@@ -35,6 +35,8 @@ router.post('/', async (req, res) => {
             apiKey: randomString.generate(30),
             ownerId: req.user.id,
             createdAt: new Date(),
+            featured: false,
+            premium: false,
             verified: false,
             verifiedAt: null
         }, newBotSchema
