@@ -1,8 +1,6 @@
 const express = require('express');
-const config = require('../config.json');
 const { r } = require('../');
-const { publicifyUser } = require("../util");
-const fetch = require('node-fetch');
+const { publicifyUser } = require('../util');
 const router = module.exports = express.Router();
 
 router.get('/user/:id', async (req, res) => {
