@@ -1,4 +1,17 @@
 const Joi = require('joi');
+const fetch = require('node-fetch');
+
+let badbots;
+
+exports.getBadBots = async () => {
+    if (!badbots) {
+        const res = await fetch("https://i.ronthecookie.me/badbots.txt");
+        badbots = await res.text().split("\n").map(e => e.split(" ")[0]);
+        return badbots;
+    } else {
+        return badbots;
+    }
+}
 
 exports.handleJoi = (req, res, schema) => {
     const result = Joi.validate(req.body, schema);

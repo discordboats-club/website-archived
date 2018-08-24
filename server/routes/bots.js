@@ -2,7 +2,7 @@ const express = require('express');
 const router = module.exports = express.Router();
 const newBotSchema = require('../schemas/new-bot.js');
 const randomString = require('randomstring');
-const { handleJoi, libraries, filterUnexpectedData, safeBot } = require('../util.js');
+const { handleJoi, libraries, filterUnexpectedData, safeBot, getBadBots } = require('../util.js');
 const { r } = require('../');
 const client = require('../client.js');
 const config = require('../config.json');
@@ -11,7 +11,8 @@ router.post('/', async (req, res) => {
     if (!req.user) return res.sendStatus(401);
     if (!handleJoi(req, res, newBotSchema)) return;
 
-    // TODO: deny blacklisted bots 
+    const badBots = await getBadBots();
+    if (badBots.includes(req.body.id)) return res.status(403).json({ error: 'ValidationError', details: ['This bot is blacklisted']});
 
     if (req.body.github && !req.body.github.toLowerCase().startsWith('https://github.com')) return res.status(400).json({ error: 'ValidationError', details: ['Invalid Github URL'] });
     if (req.body.library && !libraries.includes(req.body.library)) return res.status(400).json({ error: 'ValidationError', details: ['Invalid library'] });
