@@ -72,6 +72,11 @@ router.get('/', async (req, res) => {
     res.json(botsFromDatabase.map(bot => safeBot(bot)));
 });
 
+router.get('/featured', async (req, res) => {
+    const featuredBots = await r.table('bots').filter({ featured: true }).run();
+    res.json(featuredBots.map(bot => safeBot(bot)));
+});
+
 router.get('/:id', async (req, res) => {
     const bot = await r.table('bots').get(req.params.id).run();
     if (!bot) return res.status(404).json({ error: 'BotRetrievalError', details: ['Invalid bot'] });
