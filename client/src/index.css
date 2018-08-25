@@ -4,6 +4,11 @@ body {
   font-family: sans-serif;
 }
 
+.container {
+  padding-left: 15%;
+  padding-right: 15%l
+}
+
 /* div[class^="MuiPaper-root"] {
   box-shadow: none;
   right: 0;

@@ -13,10 +13,12 @@ class Router extends Component {
                 <div>
                     <Header />
 
-                    <Switch>
-                      <Route exact path="/terms" component={Terms}/>
-                      <Route exact path="/privacy" component={Privacy}/>
-                    </Switch>
+                    <div className="container">
+                      <Switch>
+                        <Route exact path="/terms" component={Terms}/>
+                        <Route exact path="/privacy" component={Privacy}/>
+                      </Switch>
+                    </div>
                 </div>
             </BrowserRouter>
         );
