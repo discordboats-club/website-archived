@@ -11,6 +11,8 @@ const port = process.env.PORT || 3000;
 const client = require('./client.js');
 client.login(config.token);
 
+app.enable('trust proxy');
+app.use(require('cloudflare-express').restore()); // so we can get their real ip
 app.use(express.json());
 app.use(require('morgan')('dev'));
 

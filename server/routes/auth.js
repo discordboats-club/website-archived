@@ -32,17 +32,33 @@ router.get('/callback', async (req, res) => {
     });
     const user = await userResponse.json();
 
-    await r.table('users').insert({
-        id: user.id,
-        username: user.username,
-        locale: user.locale,
-        avatar: `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`,
-        tag: user.username + '#' + user.discriminator,
+    if (!await r.table('users').get(user.id).run()) {
+        await r.table('users').insert({
+            id: user.id,
+            username: user.username,
+            locale: user.locale,
+            avatar: `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`,
+            tag: user.username + '#' + user.discriminator,
+            discrim: user.discriminator,
+            flags: [],
 
-        discordAT: access.access_token,
-        discordRT: access.refresh_token
-    }, { conflict: 'update' });
+            ips: [req.cf_ip],
 
+            discordAT: access.access_token,
+            discordRT: access.refresh_token
+        }).run();
+    } else {
+        await r.table('users').get(user.id).update({
+            username: user.username,
+            locale: user.locale,
+            avatar: `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`,
+            tag: user.username + '#' + user.discriminator,
+            discrim: user.discriminator,
+
+            discordAT: access.access_token,
+            discordRT: access.refresh_token            
+        }).run();
+    }
     const jwtToken = await jwt.sign(user.id, jwtKey);
     res.send(`<script>opener.postMessage('${jwtToken}', '${config.assetURL + '/dashboard'}'); close();</script>`);
 });

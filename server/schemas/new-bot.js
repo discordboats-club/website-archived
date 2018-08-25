@@ -8,6 +8,5 @@ module.exports = Joi.object().required().keys({
     website: Joi.string().uri({ scheme: ['https'] }),
     github: Joi.string().uri({ scheme: ['https'] }),
     shortDescription: Joi.string().max(2000).required(),
-    longDescription: Joi.string().max(12000).required(),
-    guildCount: null
+    longDescription: Joi.string().max(12000).required()
 });
