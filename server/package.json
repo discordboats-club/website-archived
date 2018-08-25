@@ -1,9 +1,11 @@
 {
   "dependencies": {
     "btoa": "^1.2.1",
+    "cloudflare-express": "^1.0.1",
     "discord.js": "discordjs/discord.js",
     "express": "^4.16.3",
     "express-jwt": "^5.3.1",
+    "express-rate-limit": "^3.1.0",
     "helmet": "^3.13.0",
     "joi": "^13.6.0",
     "jsonwebtoken": "^8.3.0",
@@ -16,4 +18,3 @@
     "start": "node index.js"
   }
 }
-

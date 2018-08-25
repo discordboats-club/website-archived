@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/bin/node /usr/share/yarn/bin/yarn.js add hydrabolt/discord.js
+  /usr/bin/node /usr/share/yarn/bin/yarn.js add express-ratelimit
 
 PATH: 
   /usr/games:/home/daniel/bin:/home/daniel/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/usr/lib/jvm/java-8-oracle/bin:/usr/lib/jvm/java-8-oracle/db/bin:/usr/lib/jvm/java-8-oracle/jre/bin:/opt/etcher-cli
@@ -14,22 +14,23 @@ Platform:
   linux x64
 
 Trace: 
-  Error: https://codeload.github.com/hydrabolt/discord.js/tar.gz/82993fbe510aa3f170708659fc39a3b25d07261b: Request failed "404 Not Found"
-      at ResponseError.ExtendableBuiltin (/usr/share/yarn/lib/cli.js:218:66)
-      at new ResponseError (/usr/share/yarn/lib/cli.js:324:124)
-      at Request.<anonymous> (/usr/share/yarn/lib/cli.js:61013:26)
+  Error: https://registry.yarnpkg.com/express-ratelimit: Not found
+      at Request.params.callback [as _callback] (/usr/share/yarn/lib/cli.js:64202:18)
+      at Request.self.callback (/usr/share/yarn/lib/cli.js:137468:22)
+      at emitTwo (events.js:126:13)
+      at Request.emit (events.js:214:7)
+      at Request.<anonymous> (/usr/share/yarn/lib/cli.js:138440:10)
       at emitOne (events.js:116:13)
       at Request.emit (events.js:211:7)
-      at Request.module.exports.Request.onRequestResponse (/usr/share/yarn/lib/cli.js:138345:10)
-      at emitOne (events.js:116:13)
-      at ClientRequest.emit (events.js:211:7)
-      at HTTPParser.parserOnIncomingClient (_http_client.js:551:21)
-      at HTTPParser.parserOnHeadersComplete (_http_common.js:116:23)
+      at IncomingMessage.<anonymous> (/usr/share/yarn/lib/cli.js:138362:12)
+      at Object.onceWrapper (events.js:313:30)
+      at emitNone (events.js:111:20)
 
 npm manifest: 
   {
     "dependencies": {
       "btoa": "^1.2.1",
+      "discord.js": "discordjs/discord.js",
       "express": "^4.16.3",
       "express-jwt": "^5.3.1",
       "helmet": "^3.13.0",
@@ -39,6 +40,9 @@ npm manifest:
       "node-fetch": "^2.2.0",
       "randomstring": "^1.1.5",
       "rethinkdbdash": "^2.3.31"
+    },
+    "scripts": {
+      "start": "node index.js"
     }
   }
 
@@ -65,9 +69,17 @@ Lockfile:
     version "1.0.2"
     resolved "https://registry.yarnpkg.com/array-uniq/-/array-uniq-1.0.2.tgz#5fcc373920775723cfd64d65c64bef53bf9eba6d"
   
+  async-limiter@~1.0.0:
+    version "1.0.0"
+    resolved "https://registry.yarnpkg.com/async-limiter/-/async-limiter-1.0.0.tgz#78faed8c3d074ab81f22b4e985d79e8738f720f8"
+  
   async@^1.5.0:
     version "1.5.2"
     resolved "https://registry.yarnpkg.com/async/-/async-1.5.2.tgz#ec6a61ae56480c0c3cb241c95618e20892f9672a"
+  
+  asynckit@^0.4.0:
+    version "0.4.0"
+    resolved "https://registry.yarnpkg.com/asynckit/-/asynckit-0.4.0.tgz#c79ed97f7f34cb8f2ba1bc9790bcc366474b4b79"
   
   basic-auth@~2.0.0:
     version "2.0.0"
@@ -110,6 +122,12 @@ Lockfile:
     version "1.0.0"
     resolved "https://registry.yarnpkg.com/camelize/-/camelize-1.0.0.tgz#164a5483e630fa4321e5af07020e531831b2609b"
   
+  combined-stream@1.0.6:
+    version "1.0.6"
+    resolved "https://registry.yarnpkg.com/combined-stream/-/combined-stream-1.0.6.tgz#723e7df6e801ac5613113a7e445a9b69cb632818"
+    dependencies:
+      delayed-stream "~1.0.0"
+  
   content-disposition@0.5.2:
     version "0.5.2"
     resolved "https://registry.yarnpkg.com/content-disposition/-/content-disposition-0.5.2.tgz#0cf68bb9ddf5f2be7961c3a85178cb85dba78cb4"
@@ -140,6 +158,10 @@ Lockfile:
     dependencies:
       ms "2.0.0"
   
+  delayed-stream@~1.0.0:
+    version "1.0.0"
+    resolved "https://registry.yarnpkg.com/delayed-stream/-/delayed-stream-1.0.0.tgz#df3ae199acadfb7d440aaae0b29e2272b24ec619"
+  
   depd@1.1.1:
     version "1.1.1"
     resolved "https://registry.yarnpkg.com/depd/-/depd-1.1.1.tgz#5783b4e1c459f06fa5ca27f991f3d06e7a310359"
@@ -151,6 +173,17 @@ Lockfile:
   destroy@~1.0.4:
     version "1.0.4"
     resolved "https://registry.yarnpkg.com/destroy/-/destroy-1.0.4.tgz#978857442c44749e4206613e37946205826abd80"
+  
+  discord.js@discordjs/discord.js:
+    version "12.0.0-dev"
+    resolved "https://codeload.github.com/discordjs/discord.js/tar.gz/82993fbe510aa3f170708659fc39a3b25d07261b"
+    dependencies:
+      form-data "^2.3.2"
+      node-fetch "^2.1.2"
+      pako "^1.0.0"
+      prism-media amishshah/prism-media
+      tweetnacl "^1.0.0"
+      ws "^6.0.0"
   
   dns-prefetch-control@0.1.0:
     version "0.1.0"
@@ -245,6 +278,14 @@ Lockfile:
       parseurl "~1.3.2"
       statuses "~1.4.0"
       unpipe "~1.0.0"
+  
+  form-data@^2.3.2:
+    version "2.3.2"
+    resolved "https://registry.yarnpkg.com/form-data/-/form-data-2.3.2.tgz#4970498be604c20c005d4f5c23aecd21d6b49099"
+    dependencies:
+      asynckit "^0.4.0"
+      combined-stream "1.0.6"
+      mime-types "^2.1.12"
   
   forwarded@~0.1.2:
     version "0.1.2"
@@ -430,7 +471,7 @@ Lockfile:
     version "1.35.0"
     resolved "https://registry.yarnpkg.com/mime-db/-/mime-db-1.35.0.tgz#0569d657466491283709663ad379a99b90d9ab47"
   
-  mime-types@~2.1.18:
+  mime-types@^2.1.12, mime-types@~2.1.18:
     version "2.1.19"
     resolved "https://registry.yarnpkg.com/mime-types/-/mime-types-2.1.19.tgz#71e464537a7ef81c15f2db9d97e913fc0ff606f0"
     dependencies:
@@ -466,7 +507,7 @@ Lockfile:
     version "2.0.0"
     resolved "https://registry.yarnpkg.com/nocache/-/nocache-2.0.0.tgz#202b48021a0c4cbde2df80de15a17443c8b43980"
   
-  node-fetch@^2.2.0:
+  node-fetch@^2.1.2, node-fetch@^2.2.0:
     version "2.2.0"
     resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.2.0.tgz#4ee79bde909262f9775f731e3656d0db55ced5b5"
   
@@ -480,6 +521,10 @@ Lockfile:
     version "1.0.1"
     resolved "https://registry.yarnpkg.com/on-headers/-/on-headers-1.0.1.tgz#928f5d0f470d49342651ea6794b0857c100693f7"
   
+  pako@^1.0.0:
+    version "1.0.6"
+    resolved "https://registry.yarnpkg.com/pako/-/pako-1.0.6.tgz#0101211baa70c4bca4a0f63f2206e97b7dfaf258"
+  
   parseurl@~1.3.2:
     version "1.3.2"
     resolved "https://registry.yarnpkg.com/parseurl/-/parseurl-1.3.2.tgz#fc289d4ed8993119460c156253262cdc8de65bf3"
@@ -491,6 +536,10 @@ Lockfile:
   platform@1.3.5:
     version "1.3.5"
     resolved "https://registry.yarnpkg.com/platform/-/platform-1.3.5.tgz#fb6958c696e07e2918d2eeda0f0bc9448d733444"
+  
+  prism-media@amishshah/prism-media:
+    version "0.3.1"
+    resolved "https://codeload.github.com/amishshah/prism-media/tar.gz/7146426e462bf91b39053de4cf8b78c72490cd54"
   
   proxy-addr@~2.0.3:
     version "2.0.4"
@@ -593,6 +642,10 @@ Lockfile:
     dependencies:
       hoek "5.x.x"
   
+  tweetnacl@^1.0.0:
+    version "1.0.0"
+    resolved "https://registry.yarnpkg.com/tweetnacl/-/tweetnacl-1.0.0.tgz#713d8b818da42068740bf68386d0479e66fc8a7b"
+  
   type-is@~1.6.15, type-is@~1.6.16:
     version "1.6.16"
     resolved "https://registry.yarnpkg.com/type-is/-/type-is-1.6.16.tgz#f89ce341541c672b25ee7ae3c73dee3b2be50194"
@@ -611,6 +664,12 @@ Lockfile:
   vary@~1.1.2:
     version "1.1.2"
     resolved "https://registry.yarnpkg.com/vary/-/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
+  
+  ws@^6.0.0:
+    version "6.0.0"
+    resolved "https://registry.yarnpkg.com/ws/-/ws-6.0.0.tgz#eaa494aded00ac4289d455bac8d84c7c651cef35"
+    dependencies:
+      async-limiter "~1.0.0"
   
   x-xss-protection@1.1.0:
     version "1.1.0"

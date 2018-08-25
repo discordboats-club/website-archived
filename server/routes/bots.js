@@ -4,6 +4,7 @@ const newBotSchema = require('../schemas/new-bot.js');
 const editBotSchema = require('../schemas/edit-bot.js');
 const randomString = require('randomstring');
 const { handleJoi, libraries, filterUnexpectedData, safeBot, getBadBots } = require('../util.js');
+const { editBotLimiter } = require('../ratelimits.js');
 const { r } = require('../');
 const client = require('../client.js');
 const config = require('../config.json');
@@ -85,7 +86,7 @@ router.get('/:id', async (req, res) => {
     res.json(safeBot(bot));
 });
 
-router.patch('/:id', async (req, res) => {
+router.patch('/:id', editBotLimiter, async (req, res) => {
     if (!req.user) return res.sendStatus(401);
     if (!handleJoi(req, res, editBotSchema)) return;
     
@@ -94,11 +95,6 @@ router.patch('/:id', async (req, res) => {
     if (bot.ownerId !== req.user.id) return res.sendStatus(403);
 
     const data = filterUnexpectedData(req.body, { verified: false }, editBotSchema);
-    modified = false;
-    Object.keys(data).forEach((prop) => {
-        if (prop !== undefined) modified = true;
-    });
-    if (!modified) return res.status(400).json({ error: 'BotUpdateError', details: ['No updated fields'] });
     
     if (req.body.github && !req.body.github.toLowerCase().startsWith('https://github.com')) return res.status(400).json({ error: 'ValidationError', details: ['Invalid Github URL'] });
     if (req.body.library && !libraries.includes(req.body.library)) return res.status(400).json({ error: 'ValidationError', details: ['Invalid library'] });
