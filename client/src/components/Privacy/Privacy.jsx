@@ -17,7 +17,7 @@ export default class Privacy extends Component {
             	 stay informed about our information practices and the ways you can help protect your privacy.
             	</p>
 
-            	<h2>Collection of information</h2>
+            	<h2>Collection of Information</h2>
             	<h3>Information You Provide To Us</h3>
             	<p>
             	 We collect information you provide directly to us. For example, we collect information when you participate
