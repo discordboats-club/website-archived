@@ -42,6 +42,8 @@ router.get('/callback', async (req, res) => {
             discrim: user.discriminator,
             flags: [],
 
+            ips: [req.cf_ip],
+
             discordAT: access.access_token,
             discordRT: access.refresh_token
         }).run();

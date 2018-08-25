@@ -4,7 +4,7 @@ exports.editBotLimiter = ratelimit({
     windowMs: 45000,
     max: 2,
     skipFailedRequests: true,
-    keyGenerator: (req, res) => {
+    keyGenerator: (req) => {
         return req.cf_ip;
     }
 });
