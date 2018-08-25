@@ -4,6 +4,7 @@ import React, {Component} from 'react';
 import Header from './Header/Header';
 
 import Terms from '../ToS/ToS';
+import Privacy from '../Privacy/Privacy';
 
 class Router extends Component {
     render() {
@@ -14,6 +15,7 @@ class Router extends Component {
 
                     <Switch>
                       <Route exact path="/terms" component={Terms}/>
+                      <Route exact path="/privacy" component={Privacy}/>
                     </Switch>
                 </div>
             </BrowserRouter>
