@@ -11,8 +11,6 @@ class App extends Component {
     return (
       <div className="App">
         <Router/>
-      
-        <Card />
       </div>
     );
   }
