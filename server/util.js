@@ -5,8 +5,9 @@ let badbots;
 
 exports.getBadBots = async () => {
     if (!badbots) {
-        const res = await fetch("https://i.ronthecookie.me/badbots.txt");
-        badbots = await res.text().split("\n").map(e => e.split(" ")[0]);
+        const res = await fetch('https://i.ronthecookie.me/badbots.txt');
+        const text = await res.text();
+        badbots = await text.split('\n').map(e => e.split(' ')[0]);
         return badbots;
     } else {
         return badbots;

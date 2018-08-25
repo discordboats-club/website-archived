@@ -1,6 +1,7 @@
 const express = require('express');
 const router = module.exports = express.Router();
 const newBotSchema = require('../schemas/new-bot.js');
+const editBotSchema = require('../schemas/edit-bot.js');
 const randomString = require('randomstring');
 const { handleJoi, libraries, filterUnexpectedData, safeBot, getBadBots } = require('../util.js');
 const { r } = require('../');
@@ -38,7 +39,7 @@ router.post('/', async (req, res) => {
             createdAt: new Date(),
             featured: false,
             premium: false,
-            verified: false,
+            verified: null,
             verifiedAt: null
         }, newBotSchema
     );
@@ -82,6 +83,35 @@ router.get('/:id', async (req, res) => {
     const bot = await r.table('bots').get(req.params.id).run();
     if (!bot) return res.status(404).json({ error: 'BotRetrievalError', details: ['Invalid bot'] });
     res.json(safeBot(bot));
+});
+
+router.patch('/:id', async (req, res) => {
+    if (!req.user) return res.sendStatus(401);
+    if (!handleJoi(req, res, editBotSchema)) return;
+    
+    const bot = await r.table('bots').get(req.params.id).run();
+    if (!bot) return res.status(404).json({ error: 'BotRetrievalError', details: ['Invalid bot'] });
+    if (bot.ownerId !== req.user.id) return res.sendStatus(403);
+
+    const data = filterUnexpectedData(req.body, { verified: false }, editBotSchema);
+    modified = false;
+    Object.keys(data).forEach((prop) => {
+        if (prop !== undefined) modified = true;
+    });
+    if (!modified) return res.status(400).json({ error: 'BotUpdateError', details: ['No updated fields'] });
+    
+    if (req.body.github && !req.body.github.toLowerCase().startsWith('https://github.com')) return res.status(400).json({ error: 'ValidationError', details: ['Invalid Github URL'] });
+    if (req.body.library && !libraries.includes(req.body.library)) return res.status(400).json({ error: 'ValidationError', details: ['Invalid library'] });
+
+    const botUser = client.users.get(bot.id) || await client.users.fetch(bot.id);
+
+    await r.table('bots').get(bot.id).update(data).run();
+    
+    const botLogChannel = client.guilds.get(config.mainGuild).channels.find(c => c.name == 'bot-log');
+    const modRole = client.guilds.get(config.mainGuild).roles.find(r => r.name == 'Moderator');
+    await botLogChannel.send(`📝 <@${req.user.id}> edited **${botUser.tag}** (reverify, <@&${modRole.id}>)`);
+
+    res.sendStatus(200);
 });
 
 router.post('/:id/verify', async (req, res) => {
