@@ -99,7 +99,7 @@ export default class Header extends Component {
                     {this.getLeftButtons()}
 
                     <Button className="discordbtn btn" onClick={this.navigateToDiscord}>
-                        Discord
+                        Our Discord
                     </Button>
                 </div>
             </div>
