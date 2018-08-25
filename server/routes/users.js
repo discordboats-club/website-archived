@@ -11,7 +11,7 @@ router.get('/:id', async (req, res) => {
 });
 
 router.delete('/me', async (req, res) => {
-    if (!req.user) return res.status(403).json({ error: 'UnauthorizedError', details: ['Not logged in'] });
+    if (!req.user) return res.sendStatus(401);
     req.user.bots.forEach(async bot => {
         await r.table('bots').delete(bot.id).run();
     });
