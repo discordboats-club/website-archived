@@ -20,7 +20,7 @@ router.post('/', async (req, res) => {
     const botUser = client.users.get(req.body.id) || await client.users.fetch(req.body.id);
     const ownerUser = await client.users.fetch(req.user.id);
     if (!ownerUser) return res.status(400).json({ error: 'ValidationError', details: ['Owner is not in discordboats discord guild'] });
-    if (!botUser) return res.status(404).json({ error: 'ValidationError', details: ['Invalid bot'] });
+    if (!botUser) return res.status(404).json({ error: 'BotRetrievalError', details: ['Invalid bot'] });
     if (!botUser.bot) return res.status(400).json({ error: 'ValidationError', details: ['Bot must be a bot'] });
 
     if (await r.table('bots').get(req.body.id).run()) return res.status(409).json({ error: 'ValidationError', details: ['Bot already exists'] });
@@ -47,16 +47,16 @@ router.post('/', async (req, res) => {
 
     const botLogChannel = client.guilds.get(config.mainGuild).channels.find(c => c.name == 'bot-log');
     const modRole = client.guilds.get(config.mainGuild).roles.find(r => r.name == 'Moderator');
-    await botLogChannel.send(`📥 <@${req.user.id}> added ${botUser.tag} (<@&${modRole.id}>)`);
+    await botLogChannel.send(`📥 <@${req.user.id}> added **${botUser.tag}** (<@&${modRole.id}>)`);
 
-    res.sendStatus(200);
+    res.sendStatus(201);
 });
 
 router.delete('/:id', async (req, res) => {
     if (!req.user) return res.sendStatus(401);
     if (!req.params.id) return res.sendStatus(400);
     const bot = await r.table('bots').get(req.params.id).run();
-    if (!bot) return res.status(404).json({ error: 'ValidationError', details: ['Invalid bot'] });
+    if (!bot) return res.status(404).json({ error: 'BotRetrievalError', details: ['Invalid bot'] });
     // TODO: allow moderators to delete bots (i need to make a permission system first)
     if (bot.ownerId !== req.user.id) return res.sendStatus(403);
 
@@ -84,10 +84,23 @@ router.get('/:id', async (req, res) => {
     res.json(safeBot(bot));
 });
 
+router.post('/:id/verify', async (req, res) => {
+    // TODO: check if user is a mod
+    if (!req.user || !req.user.flags.includes('MODERATOR')) return res.sendStatus(403);
+    const bot = await r.table('bots').get(req.params.id).run();
+    if (!bot) return res.status(404).json({ error: 'BotRetrievalError', details: ['Invalid bot'] });
+    update = { verified: !bot.verified }
+    if (!bot.verifiedAt && update.verified == true) update.verifiedAt = new Date();
+    await r.table('bots').get(req.params.id).update(update);
+    const botLogChannel = client.guilds.get(config.mainGuild).channels.find(c => c.name == 'bot-log');
+    await botLogChannel.send(`${update.verified ? '🎉' : '😦'} <@${req.user.id}> ${update.verified ? '' : 'un'}verified **${bot.tag}** by <@${bot.ownerId}>`);    
+    res.json({ verified: !bot.verified });
+});
+
 router.post('/:id/stats', async (req, res) => {
     if (!handleJoi(req, res, newBotSchema)) return;
     const bot = await r.table('bots').get(req.params.id).run();
-    if (!bot) return res.status(404).json({ error: 'BotUpdateError', details: ['Invalid bot'] });
+    if (!bot) return res.status(404).json({ error: 'BotRetrievalError', details: ['Invalid bot'] });
     if (!req.headers.authorization) return res.sendStatus(401);
     if (bot.apiKey !== req.headers.authorization.split(' ')[1]) return res.sendStatus(403);
     await r.table('bots').get(req.params.id).update({ guildCount: req.body.guildCount });
