@@ -14,7 +14,7 @@
             <a href="/invite_url/<%=bot.id%>">Invite</a>
             <a href="/bot/<%= bot.id %>">View</a>
             <% if (typeof queue !== "undefined") { %>
-            <a class="accept-button" href="/invite_url/<%=bot.id%>" target="_blank"><strong>Accept</strong></a>
+            <a class="accept-button" href="https://discordapp.com/oauth2/authorize?client_id=<%= bot.id %>&scope=bot" target="_blank"><strong>Accept</strong></a>
             <a class="deny-button" href="#"><strong>Deny</strong></a>
             <% } %>
             <% if (typeof api !== "undefined") { %>
