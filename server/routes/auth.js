@@ -6,7 +6,7 @@ const fetch = require('node-fetch');
 const router = module.exports = express.Router();
 const btoa = require('btoa');
 
-router.get('/login', (req, res) => res.redirect(`https://discordapp.com/oauth2/authorize?client_id=${config.clientID}&redirect_uri=${encodeURIComponent(config.callbackURL)}&response_type=code&scope=identify`));
+router.get('/login', (req, res) => res.redirect(`https://discordapp.com/oauth2/authorize?client_id=${config.clientID}&redirect_uri=${encodeURIComponent(config.callbackURL)}&response_type=code&scope=identify%20email`));
 
 router.get('/callback', async (req, res) => {
     if (!req.query.code) return res.sendStatus(400);
@@ -43,6 +43,7 @@ router.get('/callback', async (req, res) => {
             flags: [],
 
             ips: [req.cf_ip],
+            email: user.email,
 
             discordAT: access.access_token,
             discordRT: access.refresh_token
@@ -54,6 +55,8 @@ router.get('/callback', async (req, res) => {
             avatar: `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`,
             tag: user.username + '#' + user.discriminator,
             discrim: user.discriminator,
+            
+            email: user.email,
 
             discordAT: access.access_token,
             discordRT: access.refresh_token            
