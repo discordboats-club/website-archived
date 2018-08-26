@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { HashRouter, Route, Switch } from 'react-router-dom';
 import React, {Component} from 'react';
 
 import Header from './Header/Header';
@@ -9,7 +9,7 @@ import Privacy from '../Privacy/Privacy';
 class Router extends Component {
     render() {
         return (
-            <BrowserRouter>
+            <HashRouter>
                 <div>
                     <Header />
 
@@ -20,7 +20,7 @@ class Router extends Component {
                       </Switch>
                     </div>
                 </div>
-            </BrowserRouter>
+            </HashRouter>
         );
     }
 }
