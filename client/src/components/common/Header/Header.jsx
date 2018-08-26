@@ -15,6 +15,8 @@ import './Header.css';
 
 import { Link } from 'react-router-dom';
 
+import login from '../../../api/login';
+
 @observer
 export default class Header extends Component {
     @observable
@@ -34,8 +36,8 @@ export default class Header extends Component {
 
         return (
             <div className ="search">
-                <input 
-                    onKeyDown={this.handleKeyDown} 
+                <input
+                    onKeyDown={this.handleKeyDown}
                     type="text"
                     maxLength={19}
                     placeholder="Search Bots"
@@ -55,12 +57,16 @@ export default class Header extends Component {
 
         }
     }
-    
+
+    login = () => {
+      console.log('login opened');
+      login();
+    }
 
     getLeftButtons() {
         if(!store.loggedIn) {
             return (
-                <Button className="loginbtn btn">
+                <Button className="loginbtn btn" onClick={this.login}>
                     Login
                 </Button>
             );
@@ -104,7 +110,7 @@ export default class Header extends Component {
                 </div>
             </div>
         );
-    } 
+    }
 
     navigateToDiscord() {
         window.location = 'https://discord.gg/BJQKpts';
