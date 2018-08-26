@@ -9,7 +9,7 @@ import Privacy from '../Privacy/Privacy';
 class Router extends Component {
     render() {
         return (
-            <BrowserRouter>
+          <BrowserRouter>
                 <div>
                     <Header />
 
@@ -20,7 +20,7 @@ class Router extends Component {
                       </Switch>
                     </div>
                 </div>
-            </BrowserRouter>
+          </BrowserRouter>
         );
     }
 }
