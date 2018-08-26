@@ -41,7 +41,8 @@ router.post('/', async (req, res) => {
             featured: false,
             premium: false,
             verified: null,
-            verifiedAt: null
+            verifiedAt: null,
+            verifiedBy: null
         }, newBotSchema
     );
 
@@ -50,6 +51,7 @@ router.post('/', async (req, res) => {
     const botLogChannel = client.guilds.get(config.mainGuild).channels.find(c => c.name == 'bot-log');
     const modRole = client.guilds.get(config.mainGuild).roles.find(r => r.name == 'Moderator');
     await botLogChannel.send(`📥 <@${req.user.id}> added **${botUser.tag}** (<@&${modRole.id}>)`);
+    await ownerUser.send(`📥 Your bot **${botUser.tag}** has been added to the queue! Please wait for a moderator to review it.`);
 
     res.sendStatus(201);
 });
@@ -66,6 +68,9 @@ router.delete('/:id', async (req, res) => {
 
     const botLogChannel = client.guilds.get(config.mainGuild).channels.find(c => c.name == 'bot-log');
     await botLogChannel.send(`📤 <@${req.user.id}> deleted ${bot.tag}`);
+
+    const ownerUser = await client.users.fetch(req.user.id);
+    if (ownerUser) ownerUser.send(`📤 Your bot **${bot.tag}** has been deleted by <@${req.user.id}>`);    
 
     res.sendStatus(200);
 });
@@ -111,16 +116,17 @@ router.patch('/:id', editBotLimiter, async (req, res) => {
 });
 
 router.post('/:id/verify', async (req, res) => {
-    // TODO: check if user is a mod
     if (!req.user || !req.user.flags.includes('MODERATOR')) return res.sendStatus(403);
+    if (req.query.verified == null) return res.sendStatus(400);
     const bot = await r.table('bots').get(req.params.id).run();
     if (!bot) return res.status(404).json({ error: 'BotRetrievalError', details: ['Invalid bot'] });
-    update = { verified: !bot.verified }
-    if (!bot.verifiedAt && update.verified == true) update.verifiedAt = new Date();
-    await r.table('bots').get(req.params.id).update(update);
+    await r.table('bots').get(req.params.id).update({ verified: req.query.verified, verifiedAt: Date.now(), verifiedBy: req.user.id }).run();
+    if (!JSON.parse(req.query.verified)) await r.table('bots').get(req.params.id).delete().run();
     const botLogChannel = client.guilds.get(config.mainGuild).channels.find(c => c.name == 'bot-log');
-    await botLogChannel.send(`${update.verified ? '🎉' : '😦'} <@${req.user.id}> ${update.verified ? '' : 'un'}verified **${bot.tag}** by <@${bot.ownerId}>`);    
-    res.json({ verified: !bot.verified });
+    await botLogChannel.send(`${JSON.parse(req.query.verified) ? '🎉' : '😦'} <@${req.user.id}> ${JSON.parse(req.query.verified) ? 'verified' : 'deleted'} **${bot.tag}** by <@${bot.ownerId}>`);    
+    const ownerUser = await client.users.fetch(bot.ownerId);
+    await ownerUser.send(`${JSON.parse(req.query.verified) ? '🎉' : '😦'} Your bot **${bot.tag}** has been ${JSON.parse(req.query.verified) ? 'verified' : 'deleted'}`);
+    res.json({ verified: req.query.verified });
 });
 
 router.post('/:id/stats', async (req, res) => {
