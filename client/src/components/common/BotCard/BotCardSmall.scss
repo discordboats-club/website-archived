@@ -1,14 +1,15 @@
 @import url("https://fonts.googleapis.com/css?family=Lato|M+PLUS+Rounded+1c");
 
+$width: 196px;
 
 .card {
     display: inline-block;
-    width: 196px;
+    width: $width;
     height: 256px;
 }
 
 .card > .details {
     height: 64px;
-    width: 196px;
+    width: $width;
     background-color: gray;
 }

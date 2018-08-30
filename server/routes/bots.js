@@ -37,6 +37,7 @@ router.post('/', async (req, res) => {
             inviteClicks: 0,
             apiKey: randomString.generate(30),
             ownerId: req.user.id,
+            otherOwnersIds: req.others ? req.others.split(/(\d+)(,\s*\d+)*/) : [], // https://stackoverflow.com/questions/1396084/regex-for-comma-delimited-list
             createdAt: new Date(),
             featured: false,
             premium: false,
