@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import './BotCardSmall.css'
+import './BotCardSmall.scss'
 
 export default class BotCardSmall extends Component {
     constructor(props) {

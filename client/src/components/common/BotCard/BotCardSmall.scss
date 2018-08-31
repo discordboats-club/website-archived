@@ -1,24 +1,27 @@
 @import url("https://fonts.googleapis.com/css?family=Lato|M+PLUS+Rounded+1c");
 
 $width: 196px;
+$spacer: 1em;
 
 .card {
     display: inline-block;
     width: $width;
     height: 256px;
     
-    & > .details {
+    & .details {
         height: 64px;
         width: $width;
         background-color: gray;
     }
     
-    & > .image {
+    & .image {
         height: $width;
         width: $width;
     }
     
-    & > ul.horizontal-list li {
+    & ul.horizontal-list li {
         display: inline;
+        border-radius: $spacer / 2;
+        padding: $spacer / 3;
     }
 }
