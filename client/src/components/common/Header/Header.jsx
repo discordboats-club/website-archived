@@ -11,7 +11,7 @@ import {observable, action} from 'mobx';
 
 import store from '../../../store';
 
-import './Header.css';
+import './Header.scss';
 
 import { Link } from 'react-router-dom';
 

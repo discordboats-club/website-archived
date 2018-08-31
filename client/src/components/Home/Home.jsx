@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import BotCardSmall from "./common/BotCard/BotCardSmall"
+import BotCardSmall from "../common/BotCard/BotCardSmall"
 
 import './Home.scss'
 
-export default class BotCardSmall extends Component {
+export default class Home extends Component {
     constructor(props) {
         super(props)
         this.bots = [ // some test data, soon will be replaced with `props.bots`
@@ -20,7 +20,7 @@ export default class BotCardSmall extends Component {
                 username: "Mini Me",
                 avatarUrl: "https://this-is-why.nobody-loves.me/i/a9d9g7n1.png",
                 shortDesc: "Another Boat",
-                premium: true,
+                premium: false,
                 botTags: ['sidekick', 'bot']
             }
         ]
