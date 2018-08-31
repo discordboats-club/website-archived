@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css?family=Nova+Mono');
+
+$height: 50px;
+
+.header {
+    background-color: #7289DA;
+    width: 100%;
+    height: $height;
+    top: 0;
+    left: 0;
+    
+    & img {
+        position: absolute;
+        left: 2px;
+        height: $height;
+    }
+    
+    & .leftbuttons {
+        height: $height;
+        width: 100%;
+        line-height: inherit;
+        
+        & .btn {
+            float: right;
+            line-height: inherit;
+            height: inherit;
+            right: 0;
+            color: white;
+        
+            height: 100%;
+            right: 10px;
+        }
+        
+        & div {
+            height: inherit;
+            float: right;
+            border-radius: 0;
+        }
+    }
+    
+    & .search input {
+        padding: 0;
+        margin: 0;
+    
+        float: left;
+        margin-left: 10%;
+        margin-top: 5px;
+        height: 35px;
+    
+        font-size: 24px;
+        text-align: center;
+        font-family: Nova Mono, monospace;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .header .search {
+        display: none;
+    }
+}
+
+
