@@ -6,10 +6,19 @@ $width: 196px;
     display: inline-block;
     width: $width;
     height: 256px;
-}
-
-.card > .details {
-    height: 64px;
-    width: $width;
-    background-color: gray;
+    
+    & > .details {
+        height: 64px;
+        width: $width;
+        background-color: gray;
+    }
+    
+    & > .image {
+        height: $width;
+        width: $width;
+    }
+    
+    & > ul.horizontal-list li {
+        display: inline;
+    }
 }
