@@ -33,11 +33,18 @@ router.post('/', async (req, res) => {
             discrim: botUser.discriminator,
             tag: botUser.tag,
             avatarUrl: botUser.avatarURL(),
+            shortDesc: req.body.shortDesc,
+            longDesc: req.body.longDesc,
             views: 0,
             inviteClicks: 0,
             apiKey: randomString.generate(30),
             ownerId: req.user.id,
+<<<<<<< HEAD
             otherOwnersIds: req.others ? req.others.split(/(\d+)(,\s*\d+)*/) : [], // https://stackoverflow.com/questions/1396084/regex-for-comma-delimited-list
+=======
+            otherOwnersIds: req.others ? req.others.split(/(\d+)(,\s*\d+)*/) : [], // https://stackoverflow.com/questions/1396084/regex-for-comma-delimited-list,
+            botTags: req.botTags ? req.botTags.split(/(\d+)(,\s*\d+)*/) : [],
+>>>>>>> 414d14fd0f3c3cc1c40c7db420594095092a7bb9
             createdAt: new Date(),
             featured: false,
             premium: false,

@@ -22,7 +22,7 @@ export default class APIDocs extends Component {
 
     render() {
         return (
-            <div className="APIDocs">
+            <div className="page">
 				<Markdown source={this.markdown} />
             </div>
         );
