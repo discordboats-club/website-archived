@@ -24,4 +24,3 @@ export default class BotCardSmall extends Component {
 BotCardSmall.propTypes = {
     bot: PropTypes.object
 }
-
