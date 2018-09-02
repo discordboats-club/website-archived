@@ -10,6 +10,12 @@ const config = require("./config");
 const minifyHTML = require("express-minify-html");
 const RethinkStore = require("session-rethinkdb")(session);
 const port = process.env.PORT || require("./config.json").listeningPort || 3000;
+var Rollbar = require("rollbar");
+var rollbar = new Rollbar({
+  accessToken: 'b05c36139ad24f8b8953343ac8c7ff7e',
+  captureUncaught: true,
+  captureUnhandledRejections: true
+});
 
 const app = module.exports = express();
 // const client = require("./bot");
@@ -86,4 +92,7 @@ app.use((req, res) => {
     res.status(404).render("404", {user: req.user});
 });
 
-app.listen(port, () => console.log(`Listening on port ${port}.`));
+app.listen(port, () => {
+    console.log(`Listening on port ${port}.`)
+    rollbar.log(`Listening on port ${port}.`)
+});
