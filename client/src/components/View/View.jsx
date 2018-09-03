@@ -4,11 +4,14 @@ import PropTypes from 'prop-types'
 import Markdown from 'react-markdown';
 
 import './View.scss'
+const prodURL = "https://api.discordboats.club/api/bots"
+const devURL = "https://dboatsapi.sdfx.ga/api/bots"
 
 export default class View extends Component {
     constructor(props) {
         super(props)
-        this.bot = props.bot
+        this.match = props.match
+        this.bot = JSON.parse(fetch(devURL)).find(b => this.match.params.id === b.botId)
     }
     
     render() {

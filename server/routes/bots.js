@@ -36,6 +36,7 @@ router.post('/', async (req, res) => {
             shortDesc: req.body.shortDesc,
             longDesc: req.body.longDesc,
             views: 0,
+            botId: req.body.clientId,
             inviteClicks: 0,
             apiKey: randomString.generate(30),
             ownerId: req.user.id,
