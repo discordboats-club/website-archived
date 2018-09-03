@@ -11,7 +11,7 @@ export default class View extends Component {
     constructor(props) {
         super(props)
         this.match = props.match
-        this.bot = JSON.parse(fetch(devURL)).find(b => this.match.params.id === b.botId)
+        this.bot = JSON.parse(fetch(devURL)).find(b => this.match.params.id === b.id)
     }
     
     render() {
