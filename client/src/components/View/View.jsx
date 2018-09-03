@@ -14,15 +14,15 @@ export default class View extends Component {
     render() {
         return (
             <div className="page">
-                <div class="sidebar">
+                <aside>
                     <img src={this.bot.avatarUrl} alt={`${this.bot.username}'s icon`} className="image"/>
                     <h3>{this.bot.username + this.bot.premium ? <small>[premium]</small> : ''}</h3>
                     <p>{this.bot.shortDesc}</p>
                     <ul className="horizontal-list">
                         {this.bot.botTags.map(tag => {<li className="tag">{tag}</li>})}
                     </ul>
-                </div>
-                <div className="main-article">
+                </aside>
+                <article>
                     <img src={this.bot.avatarUrl} alt={`${this.bot.username}'s icon`} className="image-center"/>
                     <h1>{this.bot.tag}</h1>
                     <ul className="attr-list">
@@ -30,7 +30,7 @@ export default class View extends Component {
                         {this.bot.premium ? <li className="attr">Premium</li> : ''}
                     </ul>
                     <Markdown source={this.bot.longDesc} />
-                </div>
+                </article>
             </div>
         )
     }
