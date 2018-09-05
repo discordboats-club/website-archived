@@ -1,9 +1,51 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway:300');
+
+$spacer:        1rem;
+$no-margin:     0;
+$border-radius: .25rem;
+$box-spacer-y:  .75rem;
+$box-spacer-x:  1.25rem;
+
 article {
-  float: right;
-  width: 600px / 960px * 100%;
+	float: right;
+	width: 600px / 960px * 100%;
+	
+	& img.image-center {
+		height: 256px;
+		width: 256px;
+	}
 }
 
 aside {
-  float: left;
-  width: 300px / 960px * 100%;
+	float: left;
+	width: 300px / 960px * 100%;
+	
+	& ul.horizontal-list li {
+		display: inline;
+		border-radius: $border-radius;
+		padding: $spacer / 3;
+	}
+	
+	& img.image {
+		width: 100%;
+		margin-top: $no-margin;
+		margin-right: $no-margin;
+		margin-left: $no-margin;
+		margin-bottom: $box-spacer-y;
+	}
+	
+	& ul.attr-list li {
+		display: inline;
+		border-radius: $border-radius;
+		padding: $spacer / 4;
+	}
+  	
+  	& h3 {
+  		font-family: 'Raleway', sans-serif;
+  		
+  		& small.premium {
+  			color: #6c757d;
+  		}
+  	}
 }
+
