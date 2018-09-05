@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
+import { Label, Card } from 'semantic-ui-react';
+
 import './BotCardSmall.scss'
 
 export default class BotCardSmall extends Component {
@@ -11,17 +13,13 @@ export default class BotCardSmall extends Component {
     
     render() {
         return (
-            <div className="card">
-                <img src={this.bot.avatarUrl} alt={`${this.bot.username}'s icon`} className="image"/>
-                <div className="details">
-                    <h2>{this.bot.username + this.bot.premium ? <small>[premium]</small> : ''}</h2>
-                    <p>{this.bot.shortDesc}</p>
-                    <h5>Tags</h5>
-                    <ul className="horizontal-list">
-                        {this.bot.botTags.map(tag => {<li className="tag">{tag}</li>})}
-                    </ul>
-                </div>
-            </div>
+            <Card
+                image={this.bot.avatarURL}
+                header={this.bot.username}
+                meta={this.bot.library}
+                description={this.bot.shortDesc}
+                extra={this.bot.botTags.map(t => {<Label color='blue'>{t}</Label>})}
+            />
         )
     }
 }

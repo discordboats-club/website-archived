@@ -1,8 +1,9 @@
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import React, {Component} from 'react';
+import React, { Component } from 'react';
+import { Container } from 'semantic-ui-react';
 
 import Header from './Header/Header';
-import Footer from './Footer/Footer'
+import Footer from './Footer/Footer';
 
 import Terms from '../ToS/ToS';
 import Privacy from '../Privacy/Privacy';
@@ -17,7 +18,7 @@ class Router extends Component {
                 <div>
                     <Header />
 
-                    <div className="container">
+                    <Container text>
                       <Switch>
                         <Route exact path="/" component={Home}/>
                         <Route path="/terms" component={Terms}/>
@@ -25,7 +26,7 @@ class Router extends Component {
                         <Route path="/api" component={APIDocs}/>
                         <Route path="/view/:id" component={View}/>
                       </Switch>
-                    </div>
+                    </Container>
                     
                     <Footer />
                 </div>

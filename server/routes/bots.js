@@ -32,7 +32,7 @@ router.post('/', async (req, res) => {
             username: botUser.username,
             discrim: botUser.discriminator,
             tag: botUser.tag,
-            avatarUrl: botUser.avatarURL(),
+            avatarUrl: botUser.displayAvatarURL(),
             shortDesc: req.body.shortDesc,
             longDesc: req.body.longDesc,
             views: 0,
@@ -47,7 +47,10 @@ router.post('/', async (req, res) => {
             premium: false,
             verified: null,
             verifiedAt: null,
-            verifiedBy: null
+            verifiedBy: null,
+            library: req.body.library,
+            website: req.body.website ? req.body.website : null,
+            github: req.body.github ? req.body.github : null
         }, newBotSchema
     );
 
