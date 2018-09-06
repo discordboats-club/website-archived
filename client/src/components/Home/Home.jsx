@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
+import { Helmet } from "react-helmet";
+
 import BotCardSmall from "../common/BotCard/BotCardSmall"
 
 import { BASE } from '../../api/index'
