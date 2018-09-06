@@ -3,32 +3,32 @@ import PropTypes from 'prop-types'
 
 import BotCardSmall from "../common/BotCard/BotCardSmall"
 
+import { BASE } from '../../api/index'
+
 import './Home.scss'
 
 export default class Home extends Component {
     constructor(props) {
         super(props)
-        this.bots = [ // some test data, soon will be replaced with `props.bots`
-            {
-                username: "List Boat",
-                avatarUrl: "https://this-is-why.nobody-loves.me/i/a9d9g7n1.png",
-                shortDesc: "A Boat",
-                premium: true,
-                botTags: ['list', 'bot']
-            },
-            {
-                username: "Mini Me",
-                avatarUrl: "https://this-is-why.nobody-loves.me/i/a9d9g7n1.png",
-                shortDesc: "Another Boat",
-                premium: false,
-                botTags: ['sidekick', 'bot']
-            }
-        ]
+    }
+    
+    async componentWillMount() {
+        let res = await fetch(BASE + 'api/bots')
+        this.bots = await JSON.parse(res)
     }
     
     render() {
         return (
             <div className="page">
+                <Helmet>
+                    <title>Discordboats | Home</title>
+                    
+                    <meta property='og:title' content='Discordboats | Home' />
+                    <meta property='og:url' content='https://discordboats.club/'/>
+                    <meta property='og:site_name' content='discordboats.club' />
+                    <meta property='og:type' content='website' />
+                    <meta property='og:image' content='LOGO URL' />
+                </Helmet>
                 {this.bots.map(bot => {<BotCardSmall bot={bot} />})}
             </div>
         )
