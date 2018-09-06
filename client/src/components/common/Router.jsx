@@ -21,10 +21,10 @@ class Router extends Component {
                     <Container text>
                       <Switch>
                         <Route exact path="/" component={Home}/>
-                        <Route path="/terms" component={Terms}/>
-                        <Route path="/privacy" component={Privacy}/>
-                        <Route path="/api" component={APIDocs}/>
-                        <Route path="/view/:id" component={View}/>
+                        <Route exact path="/terms" component={Terms}/>
+                        <Route exact path="/privacy" component={Privacy}/>
+                        <Route exact path="/api" component={APIDocs}/>
+                        <Route exact path="/view/:id" component={View}/>
                       </Switch>
                     </Container>
                     
