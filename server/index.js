@@ -6,7 +6,7 @@ const config = require('./config.json');
 const r = module.exports.r = require('rethinkdbdash')({ db: 'discordboatsclub_v2', port: 28016 });
 const jwtKey = module.exports.jwtKey = require('fs').readFileSync('jwt.key').toString();
 
-const port = process.env.PORT || 9998;
+const port = process.env.PORT || 3000;
 
 const client = require('./client.js');
 client.login(config.token);
