@@ -12,11 +12,12 @@ import './Home.scss'
 export default class Home extends Component {
     constructor(props) {
         super(props)
+        this.bots = []
     }
     
     async componentWillMount() {
-        let res = await fetch(BASE + 'api/bots')
-        this.bots = await JSON.parse(res)
+        let res = await fetch(BASE + '/api/bots')
+        this.bots = JSON.parse(res)
     }
     
     render() {
