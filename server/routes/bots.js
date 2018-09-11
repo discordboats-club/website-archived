@@ -85,7 +85,9 @@ router.delete('/:id', async (req, res) => {
 
 router.get('/', async (req, res) => {
     const botsFromDatabase = await r.table('bots').run();
-    res.json(botsFromDatabase.map(bot => safeBot(bot)));
+    res.json({
+        bots: botsFromDatabase.map(bot => safeBot(bot))
+    });
 });
 
 router.get('/featured', async (req, res) => {

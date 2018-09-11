@@ -21,7 +21,7 @@ export default class Home extends Component {
         const res = await fetch(BASE + '/api/bots', {
             mode: 'no-cors'
         })
-        this.bots = res.json()
+        this.bots = res.json().bots
     }
     
     render() {
