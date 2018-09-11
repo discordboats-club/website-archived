@@ -1,3 +1,5 @@
+/* global fetch */
+
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
@@ -16,10 +18,9 @@ export default class Home extends Component {
     }
     
     async componentWillMount() {
-        let res = await fetch(BASE + '/api/bots', {
+        this.bots = await fetch(BASE + '/api/bots', {
             mode: 'no-cors'
         })
-        this.bots = JSON.parse(res)
     }
     
     render() {
