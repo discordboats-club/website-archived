@@ -18,9 +18,10 @@ export default class Home extends Component {
     }
     
     async componentWillMount() {
-        this.bots = await fetch(BASE + '/api/bots', {
+        const res = await fetch(BASE + '/api/bots', {
             mode: 'no-cors'
         })
+        this.bots = res.json()
     }
     
     render() {
