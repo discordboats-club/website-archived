@@ -75,3 +75,9 @@ typings/
 
 # Serverless directories
 .serverless
+
+# Yarn lockfile
+yarn.lock
+
+# ENV variables lul
+.env

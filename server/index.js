@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const fs = require('fs');
 const config = require('./config.json');
+const cors = require('cors')
 
 const r = module.exports.r = require('rethinkdbdash')({ db: 'discordboatsclub_v2', port: 28016 });
 const jwtKey = module.exports.jwtKey = require('fs').readFileSync('jwt.key').toString();
@@ -10,6 +11,13 @@ const port = process.env.PORT || 3000;
 
 const client = require('./client.js');
 client.login(config.token);
+
+var corsOptions = {
+  origin: process.env.REACT_APP_WEB_BASE,
+  optionsSuccessStatus: 200 
+}
+
+app.use(cors(corsOptions))
 
 app.enable('trust proxy');
 app.use(require('cloudflare-express').restore()); // so we can get their real ip
