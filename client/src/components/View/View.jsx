@@ -18,7 +18,9 @@ export default class View extends Component {
     }
     
     async componentWillMount() {
-        let res = await fetch(BASE + 'api/bots/' + this.id)
+        let res = await fetch(BASE + 'api/bots/' + this.id, {
+            mode: 'no-cors'
+        })
         this.bot = await JSON.parse(res)
     }
     
