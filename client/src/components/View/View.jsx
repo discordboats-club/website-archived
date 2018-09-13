@@ -1,27 +1,27 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Markdown from 'react-markdown';
 import { Image, List, Header, Divider, Label, Segment } from 'semantic-ui-react';
 import { Helmet } from "react-helmet";
 
-import { BASE } from '../../api/index'
+import { BASE } from '../../api/index';
 
-import './View.scss'
-const prodURL = "https://api.discordboats.club/api/bots"
-const devURL = "https://dboatsapi.sdfx.ga/api/bots"
+import './View.scss';
+
+import fetch from 'node-fetch';
 
 export default class View extends Component {
     constructor(props) {
-        super(props)
-        this.id = props.params.id
+        super(props);
+        this.id = props.params.id;
     }
     
     async componentWillMount() {
-        let res = await fetch(BASE + 'api/bots/' + this.id, {
+        fetch(`${BASE}/api/bots`, {
             mode: 'no-cors'
-        })
-        this.bot = await JSON.parse(res)
+        }).then(res => res.json()).then(json => {
+            this.bot = json;
+        });
     }
     
     render() {

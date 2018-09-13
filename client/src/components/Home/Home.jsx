@@ -1,27 +1,27 @@
-/* global fetch */
-
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Helmet } from "react-helmet";
 
-import BotCardSmall from "../common/BotCard/BotCardSmall"
+import BotCardSmall from "../common/BotCard/BotCardSmall";
 
-import { BASE } from '../../api/index'
+import { BASE } from '../../api/index';
 
-import './Home.scss'
+import fetch from 'node-fetch';
+
+import './Home.scss';
 
 export default class Home extends Component {
     constructor(props) {
-        super(props)
-        this.bots = []
+        super(props);
+        this.bots = [];
     }
     
     async componentWillMount() {
-        const res = await fetch(BASE + '/api/bots', {
+        fetch(`${BASE}/api/bots`, {
             mode: 'no-cors'
-        })
-        this.bots = res.json().bots
+        }).then(res => res.json()).then(json => {
+            this.bots = json.bots;
+        });
     }
     
     render() {
@@ -38,10 +38,10 @@ export default class Home extends Component {
                 </Helmet>
                 {this.bots.map(bot => {<BotCardSmall bot={bot} />})}
             </div>
-        )
+        );
     }
 }
 
-BotCardSmall.propTypes = {
+Home.propTypes = {
     bots: PropTypes.array
-}
+};
