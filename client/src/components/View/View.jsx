@@ -8,8 +8,6 @@ import { BASE } from '../../api/index';
 
 import './View.scss';
 
-import fetch from 'node-fetch';
-
 export default class View extends Component {
     constructor(props) {
         super(props);
@@ -17,11 +15,9 @@ export default class View extends Component {
     }
     
     async componentWillMount() {
-        fetch(`${BASE}/api/bots`, {
-            mode: 'no-cors'
-        }).then(res => res.json()).then(json => {
-            this.bot = json;
-        });
+        const res = await fetch(`${BASE}/api/bots${this.id}`, { mode: 'no-cors' });
+        const json = await res.json();
+        this.bot = json;
     }
     
     render() {

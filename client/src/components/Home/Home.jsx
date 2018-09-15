@@ -6,8 +6,6 @@ import BotCardSmall from "../common/BotCard/BotCardSmall";
 
 import { BASE } from '../../api/index';
 
-import fetch from 'node-fetch';
-
 import './Home.scss';
 
 export default class Home extends Component {
