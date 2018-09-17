@@ -9,43 +9,18 @@ $box-spacer-x:  1.25rem;
 article {
 	float: right;
 	width: 600px / 960px * 100%;
-	
-	& img.image-center {
-		height: 256px;
-		width: 256px;
-	}
+	position: absolute;
+	right: 0;
+	top: 0;
+	height: 100%;
 }
 
 aside {
 	float: left;
 	width: 300px / 960px * 100%;
-	
-	& ul.horizontal-list li {
-		display: inline;
-		border-radius: $border-radius;
-		padding: $spacer / 3;
-	}
-	
-	& img.image {
-		width: 100%;
-		margin-top: $no-margin;
-		margin-right: $no-margin;
-		margin-left: $no-margin;
-		margin-bottom: $box-spacer-y;
-	}
-	
-	& ul.attr-list li {
-		display: inline;
-		border-radius: $border-radius;
-		padding: $spacer / 4;
-	}
-  	
-  	& h3 {
-  		font-family: 'Raleway', sans-serif;
-  		
-  		& small.premium {
-  			color: #6c757d;
-  		}
-  	}
+	position: absolute;
+	left: 0;
+	top: 0;
+	height: 100%;
 }
 

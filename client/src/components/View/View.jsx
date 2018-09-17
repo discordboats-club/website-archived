@@ -26,11 +26,11 @@ export default class View extends Component {
                 <Helmet>
                     <title>Discordboats | {this.bot.username}</title>
                     
-                    <meta property='og:title' content={'Discordboats | ' + this.bot.username} />
-                    <meta property='og:url' content={'https://discordboats.club/view/' + this.bot.botId} />
+                    <meta property='og:title' content={`Discordboats | ${this.bot.username}`} />
+                    <meta property='og:url' content={`https://discordboats.club/view/${this.bot.botId}`} />
                     <meta property='og:site_name' content='discordboats.club' />
                     <meta property='og:image' content={this.bot.avatarURL} />
-                    <meta property='og:image:alt' content={this.bot.username + '\'s Avatar'} />
+                    <meta property='og:image:alt' content={`${this.bot.username}'s Avatar`} />
                     <meta property='og:type' content='website' />
                 </Helmet>
                 <aside>
@@ -60,8 +60,10 @@ export default class View extends Component {
                             </List.Content>
                         </List.Item> : ''}
                         <List.Item>
-                            <List.Content>
-                                <List.Header>Views: {this.bot.views}</List.Header>
+                            <List.Content>            
+                                <List.Header>
+                                    <Label color='orange'>Views: {this.bot.views}</Label>
+                                </List.Header>
                             </List.Content>
                         </List.Item>
                     </List>
