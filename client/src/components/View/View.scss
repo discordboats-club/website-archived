@@ -1,26 +1,22 @@
-@import url('https://fonts.googleapis.com/css?family=Raleway:300');
-
-$spacer:        1rem;
-$no-margin:     0;
-$border-radius: .25rem;
-$box-spacer-y:  .75rem;
-$box-spacer-x:  1.25rem;
+@mixin sidebar-base {
+	top: 0;
+	height: 100%;
+	position: absolute;
+}
 
 article {
 	float: right;
 	width: 600px / 960px * 100%;
-	position: absolute;
 	right: 0;
-	top: 0;
-	height: 100%;
+
+	@include sidebar-base();
 }
 
 aside {
 	float: left;
 	width: 300px / 960px * 100%;
-	position: absolute;
 	left: 0;
-	top: 0;
-	height: 100%;
+	
+	@include sidebar-base();
 }
 

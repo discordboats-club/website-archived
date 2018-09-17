@@ -54,11 +54,13 @@ export default class View extends Component {
                     <Header as='h1'>{this.bot.tag}</Header>
                     <Header as='h3'>{this.bot.shortDesc}</Header>
                     <List horizontal size='tiny'>
-                        {this.bot.premium ? <List.Item>
-                            <List.Content>
-                                <List.Header>Premium</List.Header>
-                            </List.Content>
-                        </List.Item> : ''}
+                        {this.bot.premium ? 
+                            <List.Item>
+                                <List.Content>
+                                    <List.Header>Premium</List.Header>
+                                </List.Content>
+                            </List.Item>
+                        : ''}
                         <List.Item>
                             <List.Content>            
                                 <List.Header>
