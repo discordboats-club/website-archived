@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Helmet } from "react-helmet";
+import { Helmet } from 'react-helmet';
+import { Header } from 'semantic-ui-react'
 
 import BotCardSmall from "../common/BotCard/BotCardSmall";
 
@@ -12,12 +13,18 @@ export default class Home extends Component {
     constructor(props) {
         super(props);
         this.bots = [];
+        this.featuredBots= []
     }
     
     async componentWillMount() {
         const res = await fetch(`${BASE}/api/bots`, { mode: 'no-cors' });
         const json = await res.json();
         this.bots = json.bots;
+
+        // featured bots
+        const res = await fetch(`${BASE}/api/bots/featured`, { mode: 'no-cors' });
+        const json = await res.json();
+        this.featuredBots = json.bots;
     }
     
     render() {
@@ -33,11 +40,15 @@ export default class Home extends Component {
                     <meta property='og:image' content='LOGO URL' />
                 </Helmet>
                 {this.bots.map(bot => {<BotCardSmall bot={bot} />})}
+                <hr />
+                <Header as='h3'>Featured</Header>
+                {this.featuredBots.map(bot => {<BotCardSmall bot={bot} />})}
             </div>
         );
     }
 }
 
 Home.propTypes = {
-    bots: PropTypes.array
+    bots: PropTypes.array,
+    featuredBots: Proptypes.array
 };
