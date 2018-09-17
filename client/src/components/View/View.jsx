@@ -38,13 +38,15 @@ export default class View extends Component {
                     <Header as='h4'>{this.bot.username + this.bot.premium ? <Label color='green'>Premium</Label> : ''}</Header>
                     <Segment color='blue'>{this.bot.shortDesc}</Segment>
                     <List horizontal>
-                        {this.bot.botTags.map(tag => {<List.Item>
-                            <List.Content>
-                                <List.Header>
-                                    <Label color='blue'>{tag}</Label>
-                                </List.Header>
-                            </List.Content>
-                        </List.Item>})}
+                        {this.bot.botTags.map(tag => {
+                            <List.Item>
+                                <List.Content>
+                                    <List.Header>
+                                        <Label color='blue'>{tag}</Label>
+                                    </List.Header>
+                                </List.Content>
+                            </List.Item>
+                        })}
                     </List>
                 </aside>
                 <article>
