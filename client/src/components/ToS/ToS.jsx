@@ -1,6 +1,6 @@
 import React, { Component} from 'react';
 
-import './ToS.css';
+import './ToS.scss';
 
 export default class ToS extends Component {
     render() {

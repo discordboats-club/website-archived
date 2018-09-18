@@ -1,6 +1,6 @@
 import React, { Component} from 'react';
 
-import './Privacy.css';
+import './Privacy.scss';
 
 export default class Privacy extends Component {
     render() {

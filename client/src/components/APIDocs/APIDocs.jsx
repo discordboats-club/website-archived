@@ -4,7 +4,7 @@ import {observable, action} from 'mobx';
 import {observer} from 'mobx-react';
 
 import Markdown from 'react-markdown';
-import './APIDocs.css';
+import './APIDocs.scss';
 
 import docs from './docs.md';
 
