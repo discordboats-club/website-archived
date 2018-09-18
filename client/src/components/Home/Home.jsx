@@ -22,9 +22,9 @@ export default class Home extends Component {
         this.bots = json.bots;
 
         // featured bots
-        const res = await fetch(`${BASE}/api/bots/featured`, { mode: 'no-cors' });
-        const json = await res.json();
-        this.featuredBots = json.bots;
+        const featuredRes = await fetch(`${BASE}/api/bots/featured`, { mode: 'no-cors' });
+        const featuredJson = await featuredRes.json();
+        this.featuredBots = featuredJson.bots;
     }
     
     render() {
