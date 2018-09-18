@@ -50,5 +50,5 @@ export default class Home extends Component {
 
 Home.propTypes = {
     bots: PropTypes.array,
-    featuredBots: Proptypes.array
+    featuredBots: PropTypes.array
 };
