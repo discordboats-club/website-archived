@@ -37,21 +37,38 @@ client.once('message', msg => {
                     .addField('Owner', bot.otherOwnersIds ? `<@${bot.ownerID}>, ${bot.otherOwnersIds.map(id => `<@${id}>`).join(', ')}` : `<@${bot.ownerID}>`, true)
                     .addField('Library', bot.library, true)
                     .addField('Views', bot.views, true)
-                    .addField('Links', `${bot.github ? `[GitHub](${bot.github})`: 'No GitHub'} | ${bot.website ? `[Website](${bot.website})`: 'No Website'} | [Invite](${bot.invite})`);
+                    .addField('Links', `${bot.github ? `[GitHub](${bot.github})` : 'No GitHub'} | ${bot.website ? `[Website](${bot.website})` : 'No Website'} | [Invite](${bot.invite})`);
 
                     msg.channel.send(embed);
-                })
+                });
             }).catch(err => {
-                msg.channel.send('Unable to find any users from your query!')
-            })
+                msg.channel.send('Unable to find any users from your query!');
+            });
             break;
         case 'bots':
             if (args[0]) {
                 resolveUser(client, args.join(' ')).then(user => {
-
+                    if (user.bot) return msg.channel.send('Bots can\'t own bots!');
+                    r.table('bots').filter({ ownerId: user.id }).run().then(ownedBots => {
+                        const embed = new RichEmbed()
+                        .setTitle(`${user.username}'s Bots`)
+                        .setDescription(ownedBots.map(bot => `<@${bot.botId}>`).join(',\n'))
+                        .setFooter(`Bots | Requested by ${msg.author.username}`, client.user.displayAvatarURL);
+                        
+                        msg.channel.send(embed);
+                    });
                 }).catch(err => {
-                    msg.channel.send('Unable to find any users from your query!')
-                })
+                    msg.channel.send('Unable to find any users from your query!');
+                });
+            } else {
+                r.table('bots').filter({ ownerId: msg.author.id }).run().then(ownedBots => {
+                    const embed = new RichEmbed()
+                    .setTitle(`${msg.author.username}'s Bots`)
+                    .setDescription(ownedBots.map(bot => `<@${bot.botId}>`).join(',\n'))
+                    .setFooter(`Bots | Requested by ${msg.author.username}`, client.user.displayAvatarURL);
+                    
+                    msg.channel.send(embed);
+                });
             }
     }
 });

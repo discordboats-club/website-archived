@@ -61,7 +61,7 @@
     "whatwg-fetch": "2.0.3"
   },
   "scripts": {
-    "start": "cross-env PORT=4000 node scripts/start.js",
+    "start": "cross-env PORT=8080 node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom",
     "ngrok": "ngrok http 4000"
