@@ -21,6 +21,7 @@ client.once('message', msg => {
 
     switch(command) {
         case 'botinfo':
+            if (!args[0]) return msg.channel.send('You must specify a bot!');
             resolveUser(args.join(' ')).then(user => {
                 if (!user.bot) return msg.channel.send('This user is not a bot!');
                 r.table('bots').get(user.id).run().then(bot => {
@@ -36,7 +37,9 @@ client.once('message', msg => {
                     .addField('Owner', bot.otherOwnersIds ? `<@${bot.ownerID}>, ${bot.otherOwnersIds.map(id => `<@${id}>`).join(', ')}` : `<@${bot.ownerID}>`, true)
                     .addField('Library', bot.library, true)
                     .addField('Views', bot.views, true)
-                    .addField('Links', `${bot.github ? `[GitHub](${bot.github})`: 'No GitHub'} | ${bot.website ? `[Website](${bot.website})`: 'No Website'} | [Invite](${bot.invite})`)
+                    .addField('Links', `${bot.github ? `[GitHub](${bot.github})`: 'No GitHub'} | ${bot.website ? `[Website](${bot.website})`: 'No Website'} | [Invite](${bot.invite})`);
+
+                    msg.channel.send(embed);
                 })
             })
             break;
