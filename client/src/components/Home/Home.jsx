@@ -39,10 +39,11 @@ export default class Home extends Component {
                     <meta property='og:type' content='website' />
                     <meta property='og:image' content='LOGO URL' />
                 </Helmet>
-                {this.bots.map(bot => {<BotCardSmall bot={bot} />})}
-                <hr />
                 <Header as='h3'>Featured</Header>
                 {this.featuredBots.map(bot => {<BotCardSmall bot={bot} />})}
+                <hr />
+                <Header as='h3'>All the Rest</Header>
+                {this.bots.map(bot => {<BotCardSmall bot={bot} />})}
             </div>
         );
     }
