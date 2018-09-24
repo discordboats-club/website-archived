@@ -70,5 +70,31 @@ client.once('message', msg => {
                     msg.channel.send(embed);
                 });
             }
+            break;
+        case 'featuredbots':
+        case 'featured-bots':
+        case 'featured':
+            r.table('bots').filter({ featured: true }).run().then(featuredBots => {
+                const embed = new RichEmbed()
+                .setTitle(`Featured Bots`)
+                .setDescription(featuredBots.map(bot => `<@${bot.botId}>`).join(',\n'))
+                .setFooter(`Featured Bots | Requested by ${msg.author.username}`, client.user.displayAvatarURL);
+                
+                msg.channel.send(embed);
+            });
+            break;
+        case 'help':
+        case 'commands':
+        case 'cmds':
+        default:
+            const embed = new RichEmbed()
+            .setTitle(`Help`)
+            .setFooter(`Help | Requested by ${msg.author.username}`, client.user.displayAvatarURL)
+            .addField('Featured', 'List all featured bots.\n\n**Usage:**\n`-[featured|featuredbots|featured-bots]`')
+            .addField('Help', 'Lists all bot commands.\n\n**Usage:**\n`-[help|cmds|commands]`')
+            .addField('Bots', 'List all of a user\'s bots.\n\n**Usage:**\n`-bots [user]`')
+            .addField('Botinfo', 'Retrieves a bot\'s information.\n\n**Usage:**\n`-botinfo <bot>`')
+            
+            msg.channel.send(embed);
     }
 });
