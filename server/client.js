@@ -22,7 +22,7 @@ client.once('message', msg => {
     switch(command) {
         case 'botinfo':
             if (!args[0]) return msg.channel.send('You must specify a bot!');
-            resolveUser(args.join(' ')).then(user => {
+            resolveUser(client, args.join(' ')).then(user => {
                 if (!user.bot) return msg.channel.send('This user is not a bot!');
                 r.table('bots').get(user.id).run().then(bot => {
                     const embed = new RichEmbed()
@@ -41,7 +41,17 @@ client.once('message', msg => {
 
                     msg.channel.send(embed);
                 })
+            }).catch(err => {
+                msg.channel.send('Unable to find any users from your query!')
             })
             break;
+        case 'bots':
+            if (args[0]) {
+                resolveUser(client, args.join(' ')).then(user => {
+
+                }).catch(err => {
+                    msg.channel.send('Unable to find any users from your query!')
+                })
+            }
     }
 });
