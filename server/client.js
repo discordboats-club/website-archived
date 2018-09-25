@@ -1,4 +1,4 @@
-const { Client, RichEmbed } = require('discord.js');
+const { Client } = require('discord.js');
 const client = module.exports = new Client({ disableEveryone: true });
 
 const resolveUser = require('./botutils/resolveUser.js');
@@ -25,21 +25,56 @@ client.on('message', msg => {
             resolveUser(client, args.join(' ')).then(user => {
                 if (!user.bot) return msg.channel.send('This user is not a bot!');
                 r.table('bots').get(user.id).run().then(bot => {
-                    const embed = new RichEmbed()
-                    .setTitle(bot.username)
-                    .setColor(color)
-                    .setThumbnail(bot.avatarUrl)
-                    .setDescription(bot.shortDesc)
-                    .setFooter(`Botinfo | Requested by ${msg.author.username}`, client.user.displayAvatarURL)
-                    .addField('Prefix', bot.prefix, true)
-                    .addField('Username', bot.username, true)
-                    .addField('Discriminator', bot.discrim, true)
-                    .addField('Owner', bot.otherOwnersIds ? `<@${bot.ownerID}>, ${bot.otherOwnersIds.map(id => `<@${id}>`).join(', ')}` : `<@${bot.ownerID}>`, true)
-                    .addField('Library', bot.library, true)
-                    .addField('Views', bot.views, true)
-                    .addField('Links', `${bot.github ? `[GitHub](${bot.github})` : 'No GitHub'} | ${bot.website ? `[Website](${bot.website})` : 'No Website'} | [Invite](${bot.invite})`);
-
-                    msg.channel.send(embed);
+                    msg.channel.send({
+                        embed: {
+                            title: bot.username,
+                            color: color,
+                            thumbnail: {
+                                url: bot.avatarUrl
+                            },
+                            description: bot.shortDesc,
+                            footer: {
+                                text: `Botinfo | Requested by ${msg.author.username}`,
+                                icon_url: client.user.avatarURL
+                            },
+                            fields: [
+                                {
+                                    name: 'Prefix',
+                                    value: bot.prefix,
+                                    inline: true
+                                },
+                                {
+                                    name: 'Username',
+                                    value: bot.username,
+                                    inline: true
+                                },
+                                {
+                                    name: 'Discriminator',
+                                    value: bot.discrim,
+                                    inline: true
+                                },
+                                {
+                                    name: 'Owner',
+                                    value: bot.otherOwnersIds ? `<@${bot.ownerID}>, ${bot.otherOwnersIds.map(id => `<@${id}>`).join(', ')}` : `<@${bot.ownerID}>`,
+                                    inline: true
+                                },
+                                {
+                                    name: 'Library',
+                                    value: bot.library,
+                                    inline: true
+                                },
+                                {
+                                    name: 'Views',
+                                    value: bot.views,
+                                    inline: true
+                                },
+                                {
+                                    name: 'Links',
+                                    value: `${bot.github ? `[GitHub](${bot.github})` : 'No GitHub'} | ${bot.website ? `[Website](${bot.website})` : 'No Website'} | [Invite](${bot.invite})`
+                                }
+                            ]
+                        }
+                    });
                 });
             }).catch(err => {
                 msg.channel.send('Unable to find any users from your query!');
@@ -50,24 +85,35 @@ client.on('message', msg => {
                 resolveUser(client, args.join(' ')).then(user => {
                     if (user.bot) return msg.channel.send('Bots can\'t own bots!');
                     r.table('bots').filter({ ownerId: user.id }).run().then(ownedBots => {
-                        const embed = new RichEmbed()
-                        .setTitle(`${user.username}'s Bots`)
-                        .setDescription(ownedBots.map(bot => `<@${bot.botId}>`).join(',\n'))
-                        .setFooter(`Bots | Requested by ${msg.author.username}`, client.user.displayAvatarURL);
                         
-                        msg.channel.send(embed);
+                        msg.channel.send({
+                            embed: {
+                                title: `${user.username}'s Bots`,
+                                color: color,
+                                description: ownedBots.map(bot => `<@${bot.botId}>`).join(',\n'),
+                                footer: {
+                                    text: `Bots | Requested by ${msg.author.username}`, 
+                                    icon_url: client.user.displayAvatarURL
+                                }
+                            }
+                        });
                     });
                 }).catch(err => {
                     msg.channel.send('Unable to find any users from your query!');
                 });
             } else {
                 r.table('bots').filter({ ownerId: msg.author.id }).run().then(ownedBots => {
-                    const embed = new RichEmbed()
-                    .setTitle(`${msg.author.username}'s Bots`)
-                    .setDescription(ownedBots.map(bot => `<@${bot.botId}>`).join(',\n'))
-                    .setFooter(`Bots | Requested by ${msg.author.username}`, client.user.displayAvatarURL);
-                    
-                    msg.channel.send(embed);
+                    msg.channel.send({
+                        embed: {
+                            title: `${msg.author.username}'s Bots`,
+                            color: color,
+                            description: ownedBots.map(bot => `<@${bot.botId}>`).join(',\n'),
+                            footer: {
+                                text: `Bots | Requested by ${msg.author.username}`, 
+                                icon_url: client.user.displayAvatarURL
+                            }
+                        }
+                    });
                 });
             }
             break;
@@ -75,26 +121,57 @@ client.on('message', msg => {
         case 'featured-bots':
         case 'featured':
             r.table('bots').filter({ featured: true }).run().then(featuredBots => {
-                const embed = new RichEmbed()
-                .setTitle(`Featured Bots`)
-                .setDescription(featuredBots.map(bot => `<@${bot.botId}>`).join(',\n'))
-                .setFooter(`Featured Bots | Requested by ${msg.author.username}`, client.user.displayAvatarURL);
-                
-                msg.channel.send(embed);
+                msg.channel.send({
+                    embed: {
+                        title: 'Featured Bots',
+                        color: color,
+                        description: featuredBots.map(bot => `<@${bot.botId}>`).join(',\n'),
+                        footer: {
+                            text: `Featured Bots | Requested by ${msg.author.username}`,
+                            icon_url: client.user.displayAvatarURL
+                        }
+                    }
+                });
             });
+            break;
+        case 'ping':
+            msg.channel.send(':ping_pong: Pong!');
             break;
         case 'help':
         case 'commands':
         case 'cmds':
         default:
-            const embed = new RichEmbed()
-            .setTitle(`Help`)
-            .setFooter(`Help | Requested by ${msg.author.username}`, client.user.displayAvatarURL)
-            .addField('Featured', 'List all featured bots.\n\n**Usage:**\n`-[featured|featuredbots|featured-bots]`')
-            .addField('Help', 'Lists all bot commands.\n\n**Usage:**\n`-[help|cmds|commands]`')
-            .addField('Bots', 'List all of a user\'s bots.\n\n**Usage:**\n`-bots [user]`')
-            .addField('Botinfo', 'Retrieves a bot\'s information.\n\n**Usage:**\n`-botinfo <bot>`')
-            
-            msg.channel.send(embed);
+            msg.channel.send({
+                embed: {
+                    title: 'Help',
+                    color: color,
+                    footer: {
+                        text: `Help | Requested by ${msg.author.username}`,
+                        icon_url: client.user.avatarURL
+                    },
+                    fields: [
+                        {
+                            name: 'Featured',
+                            value: 'List all featured bots.\n\n**Usage:**\n`-[featured|featuredbots|featured-bots]`'
+                        },
+                        {
+                            name: 'Help',
+                            value: 'Lists all bot commands.\n\n**Usage:**\n`-[help|cmds|commands]`'
+                        },
+                        {
+                            name: 'Bots',
+                            value: 'List all of a user\'s bots.\n\n**Usage:**\n`-bots [user]`'
+                        },
+                        {
+                            name: 'Botinfo',
+                            value: 'Retrieves a bot\'s information.\n\n**Usage:**\n`-botinfo <bot>`'
+                        },
+                        {
+                            name: 'Ping',
+                            value: 'Tests the bot'
+                        }
+                    ]
+                }
+            });
     }
 });
