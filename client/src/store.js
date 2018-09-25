@@ -1,20 +1,7 @@
 class Store {
     loggedIn = true;
 
-    authtoken = 'none';
-    
-    logIn = (token) => {
-        console.log(this.authtoken);
-        console.log(token);
-
-        this.authtoken = token;
-        this.loggedIn = true
-    }
-
-    logOut = () => {
-        this.authtoken = '';
-        this.loggedIn = false;
-    }
+    authtoken = 'none';   
 }
 
 const hydrate = create({
