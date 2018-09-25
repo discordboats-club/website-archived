@@ -173,5 +173,6 @@ client.on('message', msg => {
                     ]
                 }
             });
+            break;
     }
 });
