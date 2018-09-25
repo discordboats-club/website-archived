@@ -16,7 +16,7 @@ client.once('message', msg => {
 
     if (msg.content.indexOf('-') !== 0) return;
 
-    const args = msg.content.slice(client.config.prefix.length).trim().split(/ +/g);
+    const args = msg.content.slice("-".length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
 
     switch(command) {
