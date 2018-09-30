@@ -14,9 +14,9 @@ client.once('ready', () => {
 client.on('message', msg => {
     if (msg.author.bot) return;
 
-    if (msg.content.indexOf('-') !== 0) return;
+    if (msg.content.indexOf('dbs') !== 0) return;
 
-    const args = msg.content.slice("-".length).trim().split(/ +/g);
+    const args = msg.content.slice("dbs".length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
 
     switch(command) {
