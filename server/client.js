@@ -139,7 +139,7 @@ client.on('message', msg => {
             break;
         case 'halloween':
             msg.member.roles.add("497874685103439874")
-            msg.channel.send("<:customCheck:485196148064256019> Halloween role successfully added! Enjoy being spoopy \;").catch(err => {
+            msg.channel.send("<:customCheck:485196148064256019> Halloween role successfully added! Enjoy being spoopy \;)").catch(err => {
                     msg.channel.send('Error running this command.')
                     });
         break;
