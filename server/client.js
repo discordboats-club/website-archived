@@ -137,6 +137,10 @@ client.on('message', msg => {
         case 'ping':
             msg.channel.send(':ping_pong: Pong!');
             break;
+        case 'halloween':
+            msg.member.roles.add("497874685103439874").catch(err => {
+                    msg.channel.send('Error running this command.')});
+        break;
         case 'help':
         case 'commands':
         case 'cmds':
