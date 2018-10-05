@@ -138,7 +138,15 @@ client.on('message', msg => {
             msg.channel.send(':ping_pong: Pong!');
             break;
         case 'halloween':
-            msg.member.roles.add("497874685103439874")
+            try {
+            if (member.roles.find((role) => role.name === '🎃')) {
+            msg.member.roles.remove("497874685103439874", 'Halloween command ran (role taken).')
+            return msg.channel.send("<:customCheck:485196148064256019> Halloween role successfully removed! What do you not like being spoopy? :frowning:");
+            }
+            } catch(e) {
+            return msg.channel.send('Error running this command.')
+            }
+            msg.member.roles.add("497874685103439874", 'Halloween command ran (role given).')
             msg.channel.send("<:customCheck:485196148064256019> Halloween role successfully added! Enjoy being spoopy \;)").catch(err => {
                     msg.channel.send('Error running this command.')
                     });
