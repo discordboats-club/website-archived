@@ -90,7 +90,7 @@ client.on('message', msg => {
                             embed: {
                                 title: `${user.username}'s Bots`,
                                 color: color,
-                                description: ownedBots.map(bot => `<@${bot.botId}>`).join(',\n'),
+                                description: ownedBots.map(bot => `<@${bot.id}>`).join(',\n'),
                                 footer: {
                                     text: `Bots | Requested by ${msg.author.username}`, 
                                     icon_url: client.user.displayAvatarURL
@@ -102,7 +102,7 @@ client.on('message', msg => {
                     msg.channel.send('Unable to find any users from your query!');
                 });
             } else {
-                r.table('bots').filter({ ownerId: msg.author.id }).run().then(ownedBots => {
+                r.table('bots').filter({ ownerID: msg.author.id }).run().then(ownedBots => {
                     msg.channel.send({
                         embed: {
                             title: `${msg.author.username}'s Bots`,
