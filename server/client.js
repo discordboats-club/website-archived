@@ -84,7 +84,7 @@ client.on('message', msg => {
             if (args[0]) {
                 resolveUser(client, args.join(' ')).then(user => {
                     if (user.bot) return msg.channel.send('Bots can\'t own bots!');
-                    r.table('bots').filter({ ownerId: user.id }).run().then(ownedBots => {
+                    r.table('bots').filter({ ownerID: user.id }).run().then(ownedBots => {
                         
                         msg.channel.send({
                             embed: {
