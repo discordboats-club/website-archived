@@ -107,7 +107,7 @@ client.on('message', msg => {
                         embed: {
                             title: `${msg.author.username}'s Bots`,
                             color: color,
-                            description: ownedBots.map(bot => `<@${bot.botId}>`).join(',\n'),
+                            description: ownedBots.map(bot => `<@${bot.id}>`).join(',\n'),
                             footer: {
                                 text: `Bots | Requested by ${msg.author.username}`, 
                                 icon_url: client.user.displayAvatarURL
