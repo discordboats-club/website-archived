@@ -55,7 +55,7 @@ client.on('message', msg => {
                                 },
                                 {
                                     name: 'Owner',
-                                    value: bot.otherOwnersIds ? `<@${bot.ownerID}>, ${bot.otherOwnersIds.map(id => `<@${id}>`).join(', ')}` : `<@${bot.ownerID}>`,
+                                    value: bot.otherOwnersIds ? `<@${bot.ownerId}>, ${bot.otherOwnersIds.map(id => `<@${id}>`).join(', ')}` : `<@${bot.ownerId}>`,
                                     inline: true
                                 },
                                 {
@@ -84,7 +84,7 @@ client.on('message', msg => {
             if (args[0]) {
                 resolveUser(client, args.join(' ')).then(user => {
                     if (user.bot) return msg.channel.send('Bots can\'t own bots!');
-                    r.table('bots').filter({ ownerID: user.id }).run().then(ownedBots => {
+                    r.table('bots').filter({ ownerId: user.id }).run().then(ownedBots => {
                         
                         msg.channel.send({
                             embed: {
@@ -102,7 +102,7 @@ client.on('message', msg => {
                     msg.channel.send('Unable to find any users from your query!');
                 });
             } else {
-                r.table('bots').filter({ ownerID: msg.author.id }).run().then(ownedBots => {
+                r.table('bots').filter({ ownerId: msg.author.id }).run().then(ownedBots => {
                     msg.channel.send({
                         embed: {
                             title: `${msg.author.username}'s Bots`,

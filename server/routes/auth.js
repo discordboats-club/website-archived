@@ -32,12 +32,14 @@ router.get('/callback', async (req, res) => {
     });
     const user = await userResponse.json();
 
+    const avatar = user.avatar ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png` : `https://cdn.discordapp.com/embed/avatars/${user.discriminator % 5}.png`;
+
     if (!await r.table('users').get(user.id).run()) {
         await r.table('users').insert({
             id: user.id,
             username: user.username,
             locale: user.locale,
-            avatar: `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`,
+            avatar: avatar,
             tag: user.username + '#' + user.discriminator,
             discrim: user.discriminator,
             flags: [],
@@ -52,7 +54,7 @@ router.get('/callback', async (req, res) => {
         await r.table('users').get(user.id).update({
             username: user.username,
             locale: user.locale,
-            avatar: `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`,
+            avatar: avatar,
             tag: user.username + '#' + user.discriminator,
             discrim: user.discriminator,
             
