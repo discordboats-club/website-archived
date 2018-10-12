@@ -146,7 +146,7 @@ client.on('message', msg => {
             } catch(e) {
             return msg.channel.send('Error running this command.')
             }
-            msg.member.roles.add("497874685103439874", 'Halloween command ran (role given).')
+            msg.member.roles.add("500388497363042316", 'Halloween command ran (role given).')
             msg.channel.send("<:customCheck:485196148064256019> Halloween role successfully added! Enjoy being spoopy \;)").catch(err => {
                     msg.channel.send('Error running this command.')
                     });
