@@ -140,7 +140,7 @@ client.on('message', msg => {
         case 'halloween':
             try {
             if (msg.member.roles.find((role) => role.name === '🎃')) {
-            msg.member.roles.remove("497874685103439874", 'Halloween command ran (role taken).')
+            msg.member.roles.remove("500388497363042316", 'Halloween command ran (role taken).')
             return msg.channel.send("<:customCheck:485196148064256019> Halloween role successfully removed! What do you not like being spoopy? :frowning:");
             }
             } catch(e) {
