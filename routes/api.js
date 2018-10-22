@@ -40,7 +40,7 @@ app.get("/", (req, res) => {
 const newBotSchema = Joi.object().required().keys({
     shortDescription: Joi.string().max(200).required(),
     id: Joi.string().length(18).required(),
-    longDescription: Joi.string().max(2000).required(),
+    longDescription: Joi.string().max(12000).required(),
     prefix: Joi.string().max(50).required(),
     invite: Joi.string().uri({scheme: ["https", "http"]}).required(),
     website: Joi.string().uri({scheme: ["https", "http"]}),
@@ -77,7 +77,7 @@ app.post("/bot", async (req, res) => {
 
 const editBotSchema = Joi.object().required().keys({
     shortDescription: Joi.string().max(200),
-    longDescription: Joi.string().max(2000),
+    longDescription: Joi.string().max(12000),
     prefix: Joi.string().max(50),
     invite: Joi.string().uri({scheme: ["https", "http"]}),
     website: Joi.string().uri({scheme: ["https", "http"]}),
