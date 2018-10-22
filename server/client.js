@@ -5,6 +5,7 @@ const resolveUser = require('./botutils/resolveUser.js');
 const { r } = require('./index.js');
 
 const color = 7506394;
+const prefix = 'dbc ';
 
 client.once('ready', () => {
     console.log(`[discord] logged in as ${client.user.tag}`);
@@ -12,11 +13,9 @@ client.once('ready', () => {
 });
 
 client.on('message', msg => {
-    if (msg.author.bot) return;
+    if (msg.author.bot || !msg.content.toLowerCase().startsWith(prefix)) return;
 
-    if (msg.content.indexOf('dbs') !== 0) return;
-
-    const args = msg.content.slice("dbs".length).trim().split(/ +/g);
+    const args = msg.content.slice(prefix.length).split(/ +/g);
     const command = args.shift().toLowerCase();
 
     switch(command) {
