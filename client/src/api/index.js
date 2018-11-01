@@ -1,7 +1,11 @@
 import axios from 'axios';
 
+const BASE = 'https://api.discordboats.club';
+
 const api = axios.create({
-    baseURL: 'https://api.discordboats.club/api'
+    baseURL: `${BASE}/api`
 });
 
 export default api;
+
+export BASE;
