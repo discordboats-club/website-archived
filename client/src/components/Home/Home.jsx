@@ -5,9 +5,9 @@ import { Header } from 'semantic-ui-react'
 
 import BotCardSmall from "../common/BotCard/BotCardSmall";
 
-const BASE = process.env.REACT_APP_API_BASE || 'http://localhost:3000';
-
 import './Home.scss';
+
+const BASE = process.env.REACT_APP_API_BASE || 'http://localhost:3000';
 
 export default class Home extends Component {
     constructor(props) {

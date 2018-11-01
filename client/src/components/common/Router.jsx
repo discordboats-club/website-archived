@@ -16,19 +16,19 @@ class Router extends Component {
         return (
           <BrowserRouter>
                 <div>
-                    <Header />
+                  <Header />
 
-                    <Container text>
-                      <Switch>
-                        <Route exact path="/" component={Home}/>
-                        <Route exact path="/terms" component={Terms}/>
-                        <Route exact path="/privacy" component={Privacy}/>
-                        <Route exact path="/api" component={APIDocs}/>
-                        <Route exact path="/view/:id" component={View}/>
-                      </Switch>
-                    </Container>
-                    
-                    <Footer />
+                  <Container text>
+                    <Switch>
+                      <Route exact path="/" component={Home}/>
+                      <Route exact path="/terms" component={Terms}/>
+                      <Route exact path="/privacy" component={Privacy}/>
+                      <Route exact path="/api" component={APIDocs}/>
+                      <Route exact path="/view/:id" component={View}/>
+                    </Switch>
+                  </Container>
+                  
+                  <Footer />
                 </div>
           </BrowserRouter>
         );
