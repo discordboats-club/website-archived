@@ -3,8 +3,6 @@ import './App.scss';
 
 import Router from './components/common/Router';
 
-// import Card from './components/common/BotCard/BotCardSmall';
-
 class App extends Component {
   render() {
     return (

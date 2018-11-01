@@ -19,29 +19,33 @@ router.post('/', async (req, res) => {
     if (req.body.github && !req.body.github.toLowerCase().startsWith('https://github.com')) return res.status(400).json({ error: 'ValidationError', details: ['Invalid Github URL'] });
     if (req.body.library && !libraries.includes(req.body.library)) return res.status(400).json({ error: 'ValidationError', details: ['Invalid library'] });
 
+    const mainGuild = client.guilds.get(config.mainGuild);
+
     const botUser = client.users.get(req.body.id) || await client.users.fetch(req.body.id);
     const ownerUser = await client.users.fetch(req.user.id);
-    if (!ownerUser) return res.status(400).json({ error: 'ValidationError', details: ['Owner is not in discordboats discord guild'] });
+    if (!mainGuild.member(ownerUser.id)) return res.status(400).json({ error: 'ValidationError', details: ['Owner is not in discordboats discord guild'] });
     if (!botUser) return res.status(404).json({ error: 'BotRetrievalError', details: ['Invalid bot'] });
     if (!botUser.bot) return res.status(400).json({ error: 'ValidationError', details: ['Bot must be a bot'] });
 
     if (await r.table('bots').get(req.body.id).run()) return res.status(409).json({ error: 'ValidationError', details: ['Bot already exists'] });
 
+    req.body.invite = req.body.invite || `https://discordapp.com/oauth2/authorize?scope=bot&client_id=${botUser.id}&permissions=0`;
+    
     const bot = filterUnexpectedData(req.body, 
         { 
+            id: botUser.id,
             username: botUser.username,
             discrim: botUser.discriminator,
             tag: botUser.tag,
-            avatarUrl: botUser.displayAvatarURL(),
+            avatarUrl: botUser.displayAvatarURL({ format: 'png' }),
             shortDesc: req.body.shortDesc,
             longDesc: req.body.longDesc,
             views: 0,
-            botId: req.body.clientId,
             inviteClicks: 0,
             apiKey: randomString.generate(30),
             ownerId: req.user.id,
-            otherOwnersIds: req.others ? req.others.split(/(\d+)(,\s*\d+)*/) : [], // https://stackoverflow.com/questions/1396084/regex-for-comma-delimited-list,
-            botTags: req.botTags ? req.botTags.split(/(\d+)(,\s*\d+)*/) : [],
+            otherOwnersIds: req.others ? req.others.split(',').map(id => id.trim()) : [],
+            botTags: req.botTags ? req.botTags.split(',').map(id => id.trim()) : [],
             createdAt: new Date(),
             featured: false,
             premium: false,
@@ -56,8 +60,8 @@ router.post('/', async (req, res) => {
 
     await r.table('bots').insert(bot);
 
-    const botLogChannel = client.guilds.get(config.mainGuild).channels.find(c => c.name == 'bot-log');
-    const modRole = client.guilds.get(config.mainGuild).roles.find(r => r.name == 'Moderator');
+    const botLogChannel = mainGuild.channels.find(c => c.name == 'bot-log');
+    const modRole = mainGuild.roles.find(r => r.name == 'Moderator');
     await botLogChannel.send(`📥 <@${req.user.id}> added **${botUser.tag}** (<@&${modRole.id}>)`);
     await ownerUser.send(`📥 Your bot **${botUser.tag}** has been added to the queue! Please wait for a moderator to review it.`);
 

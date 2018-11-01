@@ -5,6 +5,7 @@ const resolveUser = require('./botutils/resolveUser.js');
 const { r } = require('./index.js');
 
 const color = 7506394;
+const prefix = 'dbc ';
 
 client.once('ready', () => {
     console.log(`[discord] logged in as ${client.user.tag}`);
@@ -12,11 +13,9 @@ client.once('ready', () => {
 });
 
 client.on('message', msg => {
-    if (msg.author.bot) return;
+    if (msg.author.bot || !msg.content.toLowerCase().startsWith(prefix)) return;
 
-    if (msg.content.indexOf('-') !== 0) return;
-
-    const args = msg.content.slice("-".length).trim().split(/ +/g);
+    const args = msg.content.slice(prefix.length).split(/ +/g);
     const command = args.shift().toLowerCase();
 
     switch(command) {
@@ -55,7 +54,7 @@ client.on('message', msg => {
                                 },
                                 {
                                     name: 'Owner',
-                                    value: bot.otherOwnersIds ? `<@${bot.ownerID}>, ${bot.otherOwnersIds.map(id => `<@${id}>`).join(', ')}` : `<@${bot.ownerID}>`,
+                                    value: bot.otherOwnersIds ? `<@${bot.ownerId}>, ${bot.otherOwnersIds.map(id => `<@${id}>`).join(', ')}` : `<@${bot.ownerId}>`,
                                     inline: true
                                 },
                                 {
@@ -90,7 +89,7 @@ client.on('message', msg => {
                             embed: {
                                 title: `${user.username}'s Bots`,
                                 color: color,
-                                description: ownedBots.map(bot => `<@${bot.botId}>`).join(',\n'),
+                                description: ownedBots.map(bot => `<@${bot.id}>`).join(',\n'),
                                 footer: {
                                     text: `Bots | Requested by ${msg.author.username}`, 
                                     icon_url: client.user.displayAvatarURL
@@ -107,7 +106,7 @@ client.on('message', msg => {
                         embed: {
                             title: `${msg.author.username}'s Bots`,
                             color: color,
-                            description: ownedBots.map(bot => `<@${bot.botId}>`).join(',\n'),
+                            description: ownedBots.map(bot => `<@${bot.id}>`).join(',\n'),
                             footer: {
                                 text: `Bots | Requested by ${msg.author.username}`, 
                                 icon_url: client.user.displayAvatarURL
@@ -137,6 +136,20 @@ client.on('message', msg => {
         case 'ping':
             msg.channel.send(':ping_pong: Pong!');
             break;
+        case 'halloween':
+            try {
+            if (msg.member.roles.find((role) => role.name === '🎃')) {
+            msg.member.roles.remove("500388497363042316", 'Halloween command ran (role taken).')
+            return msg.channel.send("<:customCheck:485196148064256019> Halloween role successfully removed! What do you not like being spoopy? :frowning:");
+            }
+            } catch(e) {
+            return msg.channel.send('Error running this command.')
+            }
+            msg.member.roles.add("500388497363042316", 'Halloween command ran (role given).')
+            msg.channel.send("<:customCheck:485196148064256019> Halloween role successfully added! Enjoy being spoopy \;)").catch(err => {
+                    msg.channel.send('Error running this command.')
+                    });
+        break;
         case 'help':
         case 'commands':
         case 'cmds':
@@ -152,19 +165,19 @@ client.on('message', msg => {
                     fields: [
                         {
                             name: 'Featured',
-                            value: 'List all featured bots.\n\n**Usage:**\n`-[featured|featuredbots|featured-bots]`'
+                            value: 'List all featured bots.\n\n**Usage:**\n`dbs[featured|featuredbots|featured-bots]`'
                         },
                         {
                             name: 'Help',
-                            value: 'Lists all bot commands.\n\n**Usage:**\n`-[help|cmds|commands]`'
+                            value: 'Lists all bot commands.\n\n**Usage:**\n`dbs[help|cmds|commands]`'
                         },
                         {
                             name: 'Bots',
-                            value: 'List all of a user\'s bots.\n\n**Usage:**\n`-bots [user]`'
+                            value: 'List all of a user\'s bots.\n\n**Usage:**\n`dbsbots [user]`'
                         },
                         {
                             name: 'Botinfo',
-                            value: 'Retrieves a bot\'s information.\n\n**Usage:**\n`-botinfo <bot>`'
+                            value: 'Retrieves a bot\'s information.\n\n**Usage:**\n`dbsbotinfo <bot>`'
                         },
                         {
                             name: 'Ping',
@@ -173,5 +186,6 @@ client.on('message', msg => {
                     ]
                 }
             });
+            break;
     }
 });

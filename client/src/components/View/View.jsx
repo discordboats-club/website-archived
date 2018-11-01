@@ -4,9 +4,9 @@ import Markdown from 'react-markdown';
 import { Image, List, Header, Divider, Label, Segment } from 'semantic-ui-react';
 import { Helmet } from "react-helmet";
 
-const BASE = process.env.REACT_APP_API_BASE || 'http://localhost:3000';
-
 import './View.scss';
+
+const BASE = process.env.REACT_APP_API_BASE || 'http://localhost:3000';
 
 export default class View extends Component {
     constructor(props) {

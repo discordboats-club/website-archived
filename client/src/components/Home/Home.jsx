@@ -17,12 +17,12 @@ export default class Home extends Component {
     }
     
     async componentWillMount() {
-        const res = await fetch(`${BASE}/api/bots`, { mode: 'no-cors' });
+        const res = await fetch(`${BASE}/api/bots`);
         const json = await res.json();
         this.bots = json.bots;
 
         // featured bots
-        const featuredRes = await fetch(`${BASE}/api/bots/featured`, { mode: 'no-cors' });
+        const featuredRes = await fetch(`${BASE}/api/bots/featured`);
         const featuredJson = await featuredRes.json();
         this.featuredBots = featuredJson.bots;
     }

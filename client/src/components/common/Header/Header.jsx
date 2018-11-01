@@ -6,9 +6,6 @@ import PersonIcon from '@material-ui/icons/Person';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 
-import {observer} from 'mobx-react';
-import {observable, action} from 'mobx';
-
 import store from '../../../store';
 
 import './Header.scss';
@@ -17,17 +14,13 @@ import { Link } from 'react-router-dom';
 
 import login from '../../../api/login';
 
-@observer
 export default class Header extends Component {
-    @observable
     menuAnchorEl = null;
-
-    @action
+    
     handleClick = (event) => {
         this.menuAnchorEl = event.currentTarget;
     }
 
-    @action
     handleClose = () => {
         this.menuAnchorEl = null;
     }
