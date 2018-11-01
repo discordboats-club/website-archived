@@ -1,30 +1,27 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
-import { Header } from 'semantic-ui-react'
+import { Header } from 'semantic-ui-react';
+import api from '../../api';
 
 import BotCardSmall from "../common/BotCard/BotCardSmall";
 
 import './Home.scss';
 
-const BASE = process.env.REACT_APP_API_BASE || 'http://localhost:3000';
-
-export default class Home extends Component {
+class Home extends Component {
     constructor(props) {
         super(props);
         this.bots = [];
-        this.featuredBots= []
+        this.featuredBots= [];
     }
     
     async componentWillMount() {
-        const res = await fetch(`${BASE}/api/bots`);
-        const json = await res.json();
-        this.bots = json.bots;
+        const res = await api.get('/bots');
+        this.bots = res.data;
 
         // featured bots
-        const featuredRes = await fetch(`${BASE}/api/bots/featured`);
-        const featuredJson = await featuredRes.json();
-        this.featuredBots = featuredJson.bots;
+        const featuredRes = await api.get('/bots/featured');
+        this.featuredBots = featuredRes.data;
     }
     
     render() {
@@ -53,3 +50,5 @@ Home.propTypes = {
     bots: PropTypes.array,
     featuredBots: PropTypes.array
 };
+
+export default Home;

@@ -1,3 +1,7 @@
-export const BASE = process.env.REACT_APP_API_BASE || 'http://localhost:3000';
+import axios from 'axios';
 
-console.log(`Using API Base ${BASE}`);
+const api = axios.create({
+    baseURL: 'https://api.discordboats.club/api'
+});
+
+export default api;
