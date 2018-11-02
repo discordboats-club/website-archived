@@ -72,7 +72,7 @@ app.post("/bot", async (req, res) => {
     // everything looks good.
     await r.table("bots").insert(data).run();
     res.status(200).json({ok: "Created bot"});
-    client.channels.get("425170250548379664").send(`<:submitted:436830297175097345> <@${req.user.id}> added ${botUser.tag} (<@&508047998706515970>).`);
+    client.channels.get("425170250548379664").send(`<:submitted:436830297175097345> <@${req.user.id}> added ${botUser.tag} (<@508047998706515970>).`);
 });
 
 const editBotSchema = Joi.object().required().keys({
@@ -97,7 +97,7 @@ app.patch("/bot/:id", async (req, res) => {
         const botUser = client.users.get(bot.id) || await client.users.fetch(bot.id);
         
         await r.table("bots").get(bot.id).update(data).run();
-        client.channels.get("425170250548379664").send(`:thinking: <@${req.user.id}> edited ${botUser.tag} (reverify, <@&508047998706516970>).`);
+        client.channels.get("425170250548379664").send(`:thinking: <@${req.user.id}> edited ${botUser.tag} (reverify, <@508047998706516970>).`);
         res.json({ok: "edited bot"});
     } else res.status(403).json({error: "you do not own this bot"});
 });
