@@ -97,7 +97,7 @@ app.patch("/bot/:id", async (req, res) => {
         const botUser = client.users.get(bot.id) || await client.users.fetch(bot.id);
         
         await r.table("bots").get(bot.id).update(data).run();
-        client.channels.get("425170250548379664").send(`:thinking: <@${req.user.id}> edited ${botUser.tag} (reverify, <@&508047998706516970>).`);
+        client.channels.get("425170250548379664").send(`:thinking: <@${req.user.id}> edited ${botUser.tag} (reverify, <@&508047998706515970>).`);
         res.json({ok: "edited bot"});
     } else res.status(403).json({error: "you do not own this bot"});
 });
