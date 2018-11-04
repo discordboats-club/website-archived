@@ -91,13 +91,13 @@ app.patch("/bot/:id", async (req, res) => {
     const bot = await r.table("bots").get(req.params.id).run();
     if (!bot) return res.status(404).json({error: "unknown bot"});
     if (req.user.id === bot.ownerID || req.user.admin || req.user.mod) {
-        const data = Util.filterUnexpectedData(req.body, {editedAt: +new Date(), verified: false}, editBotSchema);
+        const data = Util.filterUnexpectedData(req.body, {editedAt: +new Date()}, editBotSchema);
         if (data.library && !libList.includes(data.library)) return res.status(400).json({error: "Invalid Library"});
         if (data.github && !data.github.startsWith("https://github.com/")) return res.status(400).json({error: "Invalid Github URL"});
         const botUser = client.users.get(bot.id) || await client.users.fetch(bot.id);
         
         await r.table("bots").get(bot.id).update(data).run();
-        client.channels.get("425170250548379664").send(`:thinking: <@${req.user.id}> edited ${botUser.tag} (reverify, <@&508047998706515970>).`);
+        client.channels.get("425170250548379664").send(`:thinking: <@${req.user.id}> edited ${botUser.tag}`);
         res.json({ok: "edited bot"});
     } else res.status(403).json({error: "you do not own this bot"});
 });
