@@ -82,32 +82,3 @@ app.get("/stats", async (req, res) => {
         user: req.user
     });
 });
-
-
-// debugging -- currently commented out due to security issues.
-// app.get("/debug", async (req, res, next) => {
-//     if (!req.user) return next();
-//     if (req.user.id !== "142244934139904000" || req.user.id !== "250536623270264833") return next();
-//     res.render("admin_debug", {user: req.user});
-// });
-
-// app.post("/debug", async (req, res, next) => {
-//     if (!req.user) {
-//         return next();
-//     }
-//     if (req.user.id !== "142244934139904000" || req.user.id !== "250536623270264833") {
-//         return next();
-//     }
-//     if (typeof req.body.code !== "string") return res.status(400).json({error: "ron i expected a body that looks like this: {"code":"memes"} "});
-//     try {
-//         const js = req.body.code;
-//         let result = eval(js);
-//         if (result.then) {
-//             result = await result;
-//         }
-//         if (typeof result !== "string") JSON.stringify(result);
-//         res.status(200).json({ok: result});
-//     } catch (error) {
-//         res.status(500).json({error: error.toString()});
-//     }
-// });
