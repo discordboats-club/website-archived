@@ -45,7 +45,7 @@ const newBotSchema = Joi.object().required().keys({
     invite: Joi.string().uri({scheme: ["https", "http"]}).required(),
     website: Joi.string().uri({scheme: ["https", "http"]}),
     library: Joi.string(),
-    repository: Joi.string().uri({scheme: ["https"]}) // gh is just https
+    github: Joi.string().uri({scheme: ["https"]}) // gh is just https
 });
 
 
@@ -81,7 +81,7 @@ const editBotSchema = Joi.object().required().keys({
     invite: Joi.string().uri({scheme: ["https", "http"]}),
     website: Joi.string().uri({scheme: ["https", "http"]}),
     library: Joi.string(),
-    repository: Joi.string().uri({scheme: ["https"]})
+    github: Joi.string().uri({scheme: ["https"]})
 });
 
 app.patch("/bot/:id", async (req, res) => {
