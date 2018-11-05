@@ -93,7 +93,7 @@ app.patch("/bot/:id", async (req, res) => {
     if (req.user.id === bot.ownerID || req.user.admin || req.user.mod) {
         const data = Util.filterUnexpectedData(req.body, {editedAt: +new Date()}, editBotSchema);
         if (data.library && !libList.includes(data.library)) return res.status(400).json({error: "Invalid Library"});
-        if (data.github && !data.github.startsWith("https://github.com/")) return res.status(400).json({error: "Invalid Github URL"});
+        if (data.github && !data.github.startsWith("https://github.com/")) return res.status(400).json({error: "Invalid GitHub URL"});
         const botUser = client.users.get(bot.id) || await client.users.fetch(bot.id);
         
         await r.table("bots").get(bot.id).update(data).run();
