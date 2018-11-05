@@ -153,11 +153,11 @@ $(window).ready(async () => {
                 setTimeout(() => $("#like-btn").removeClass("animated tada"), 1000);
                 const svg = $("#like-btn svg");
 
-                if (likeRes.ok === "liked bot") {
+                if (likeRes.ok === "Liked bot") {
                     likeText.html(parseInt(likeText.html())+1);
                     svg.removeClass("grey-text");
                     svg.addClass("red-text");
-                } else if (likeRes.ok === "deleted like") {
+                } else if (likeRes.ok === "Unliked bot") {
                     likeText.html(parseInt(likeText.html())-1);
                     svg.removeClass("red-text");
                     svg.addClass("grey-text");
