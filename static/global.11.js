@@ -136,7 +136,7 @@ $(window).ready(async () => {
             top: "45%",
             duration: 600,
             children: {
-                shape: [ "circle", "polygon", "square" ],
+                shape: [ "circle", "polygon" ],
                 fill: [ "#7289da", "#90caf9", "#99AAB5" ],
                 angle: { 0: 180 },
                 degreeShift: "rand(-360, 360)",
