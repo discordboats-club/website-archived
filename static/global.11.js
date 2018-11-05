@@ -128,7 +128,7 @@ $(window).ready(async () => {
             }
         });
     } else if (window.IS_BOT_PAGE && window.mojs) {
-        let like = $("like-btn");
+        let like = $("#like-btn");
         const burst = new mojs.Burst({
             parent: like,
             radius: { 25 : 75 },
