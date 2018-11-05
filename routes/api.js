@@ -61,7 +61,7 @@ app.post("/bot", async (req, res) => {
     const botUser = client.users.get(data.id) || await client.users.fetch(data.id);
     if (!client.users.get(data.ownerID) || !await client.users.fetch(data.ownerID)) return res.status(403).json({ error: "Owner is not in Discord guild" });
     if (!botUser) return res.status(404).json({error: "Invalid Bot ID"});
-    if (!botUser.bot) return res.status(400).json({error: "bot can only be a bot"});
+    if (!botUser.bot) return res.status(400).json({error: "Bot can only be a bot"});
     data.name = botUser.username;
 
     // does bot already exist?
@@ -72,7 +72,7 @@ app.post("/bot", async (req, res) => {
     // everything looks good.
     await r.table("bots").insert(data).run();
     res.status(200).json({ok: "Created bot"});
-    client.channels.get("425170250548379664").send(`<:submitted:436830297175097345> <@${req.user.id}> added ${botUser.tag} (<@&508047998706515970>).`);
+    client.channels.get("425170250548379664").send(`📥 <@${req.user.id}> added ${botUser.username} (<@&508047998706515970>).`);
 });
 
 const editBotSchema = Joi.object().required().keys({
@@ -89,7 +89,7 @@ app.patch("/bot/:id", async (req, res) => {
     const client = require("../ConstantStore").bot;
     if (Util.handleJoi(editBotSchema, req, res)) return;
     const bot = await r.table("bots").get(req.params.id).run();
-    if (!bot) return res.status(404).json({error: "unknown bot"});
+    if (!bot) return res.status(404).json({error: "Unknown bot"});
     if (req.user.id === bot.ownerID || req.user.admin || req.user.mod) {
         const data = Util.filterUnexpectedData(req.body, {editedAt: +new Date()}, editBotSchema);
         if (data.library && !libList.includes(data.library)) return res.status(400).json({error: "Invalid Library"});
@@ -97,18 +97,20 @@ app.patch("/bot/:id", async (req, res) => {
         const botUser = client.users.get(bot.id) || await client.users.fetch(bot.id);
         
         await r.table("bots").get(bot.id).update(data).run();
-        client.channels.get("425170250548379664").send(`:thinking: <@${req.user.id}> edited ${botUser.tag}.`);
+        client.channels.get("425170250548379664").send(`✏ <@${req.user.id}> edited ${botUser.username}.`);
         res.json({ok: "edited bot"});
-    } else res.status(403).json({error: "you do not own this bot"});
+    } else res.status(403).json({error: "You do not own this bot"});
 });
 
 app.delete("/bot/:id", async (req, res) => {
     const bot = await r.table("bots").get(req.params.id).run();
-    if (!bot) return await res.status(404).json({error: "bot does not exist"});
+    if (!bot) return await res.status(404).json({error: "Bot does not exist"});
     if (req.user.id === bot.ownerID || req.user.admin || req.user.mod) {
         await r.table("bots").get(req.params.id).delete().run();
+        const botUser = client.users.get(bot.id) || await client.users.fetch(bot.id);
+        client.channels.get("425170250548379664").send(`🗑 <@${req.user.id}> deleted ${botUser.username}.`);
         res.status(200).json({ok: "Deleted bot."});
-    } else res.status(403).json({error: "you do not own this bot"});
+    } else res.status(403).json({error: "You do not own this bot"});
 });
 
 app.patch("/bot", async (req, res) => {
@@ -166,7 +168,7 @@ app.get("/me", (req, res) => {
             discord: {
                 username: req.user.username
             },
-            warning: "this api endpoint is a legacy one and does not provide all info about the user."
+            warning: "This API endpoint is a legacy one and does not provide all info about the user."
         });
 });
 
@@ -182,23 +184,23 @@ app.post("/bot/mod/verify", async (req, res) => {
     const data = Util.filterUnexpectedData(req.body, {}, modVerifyBotSchema);
     const bot = await Util.attachPropBot(await r.table("bots").get(data.botID).run());
     const botUser = client.users.get(bot.id) || client.users.fetch(bot.id);
-    if (!bot) return res.status(404).json({error: "bot does not exist"});
+    if (!bot) return res.status(404).json({error: "Bot does not exist"});
     const discordOwner = client.users.get(bot.ownerID);
     const staffUser = client.users.get(req.user.id) || client.users.fetch(req.user.id);
     if (data.verified) {
         try {
-            await discordOwner.send(`<:accepted:436824491470094337> Your bot, ${bot.name}, was verified by ${staffUser.tag}.`);
+            await discordOwner.send(`🎉 Your bot, ${bot.name}, was verified by ${staffUser.tag}!`);
         } catch (e) {}
-        client.channels.get("425170250548379664").send(`<:accepted:436824491470094337> ${botUser.tag} by <@${bot.ownerID}> was verified by ${staffUser}.`);
+        client.channels.get("425170250548379664").send(`🎉 ${botUser.username} by <@${bot.ownerID}> was verified by ${staffUser}!`);
         await r.table("bots").get(bot.id).update({verified: true}).run();
     } else {
         try { 
-            await discordOwner.send(`<:rejected:436824567898570763> Your bot, ${bot.name}, was rejected by ${staffUser.tag}.`);
+            await discordOwner.send(`❌ Your bot, ${bot.name}, was rejected by ${staffUser.tag}. Check <#425170250548379664> for more information.`);
         } catch (e) {}
-        client.channels.get("425170250548379664").send(`<:rejected:436824567898570763> ${botUser.tag} by <@${bot.ownerID}> was rejected by ${staffUser}.`);
+        client.channels.get("425170250548379664").send(`❌ ${botUser.tag} by <@${bot.ownerID}> was rejected by ${staffUser}.`);
         await r.table("bots").get(bot.id).delete().run();
     }
-    res.status(200).json({ok: "applied actions"});
+    res.status(200).json({ok: "Applied actions"});
 });
 
 app.post("/bot/:id/like", async (req, res) => {
@@ -207,10 +209,10 @@ app.post("/bot/:id/like", async (req, res) => {
     let existingLike = (await r.table("likes").filter({userID: req.user.id, botID: bot.id}).run())[0];
     if (existingLike) {
         await r.table("likes").get(existingLike.id).delete().run();
-        res.json({ok: "deleted like"});
+        res.json({ok: "Unliked bot"});
     } else {
         await r.table("likes").insert({userID: req.user.id, botID: bot.id, createdAt: Date.now()}).run();
-        res.json({ok: "liked bot"});
+        res.json({ok: "Liked bot"});
     }
 });
 
