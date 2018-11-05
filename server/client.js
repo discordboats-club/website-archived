@@ -19,6 +19,10 @@ client.on('message', msg => {
     const command = args.shift().toLowerCase();
 
     switch(command) {
+        case 'say':
+            if (!msg.guild || msg.guild.id !== '482022278758924298') return;
+            msg.channel.send(args.join(' '), { disableEveryone: true });
+            break;
         case 'botinfo':
             if (!args[0]) return msg.channel.send('You must specify a bot!');
             resolveUser(client, args.join(' ')).then(user => {
