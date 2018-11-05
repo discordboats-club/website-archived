@@ -133,8 +133,8 @@ $(window).ready(async () => {
             parent: like,
             radius: { 25 : 75 },
             count: 15,
-            top: "20%",
-            left: "-10%",
+            top: "-30%",
+            left: "20%%",
             duration: 600,
             children: {
                 shape: [ "circle", "polygon" ],
