@@ -22,7 +22,7 @@
                     <div class="bp-head">
                         <a id="like-btn" href="#" data-bot-id="<%=bot.id%>" class="<%= typeof user == `object` ? `` : `modal-trigger` %>" data-target="auth-modal" style="width: 20vh; height: 20vh;">
                             <p class="toast center" id="like-btn-text"><%=bot.likeCount%></p>
-                            <i class="fas fa-heart <%=bot._userLikes?`red-text`:`grey-text`%>" style="width: 20vh; height: 20vh;"></i>
+                            <i class="fas fa-heart <%=bot._userLikes?`red-text`:`grey-text`%>" style="width: 15vh; height: 10vh;"></i>
                         </a>
                         <div class="bp-avatar">
                             <img class="responsive-img circle" width="128" height="128" alt="Bot Avatar" src="<%= bot._discordAvatarURL %>">
