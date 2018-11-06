@@ -1,5 +1,6 @@
 <% if (typeof user == 'object') { %>
     <ul id="profile-dropdown" class="dropdown-content">
+            <li><a href="/user/<%=user.id%>">Profile</a></li>
             <li><a href="/dashboard">Dashboard</a></li>
             <li><a id="log-out-indd">Log Out</a></li>
     </ul>

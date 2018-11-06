@@ -47,7 +47,9 @@
                                         <div class="chip purple lighten-3 bp-chip"><%= bot.prefix %> prefix</div>
                                     <% } %>
                                     <% if (bot._ownerTag) { %>
-                                        <div class="chip blue lighten-1 bp-chip">owned by <%= bot._ownerTag %></div>
+                                        <a href="/user/<%= bot.ownerID %>">
+						<div class="chip blue lighten-1 bp-chip">owned by <%= bot._ownerTag %></div>
+					</a>
                                     <% } %>
                                 </div>
                             </div>

@@ -1,6 +1,7 @@
 const marked = require("marked");
 const Joi = require("joi");
 const moment = require("moment");
+const chunk = require("chunk");
 module.exports = class Utils {
     /**
      * @param {Object} bot 
@@ -12,7 +13,7 @@ module.exports = class Utils {
         const { r } = require("./ConstantStore");
         const botUser = client.users.get(bot.id) || await client.users.fetch(bot.id);
         bot.online = botUser.presence.status !== "offline";
-        bot._discordAvatarURL = botUser.avatarURL({format: "png", size: 512}) || "https://discordboats.club/404.png";
+        bot._discordAvatarURL = botUser.displayAvatarURL({format: "png", size: 512});
         bot._markedDescription = marked(bot.longDescription, {sanitize: true});
         bot._ownerViewing = user.id === bot.ownerID;
         bot._comments = await r.table("comments").filter({botID: bot.id}).run();
@@ -56,10 +57,13 @@ module.exports = class Utils {
     static async attachPropUser(user) {
         const client = require("./ConstantStore").bot;
         const { r } = require("./ConstantStore");
-        const discordUser = client.users.get(user.id) || client.users.fetch(user.id);
-        user._discordAvatarURL = discordUser.displayAvatarURL;
-        user._bots = await r.table("bots").filter({ownerID: user.id}).run(); // might call attachPropBot here if needed.
+        const discordUser = client.users.get(user.id) || await client.users.fetch(user.id);
+	user.online = discordUser.presence.status !== 'offline';
+	user.discriminator = discordUser.discriminator;
+        user._discordAvatarURL = discordUser.displayAvatarURL({ format: "png", size: 512 });
+        user._bots = await Promise.all((await r.table("bots").filter({ownerID: user.id})).map(b => Utils.attachPropBot(b)));
         user._verifiedBots = user._bots.filter(bot => bot.verified);
+        user._chunked = chunk(user._verifiedBots, 4);
         if (user.mod) user.badges.push("Moderator");
         if (user.admin) user.badges.push("Administrator");
         return user;

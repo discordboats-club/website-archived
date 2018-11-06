@@ -2,5 +2,6 @@
     "clientID": "",
     "clientSecret": "",
     "token": "",
-    "callbackURL": "https://discordboats.club/discord/callback"
+    "callbackURL": "https://discordboats.club/discord/callback",
+    "listeningPort": 3000
 }

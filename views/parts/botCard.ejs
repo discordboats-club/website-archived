@@ -6,6 +6,8 @@
         <div class="card-content white-text">
             <span class="card-title"><%= bot.name %></span>
             <p class="bot-card-desc"><%= bot.shortDescription %></p>
+
+            <div class="card-server-count chip <%= bot.online ? 'green' : 'red' %> lighten-2"><%= bot.online ? 'online' : 'offline' %></div>
             <% if (bot.servers) { %>
             <div class="card-server-count chip lime lighten-2"><%= bot.servers %> servers</div>
             <% } %>
