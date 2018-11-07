@@ -3,11 +3,12 @@ const app = module.exports = express.Router();
 const Joi = require("joi");
 const snekfetch = require("snekfetch");
 let badBots = [];
-const { r } = require("../ConstantStore");
+const { r, bot: client } = require("../ConstantStore");
 const randomString = require("randomstring");
 const Util = require("../Util");
 // datamined from the discord api docs
 const libList = module.exports.libList = ["discordcr","Discord.Net","DSharpPlus","dscord","DiscordGo","Discord4j","JDA","discord.js","Eris","Discordia","RestCord","Yasmin","discord.py","disco","discordrb","discord-rs","Sword"];
+const config = require('../config.json');
 
 
 snekfetch.get("https://gist.githubusercontent.com/RONTheCookie/c209f333d14fd85b3b6ae00243bff2cd/raw/dd5a159320ea5faa54c8616315b3deccfd601b3e/badbots.txt").then(res => {
@@ -71,7 +72,7 @@ app.post("/bot", async (req, res) => {
     // everything looks good.
     await r.table("bots").insert(data).run();
     res.status(200).json({ok: "Created bot"});
-    client.channels.get("425170250548379664").send(`📥 <@${req.user.id}> added ${botUser.username} (<@&508047998706515970>).`);
+    client.channels.get(config.ids.logChannel).send(`📥 <@${req.user.id}> added ${botUser.username} (<@&${config.ids.staffRole}>).`);
 });
 
 const editBotSchema = Joi.object().required().keys({
@@ -95,7 +96,7 @@ app.patch("/bot/:id", async (req, res) => {
         const botUser = client.users.get(bot.id) || await client.users.fetch(bot.id);
         
         await r.table("bots").get(bot.id).update(data).run();
-        client.channels.get("425170250548379664").send(`✏ <@${req.user.id}> edited ${botUser.username}.`);
+        client.channels.get(config.ids.logChannel).send(`✏ <@${req.user.id}> edited ${botUser.username}.`);
         res.json({ok: "edited bot"});
     } else res.status(403).json({error: "You do not own this bot"});
 });
@@ -106,7 +107,7 @@ app.delete("/bot/:id", async (req, res) => {
     if (req.user.id === bot.ownerID || req.user.admin || req.user.mod) {
         await r.table("bots").get(req.params.id).delete().run();
         const botUser = client.users.get(bot.id) || await client.users.fetch(bot.id);
-        client.channels.get("425170250548379664").send(`🗑 <@${req.user.id}> deleted ${botUser.username}.`);
+        client.channels.get(config.ids.logChannel).send(`🗑 <@${req.user.id}> deleted ${botUser.username}.`);
         res.status(200).json({ok: "Deleted bot."});
     } else res.status(403).json({error: "You do not own this bot"});
 });
@@ -189,13 +190,13 @@ app.post("/bot/mod/verify", async (req, res) => {
         try {
             await discordOwner.send(`🎉 Your bot, ${bot.name}, was verified by ${staffUser.tag}!`);
         } catch (e) {}
-        client.channels.get("425170250548379664").send(`🎉 ${botUser.username} by <@${bot.ownerID}> was verified by ${staffUser}!`);
+        client.channels.get(config.ids.logChannel).send(`🎉 ${botUser.username} by <@${bot.ownerID}> was verified by ${staffUser}!`);
         await r.table("bots").get(bot.id).update({verified: true}).run();
     } else {
         try { 
-            await discordOwner.send(`❌ Your bot, ${bot.name}, was rejected by ${staffUser.tag}. Check <#425170250548379664> for more information.`);
+            await discordOwner.send(`❌ Your bot, ${bot.name}, was rejected by ${staffUser.tag}. Check <#${config.ids.logChannel}> for more information.`);
         } catch (e) {}
-        client.channels.get("425170250548379664").send(`❌ ${botUser.tag} by <@${bot.ownerID}> was rejected by ${staffUser}.`);
+        client.channels.get(config.ids.logChannel).send(`❌ ${botUser.tag} by <@${bot.ownerID}> was rejected by ${staffUser}.`);
         await r.table("bots").get(bot.id).delete().run();
     }
     res.status(200).json({ok: "Applied actions"});

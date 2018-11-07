@@ -101,7 +101,7 @@ $(window).ready(async () => {
         $("#delete-bot-action").click(async e => {
             await api.deleteBot(document.querySelector("#delete-bot-modal").getAttribute("data-bot-id"));
             window.localStorage.setItem("toastOnNext", "Deleted bot.");
-            document.location.replace("/");
+            window.location = '/dashboard';
         });
     } else if (document.location.href.includes("/dashboard/bot") && document.location.href.endsWith("/edit")) {
         M.FormSelect.init($("select#newbot"), {classes: "newbot-dd-wrap"});

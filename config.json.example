@@ -3,5 +3,10 @@
     "clientSecret": "",
     "token": "",
     "callbackURL": "https://discordboats.club/discord/callback",
-    "listeningPort": 3000
+    "listeningPort": 3000,
+    "ids": {
+        "logChannel": "",
+        "staffRole": "",
+        "staffChannel": ""
+    }
 }
