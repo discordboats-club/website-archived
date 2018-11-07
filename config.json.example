@@ -7,6 +7,10 @@
     "ids": {
         "logChannel": "",
         "staffRole": "",
-        "staffChannel": ""
+        "staffChannel": "",
+        "mainServer": "",
+        "verificationServer": "",
+        "botRole": "",
+        "botDeveloperRole": ""
     }
 }

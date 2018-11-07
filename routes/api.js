@@ -199,6 +199,10 @@ app.post("/bot/mod/verify", async (req, res) => {
         client.channels.get(config.ids.logChannel).send(`❌ ${botUser.tag} by <@${bot.ownerID}> was rejected by ${staffUser}.`);
         await r.table("bots").get(bot.id).delete().run();
     }
+
+    client.guilds.get(config.ids.verificationServer).members.get(bot.id).kick().catch(() => {});
+    if (data.verified) client.guilds.get(config.ids.mainServer).members.get(bot.ownerID).roles.add(config.ids.botDeveloperRole).catch(() => {});
+
     res.status(200).json({ok: "Applied actions"});
 });
 

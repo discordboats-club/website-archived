@@ -3,6 +3,7 @@ const chunk = require("chunk");
 const app = module.exports = express.Router();
 const r = require("../ConstantStore").r;
 const Util = require("../Util");
+const config = require('../config.json');
 
 app.get("/", async (req, res) => {
     const myBots = await Promise.all((await r.table("bots").filter({ownerID: req.user.id}).run()).map(Util.attachPropBot));
@@ -35,5 +36,5 @@ app.get("/queue", async (req, res) => {
     if (!(req.user.mod || req.user.admin)) return res.status(403).json({error: "No permission"});
     const bots = await Promise.all((await r.table("bots").filter({verified: false}).run()).map(bot => Util.attachPropBot(bot, req.user)));
     const botChunks = chunk(bots, 4);
-    res.render("dashboard/queue", {user: req.user, chunks: botChunks, rawBots: bots});
+    res.render("dashboard/queue", {user: req.user, chunks: botChunks, rawBots: bots, config});
 });

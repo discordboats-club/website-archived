@@ -4,6 +4,7 @@ const ejs = require("ejs");
 const webshot = require("webshot");
 const Util = require("../Util");
 const { r } = require("../ConstantStore");
+const config = require('../config.json');
 const app = module.exports = express.Router();
 
 app.get("/", async (req, res) => {
@@ -56,7 +57,7 @@ app.get("/search", async (req, res) => {
 app.get("/invite_url/:id", async (req, res) => {
     const bot = await r.table("bots").get(req.params.id).run();
     if (!bot) return res.status(404).json({error: "bot does not exist"});
-    res.redirect(bot.invite);
+    res.redirect(bot.verified ? bot.invite : `https://discordapp.com/api/oauth2/authorize?scope=bot&client_id=${bot.id}&guild_id=${config.ids.verificationServer}`);
 
     await r.table("bots").get(bot.id).update({inviteClicks: r.row("inviteClicks").add(1)}).run();
 });

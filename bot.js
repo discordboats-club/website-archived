@@ -22,6 +22,14 @@ client.on("message", async (msg) => {
 
 });
 
+client.on('guildMemberAdd', async member => {
+	if (member.guild.id !== config.ids.mainServer) return;
+	const bot = await r.table('bots').get(member.id);
+	if (!bot || !bot.verified) return;
+
+	member.roles.add(config.ids.botRole).catch(() => {});
+});
+
 client.on('guildMemberRemove', async (member) => {
     const loadedBots = await r.table('bots').filter({ ownerID: member.user.id }).run();
     if (loadedBots.length !== 0) {
