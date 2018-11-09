@@ -37,7 +37,6 @@ $(window).ready(async () => {
         let modal = e.target.parentElement.parentElement;
         let id = modal.getAttribute('data-bot-id');
         let card = $(`#${id}`);
-	console.log($(`#deny-reason-${id}`));
 
 	try {
         	await api.verifyBot(false, $(`#deny-reason-${id}`).val(), id);
