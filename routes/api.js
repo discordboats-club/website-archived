@@ -200,7 +200,7 @@ app.post("/bot/mod/verify", async (req, res) => {
             await discordOwner.send(`❌ Your bot, ${bot.name}, was rejected by ${staffUser.tag}. Check <#${config.ids.logChannel}> for more information.`);
         } catch (e) {}
         client.channels.get(config.ids.logChannel).send(`❌ ${botUser.tag} by <@${bot.ownerID}> was rejected by ${staffUser}.\nReason: \`${data.reason}\``);
-        //await r.table("bots").get(bot.id).delete().run();
+        await r.table("bots").get(bot.id).delete().run();
     }
 
     try {
