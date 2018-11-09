@@ -28,16 +28,25 @@ controlEle.addEventListener("change", e => {
 
 $(window).ready(async () => {
     $(".accept-button").click((e) => {
-        let card = e.target.parentElement.parentElement.parentElement.parentElement;
+        let card = e.target.parentElement.parentElement;
         let id = card.getAttribute("id");
-        api.verifyBot(true, id);
+        api.verifyBot(true, undefined, id);
         card.remove();
     });
-    $(".deny-button").click((e) => {
-        let card = e.target.parentElement.parentElement.parentElement.parentElement;
-        let id = card.getAttribute("id");
-        api.verifyBot(false, id);
-        card.remove();
+    $(".deny-bot-action").click(async e => {
+        let modal = e.target.parentElement.parentElement;
+        let id = modal.getAttribute('data-bot-id');
+        let card = $(`#${id}`);
+	console.log($(`#deny-reason-${id}`));
+
+	try {
+        	await api.verifyBot(false, $(`#deny-reason-${id}`).val(), id);
+
+        	card.remove();
+	}
+	catch(e) {
+		M.toast({html: e.message});
+	}
     });
     document.querySelectorAll(".modal").forEach(ele => M.Modal.init(ele));
     M.Dropdown.init(document.querySelector("#profile-dropdown-trigger"), {ecoverTrigger: false});

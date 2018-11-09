@@ -173,6 +173,7 @@ app.get("/me", (req, res) => {
 
 const modVerifyBotSchema = Joi.object().required().keys({
     verified: Joi.boolean().required(),
+    reason: Joi.string(),
     botID: Joi.string().length(18).required()
 });
 
@@ -193,14 +194,20 @@ app.post("/bot/mod/verify", async (req, res) => {
         client.channels.get(config.ids.logChannel).send(`🎉 ${botUser.username} by <@${bot.ownerID}> was verified by ${staffUser}!`);
         await r.table("bots").get(bot.id).update({verified: true}).run();
     } else {
+	console.log(data.reason);
+        if (!data.reason || !data.reason.trim()) return res.status(400).json({error: "A reason is required"});
         try { 
             await discordOwner.send(`❌ Your bot, ${bot.name}, was rejected by ${staffUser.tag}. Check <#${config.ids.logChannel}> for more information.`);
         } catch (e) {}
-        client.channels.get(config.ids.logChannel).send(`❌ ${botUser.tag} by <@${bot.ownerID}> was rejected by ${staffUser}.`);
-        await r.table("bots").get(bot.id).delete().run();
+        client.channels.get(config.ids.logChannel).send(`❌ ${botUser.tag} by <@${bot.ownerID}> was rejected by ${staffUser}.\nReason: \`${data.reason}\``);
+        //await r.table("bots").get(bot.id).delete().run();
     }
 
-    client.guilds.get(config.ids.verificationServer).members.get(bot.id).kick().catch(() => {});
+    try {
+        client.guilds.get(config.ids.verificationServer).members.get(bot.id).kick().catch(() => {});
+    }
+    catch(e) {}
+
     if (data.verified) client.guilds.get(config.ids.mainServer).members.get(bot.ownerID).roles.add(config.ids.botDeveloperRole).catch(() => {});
 
     res.status(200).json({ok: "Applied actions"});

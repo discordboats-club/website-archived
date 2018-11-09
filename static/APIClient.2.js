@@ -43,8 +43,8 @@ window.APIClient = class APIClient {
         }
     }
 
-    static async verifyBot(verified, id) {
-        const res = await fetch('/api/bot/mod/verify', { method: 'POST', credentials: 'same-origin', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ verified: verified, botID: id}) });
+    static async verifyBot(verified, reason, id) {
+        const res = await fetch('/api/bot/mod/verify', { method: 'POST', credentials: 'same-origin', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ verified, reason, botID: id}) });
         const data = await res.json();
         if (data.error) {
             throw new Error(data.error);
