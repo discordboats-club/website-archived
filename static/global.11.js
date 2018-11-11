@@ -28,7 +28,7 @@ controlEle.addEventListener("change", e => {
 
 $(window).ready(async () => {
     $(".accept-button").click((e) => {
-        let card = e.target.parentElement.parentElement.parentElement;
+        let card = e.target.parentElement.parentElement.parentElement.parentElement;
         let id = card.getAttribute("id");
         api.verifyBot(true, undefined, id);
         card.remove();
