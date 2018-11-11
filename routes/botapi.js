@@ -50,6 +50,15 @@ app.post("/bot/stats", async (req, res) => {
     res.status(200).json({ok: "updated server count"});
 });
 
+app.get("/stats", async (req, res) => {
+    res.status(200).json({
+        botCount: await r.table("bots").count().run(),
+        userCount: await r.table("users").count().run(),
+        likeCount: await r.table("likes").count().run(),
+        botsInvited: await r.table("bots").sum("inviteClicks").run()
+    });
+});
+
 app.use((req, res) => {
     res.status(404).json({error: "Invalid Endpoint"});
 });
