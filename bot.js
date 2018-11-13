@@ -10,12 +10,15 @@ client.once("ready", () => {
 
 client.on("message", async (msg) => {
     if (msg.author.bot || msg.author.id === client.user.id) return;
-    const cmd = msg.content.split(" ")[0].toLowerCase();
-    const args = msg.content.split(" ").slice(1);
     const prefix = "db, ";
+    
+    if (!msg.content.startsWith(prefix)) return;
+    
+    const args = msg.content.slice(prefix.length).split(/ +/g);
+    const cmd = args.shift().toLowerCase();
 
     switch(cmd) {
-        case prefix + "ping":
+        case "ping":
             await msg.channel.send("Pong!");
         break;
     }
