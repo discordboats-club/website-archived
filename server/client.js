@@ -155,19 +155,19 @@ client.on('message', msg => {
                     fields: [
                         {
                             name: 'Featured',
-                            value: 'List all featured bots.\n\n**Usage:**\n`dbc[featured|featuredbots|featured-bots]`'
+                            value: `List all featured bots.\n\n**Usage:**\n\`${prefix}[featured|featuredbots|featured-bots]\``
                         },
                         {
                             name: 'Help',
-                            value: 'Lists all bot commands.\n\n**Usage:**\n`dbc[help|cmds|commands]`'
+                            value: `Lists all bot commands.\n\n**Usage:**\n\`${prefix}[help|cmds|commands]\``
                         },
                         {
                             name: 'Bots',
-                            value: 'List all of a user\'s bots.\n\n**Usage:**\n`dbcbots [user]`'
+                            value: `List all of a user\'s bots.\n\n**Usage:**\n\`${prefix}bots [user]\``
                         },
                         {
                             name: 'Botinfo',
-                            value: 'Retrieves a bot\'s information.\n\n**Usage:**\n`dbcbotinfo <bot>`'
+                            value: `Retrieves a bot\'s information.\n\n**Usage:**\n\`${prefix}botinfo <bot>\``
                         },
                         {
                             name: 'Ping',
