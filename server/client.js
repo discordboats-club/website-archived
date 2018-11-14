@@ -140,20 +140,6 @@ client.on('message', msg => {
         case 'ping':
             msg.channel.send(':ping_pong: Pong!');
             break;
-        case 'halloween':
-            try {
-            if (msg.member.roles.find((role) => role.name === '🎃')) {
-            msg.member.roles.remove("500388497363042316", 'Halloween command ran (role taken).')
-            return msg.channel.send("<:customCheck:485196148064256019> Halloween role successfully removed! What do you not like being spoopy? :frowning:");
-            }
-            } catch(e) {
-            return msg.channel.send('Error running this command.')
-            }
-            msg.member.roles.add("500388497363042316", 'Halloween command ran (role given).')
-            msg.channel.send("<:customCheck:485196148064256019> Halloween role successfully added! Enjoy being spoopy \;)").catch(err => {
-                    msg.channel.send('Error running this command.')
-                    });
-        break;
         case 'help':
         case 'commands':
         case 'cmds':
@@ -169,19 +155,19 @@ client.on('message', msg => {
                     fields: [
                         {
                             name: 'Featured',
-                            value: 'List all featured bots.\n\n**Usage:**\n`dbs[featured|featuredbots|featured-bots]`'
+                            value: 'List all featured bots.\n\n**Usage:**\n`dbc[featured|featuredbots|featured-bots]`'
                         },
                         {
                             name: 'Help',
-                            value: 'Lists all bot commands.\n\n**Usage:**\n`dbs[help|cmds|commands]`'
+                            value: 'Lists all bot commands.\n\n**Usage:**\n`dbc[help|cmds|commands]`'
                         },
                         {
                             name: 'Bots',
-                            value: 'List all of a user\'s bots.\n\n**Usage:**\n`dbsbots [user]`'
+                            value: 'List all of a user\'s bots.\n\n**Usage:**\n`dbcbots [user]`'
                         },
                         {
                             name: 'Botinfo',
-                            value: 'Retrieves a bot\'s information.\n\n**Usage:**\n`dbsbotinfo <bot>`'
+                            value: 'Retrieves a bot\'s information.\n\n**Usage:**\n`dbcbotinfo <bot>`'
                         },
                         {
                             name: 'Ping',
