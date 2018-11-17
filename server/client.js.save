@@ -5,7 +5,6 @@ const resolveUser = require('./botutils/resolveUser.js');
 const { r } = require('./index.js');
 
 const color = 7506394;
-const prefix = 'dbc ';
 
 client.once('ready', () => {
     console.log(`[discord] logged in as ${client.user.tag}`);
@@ -13,16 +12,14 @@ client.once('ready', () => {
 });
 
 client.on('message', msg => {
-    if (msg.author.bot || !msg.content.toLowerCase().startsWith(prefix)) return;
+    if (msg.author.bot) return;
 
-    const args = msg.content.slice(prefix.length).split(/ +/g);
+    if (msg.content.indexOf('-') !== 0) return;
+
+    const args = msg.content.slice("-".length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
 
     switch(command) {
-        case 'say':
-            if (!msg.guild || msg.guild.id !== '482022278758924298') return;
-            msg.channel.send(args.join(' '), { disableEveryone: true });
-            break;
         case 'botinfo':
             if (!args[0]) return msg.channel.send('You must specify a bot!');
             resolveUser(client, args.join(' ')).then(user => {
@@ -47,13 +44,18 @@ client.on('message', msg => {
                                     inline: true
                                 },
                                 {
-                                    name: 'Tag',
-                                    value: `${bot.username}#${bot.discrim}`,
+                                    name: 'Username',
+                                    value: bot.username,
+                                    inline: true
+                                },
+                                {
+                                    name: 'Discriminator',
+                                    value: bot.discrim,
                                     inline: true
                                 },
                                 {
                                     name: 'Owner',
-                                    value: bot.otherOwnersIds ? `<@${bot.ownerId}>, ${bot.otherOwnersIds.map(id => `<@${id}>`).join(', ')}` : `<@${bot.ownerId}>`,
+                                    value: bot.otherOwnersIds ? `<@${bot.ownerID}>, ${bot.otherOwnersIds.map(id => `<@${id}>`).join(', ')}` : `<@${bot.ownerID}>`,
                                     inline: true
                                 },
                                 {
@@ -68,7 +70,7 @@ client.on('message', msg => {
                                 },
                                 {
                                     name: 'Links',
-                                    value: `${bot.github ? `[Repo](${bot.github})` : 'No Repo'} | ${bot.website ? `[Website](${bot.website})` : 'No Website'} | [Invite](${bot.invite})`
+                                    value: `${bot.github ? `[GitHub](${bot.github})` : 'No GitHub'} | ${bot.website ? `[Website](${bot.website})` : 'No Website'} | [Invite](${bot.invite})`
                                 }
                             ]
                         }
@@ -88,7 +90,7 @@ client.on('message', msg => {
                             embed: {
                                 title: `${user.username}'s Bots`,
                                 color: color,
-                                description: ownedBots.map(bot => `<@${bot.id}>`).join(',\n'),
+                                description: ownedBots.map(bot => `<@${bot.botId}>`).join(',\n'),
                                 footer: {
                                     text: `Bots | Requested by ${msg.author.username}`, 
                                     icon_url: client.user.displayAvatarURL
@@ -105,7 +107,7 @@ client.on('message', msg => {
                         embed: {
                             title: `${msg.author.username}'s Bots`,
                             color: color,
-                            description: ownedBots.map(bot => `<@${bot.id}>`).join(',\n'),
+                            description: ownedBots.map(bot => `<@${bot.botId}>`).join(',\n'),
                             footer: {
                                 text: `Bots | Requested by ${msg.author.username}`, 
                                 icon_url: client.user.displayAvatarURL
@@ -138,6 +140,7 @@ client.on('message', msg => {
         case 'help':
         case 'commands':
         case 'cmds':
+        default:
             msg.channel.send({
                 embed: {
                     title: 'Help',
@@ -149,19 +152,19 @@ client.on('message', msg => {
                     fields: [
                         {
                             name: 'Featured',
-                            value: `List all featured bots.\n\n**Usage:**\n\`${prefix}[featured|featuredbots|featured-bots]\``
+                            value: 'List all featured bots.\n\n**Usage:**\n`-[featured|featuredbots|featured-bots]`'
                         },
                         {
                             name: 'Help',
-                            value: `Lists all bot commands.\n\n**Usage:**\n\`${prefix}[help|cmds|commands]\``
+                            value: 'Lists all bot commands.\n\n**Usage:**\n`-[help|cmds|commands]`'
                         },
                         {
                             name: 'Bots',
-                            value: `List all of a user\'s bots.\n\n**Usage:**\n\`${prefix}bots [user]\``
+                            value: 'List all of a user\'s bots.\n\n**Usage:**\n`-bots [user]`'
                         },
                         {
                             name: 'Botinfo',
-                            value: `Retrieves a bot\'s information.\n\n**Usage:**\n\`${prefix}botinfo <bot>\``
+                            value: 'Retrieves a bot\'s information.\n\n**Usage:**\n`-botinfo <bot>`'
                         },
                         {
                             name: 'Ping',
