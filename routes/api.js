@@ -108,6 +108,7 @@ app.delete("/bot/:id", async (req, res) => {
         await r.table("bots").get(req.params.id).delete().run();
         const botUser = client.users.get(bot.id) || await client.users.fetch(bot.id);
         client.channels.get(config.ids.logChannel).send(`🗑 <@${req.user.id}> deleted ${botUser.username}.`);
+        client.guilds.get(config.ids.mainServer).member(botUser.id).kick('Bot deleted').catch(() => {});
         res.status(200).json({ok: "Deleted bot."});
     } else res.status(403).json({error: "You do not own this bot"});
 });
