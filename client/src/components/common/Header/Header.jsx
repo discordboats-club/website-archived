@@ -33,7 +33,7 @@ export default class Header extends Component {
                     onKeyDown={this.handleKeyDown}
                     type="text"
                     maxLength={19}
-                    placeholder="Search Bots"
+                    placeholder="Search"
                     spellCheck="false"
                 />
             </div>
