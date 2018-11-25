@@ -74,6 +74,10 @@ app.get("/bot/:id/widget.png", async (req, res) => {
     });
 });
 
+app.get("/terms", (req, res) => {
+    res.render("terms");
+});
+
 app.get("/stats", async (req, res) => {
     res.render("stats", {
         botCount: await r.table("bots").count().run(),
