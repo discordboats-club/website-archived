@@ -78,6 +78,10 @@ app.get("/terms", (req, res) => {
     res.render("terms");
 });
 
+app.get("/privacy", (req, res) => {
+    res.render("privacy");
+});
+
 app.get("/stats", async (req, res) => {
     res.render("stats", {
         botCount: await r.table("bots").count().run(),
