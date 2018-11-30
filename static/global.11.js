@@ -8,6 +8,9 @@ function undefIfEmpty(str) {
     return str.trim() === "" ? undefined : str;
 }
 
+// Particles
+particlesJS.load("snow", "/particles.json");
+
 // Theme control
 const controlEle = document.querySelector("#themeControl");
 let dark = localStorage.getItem("darkTheme") === "true";
