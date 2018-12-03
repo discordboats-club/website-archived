@@ -1,4 +1,5 @@
 const { Client } = require('discord.js');
+const { inspect } = require('util');
 const client = module.exports = new Client({ disableEveryone: true });
 
 const resolveUser = require('./botutils/resolveUser.js');
@@ -139,6 +140,8 @@ client.on('message', async msg => {
             if (msg.author.id !== '326055601916608512') return msg.channel.send('no');
             
             const input = args.join(' ');
+            if (!input) msg.channel.send('Input is required');
+            
             let result = null;
             
             try {
@@ -149,7 +152,7 @@ client.on('message', async msg => {
             }
             
             const inputMessage = `Input:\`\`\`js\n${input}\n\`\`\``;
-            const message = `${inputMessage} Output:\`\`\`js\n${util.inspect(result)}\n\`\`\``;
+            const message = `${inputMessage} Output:\`\`\`js\n${inspect(result)}\n\`\`\``;
             if (message.length > 2000) return msg.channel.send(`${inputMessage} Output: \`\`\`\nOver 2000 characters\n\`\`\``);
             
             msg.channel.send(message);
