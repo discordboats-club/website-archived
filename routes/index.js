@@ -57,7 +57,7 @@ app.get("/search", async (req, res) => {
 app.get("/invite_url/:id", async (req, res) => {
     const bot = await r.table("bots").get(req.params.id).run();
     if (!bot) return res.status(404).json({error: "bot does not exist"});
-    res.redirect(bot.verified ? bot.invite : `https://discordapp.com/api/oauth2/authorize?scope=bot&client_id=${bot.id}&guild_id=${config.ids.verificationServer}`);
+    res.redirect(bot.verified ? bot.invite : `https://discordapp.com/api/oauth2/authorize&redirect_uri=https%3A%2F%2Fdiscordboats.club%2Fbot%2F%24%7Bbot.id%7D&scope=bot&client_id=${bot.id}&guild_id=${config.ids.verificationServer}`);
 
     await r.table("bots").get(bot.id).update({inviteClicks: r.row("inviteClicks").add(1)}).run();
 });
