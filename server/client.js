@@ -139,7 +139,7 @@ client.on('message', async msg => {
             msg.channel.send(':ping_pong: Pong!');
             break;
         case 'eval':
-            if (evalUsers.indexOf(msg.author.id) === -1) return msg.channel.send('no');
+            if (evalUsers.indexOf(msg.author.id) === -1) return;
             
             const input = args.join(' ');
             if (!input) return msg.channel.send('Input is required');
