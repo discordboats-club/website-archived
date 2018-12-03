@@ -12,7 +12,7 @@ client.once('ready', () => {
     client.user.setActivity('with boats');
 });
 
-client.on('message', msg => {
+client.on('message', async msg => {
     if (msg.author.bot || !msg.content.toLowerCase().startsWith(prefix)) return;
 
     const args = msg.content.slice(prefix.length).split(/ +/g);
@@ -134,6 +134,25 @@ client.on('message', msg => {
             break;
         case 'ping':
             msg.channel.send(':ping_pong: Pong!');
+            break;
+        case 'eval':
+            if (msg.author.id !== '326055601916608512') return msg.channel.send('no');
+            
+            const input = args.join(' ');
+            let result = null;
+            
+            try {
+                result = await eval(input);
+            }
+            catch(e) {
+                result = e.toString();
+            }
+            
+            const inputMessage = `Input:\`\`\`js\n${input}\n\`\`\``;
+            const message = `${inputMessage} Output:\`\`\`js\n${util.inspect(result)}\n\`\`\``;
+            if (message.length > 2000) return msg.channel.send(`${inputMessage} Output: \`\`\`\nOver 2000 characters\n\`\`\``);
+            
+            msg.channel.send(message);
             break;
         case 'help':
         case 'commands':
