@@ -140,19 +140,21 @@ client.on('message', async msg => {
             if (msg.author.id !== '326055601916608512') return msg.channel.send('no');
             
             const input = args.join(' ');
-            if (!input) msg.channel.send('Input is required');
+            if (!input) return msg.channel.send('Input is required');
             
             let result = null;
+            let error = false;
             
             try {
                 result = await eval(input);
             }
             catch(e) {
                 result = e.toString();
+                error = true;
             }
             
             const inputMessage = `Input:\`\`\`js\n${input}\n\`\`\``;
-            const message = `${inputMessage} Output:\`\`\`js\n${inspect(result)}\n\`\`\``;
+            const message = `${inputMessage} Output:\`\`\`js\n${error ? result : inspect(result)}\n\`\`\``;
             if (message.length > 2000) return msg.channel.send(`${inputMessage} Output: \`\`\`\nOver 2000 characters\n\`\`\``);
             
             msg.channel.send(message);
