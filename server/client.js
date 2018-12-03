@@ -8,6 +8,8 @@ const { r } = require('./index.js');
 const color = 7506394;
 const prefix = 'dbc ';
 
+const evalUsers = ['233823931830632449', '326055601916608512'];
+
 client.once('ready', () => {
     console.log(`[discord] logged in as ${client.user.tag}`);
     client.user.setActivity('with boats');
@@ -137,7 +139,7 @@ client.on('message', async msg => {
             msg.channel.send(':ping_pong: Pong!');
             break;
         case 'eval':
-            if (msg.author.id !== '326055601916608512') return msg.channel.send('no');
+            if (evalUsers.indexOf(msg.author.id) === -1) return msg.channel.send('no');
             
             const input = args.join(' ');
             if (!input) return msg.channel.send('Input is required');
