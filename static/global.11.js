@@ -24,7 +24,7 @@ function processThemeState() {
 }
 processThemeState();
 controlEle.addEventListener("change", e => {
-    dark = e.target.checked;
+    light = e.target.checked;
     localStorage.setItem("lightTheme", JSON.stringify(e.target.checked));
     processThemeState();
 });
