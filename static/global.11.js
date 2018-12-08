@@ -13,10 +13,10 @@ particlesJS.load("snow", "/particles.json");
 
 // Theme control
 const controlEle = document.querySelector("#themeControl");
-let dark = localStorage.getItem("darkTheme") === "true";
-controlEle.checked = dark;
+let light = localStorage.getItem("lightTheme") === "true";
+controlEle.checked = light;
 function processThemeState() {
-    if (dark) {
+    if (!light) {
         $(document.body).addClass("dark-theme");
     } else {
         $(document.body).removeClass("dark-theme");
@@ -25,7 +25,7 @@ function processThemeState() {
 processThemeState();
 controlEle.addEventListener("change", e => {
     dark = e.target.checked;
-    localStorage.setItem("darkTheme", JSON.stringify(e.target.checked));
+    localStorage.setItem("lightTheme", JSON.stringify(e.target.checked));
     processThemeState();
 });
 
