@@ -24,7 +24,7 @@ client.on("message", async (msg) => {
     switch(cmd) {
         case "ping":
 	        const ping = await msg.channel.send(":ping_pong: Ping!");
-	        ping.edit(`:clock1030: Pong! ${m.createdTimestamp - msg.createdTimestamp}ms response\n:sparkling_heart:  ${Math.round(bot.ws.ping)}ms API heartbeat`);
+	        ping.edit(`:clock1030: Pong! ${ping.createdTimestamp - msg.createdTimestamp}ms response\n:sparkling_heart:  ${Math.round(bot.ws.ping)}ms API heartbeat`);
         break;
 
         case "say":
