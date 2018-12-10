@@ -1,16 +1,20 @@
 const { Client } = require("discord.js");
 const { r } = require("./ConstantStore");
-const client = module.exports = new Client({disableEveryone: true, presence: {activity: {name: "with boats"}}});
+const client = module.exports = new Client({disableEveryone: true});
 const config = require("./config.json");
 client.login(config.token);
 
-client.once("ready", () => {
-    console.log(`[discord] Logged in as ${client.user.tag}.`)
+const evalUsers = ['233823931830632449', '326055601916608512'];
+
+client.once('ready', () => {
+    console.log(`[discord] logged in as ${client.user.tag}`);
+    client.user.setActivity('over discordboats.club', { type: 'WATCHING' });
 });
+
 
 client.on("message", async (msg) => {
     if (msg.author.bot || msg.author.id === client.user.id) return;
-    const prefix = "db, ";
+    const prefix = "dbc ";
     
     if (!msg.content.startsWith(prefix)) return;
     
@@ -19,8 +23,71 @@ client.on("message", async (msg) => {
 
     switch(cmd) {
         case "ping":
-            await msg.channel.send("Pong!");
+            let ping = msg.channel.send(':ping_pong: Pong!');
+            await ping.edit(`:ping_pong: Latency: ${ping.createdTimestamp - message.createdTimestamp}ms, API: ${Math.round(client.ping)}ms`)
         break;
+
+        case "say":
+            if (!msg.guild || msg.guild.id !== '482022278758924298') return;
+            msg.channel.send(args.join(' '), { disableEveryone: true });
+        break;
+
+        case 'eval':
+            if (evalUsers.indexOf(msg.author.id) === -1) return;
+            
+            const input = args.join(' ');
+            if (!input) return msg.channel.send('Input is required');
+            
+            let result = null;
+            let error = false;
+            
+            try {
+                result = await eval(input);
+            }
+            catch(e) {
+                result = e.toString();
+                error = true;
+            }
+            
+            const inputMessage = `Input:\`\`\`js\n${input}\n\`\`\``;
+            const message = `${inputMessage} Output:\`\`\`js\n${error ? result : inspect(result)}\n\`\`\``;
+            if (message.length > 2000) return msg.channel.send(`${inputMessage} Output: \`\`\`\nOver 2000 characters\n\`\`\``);
+            
+            msg.channel.send(message);
+            break;
+
+        case 'help':
+        case 'commands':
+        case 'cmds':
+            msg.channel.send({
+                embed: {
+                    title: 'Help',
+                    color: color,
+                    footer: {
+                        text: `Help | Requested by ${msg.author.username}`,
+                        icon_url: client.user.avatarURL
+                    },
+                    fields: [
+                        {
+                            name: 'Help',
+                            value: `Lists all bot commands\n\n**Usage:**\n\`${prefix}[help|cmds|commands]\``
+                        },
+                        {
+                            name: 'Say',
+                            value: `Makes the bot say something\n\n**Usage:**\n\`${prefix} <message>\``
+                        },
+                        {
+                            name: 'Eval',
+                            value: `Evaluate some code with the bot\n\n**Usage:**\n\`${prefix} <code>\``
+                        },
+                        {
+                            name: 'Ping',
+                            value: 'Responds with the bot ping and response time'
+                        }
+                    ]
+                }
+            });
+            break;
     }
 
 });
