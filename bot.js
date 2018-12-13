@@ -1,3 +1,4 @@
+const { inspect } = require('util');
 const { Client } = require("discord.js");
 const { r } = require("./ConstantStore");
 const client = module.exports = new Client({disableEveryone: true});
