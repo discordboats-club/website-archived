@@ -5,7 +5,7 @@ const client = module.exports = new Client({disableEveryone: true});
 const config = require("./config.json");
 client.login(config.token);
 
-const evalUsers = ['233823931830632449', '326055601916608512'];
+const evalUsers = ['233823931830632449', '326055601916608512', '221659063312842752'];
 
 client.once('ready', () => {
     console.log(`[discord] logged in as ${client.user.tag}`);
