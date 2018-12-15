@@ -102,15 +102,20 @@ client.on('guildMemberAdd', async member => {
 });
 
 client.on('guildMemberRemove', async (member) => {
-    const loadedBots = await r.table('bots').filter({ ownerID: member.user.id }).run();
-    if (loadedBots.length !== 0) {
-        const modChannel = client.channels.get(config.ids.staffChannel);
-        modChannel.send(`**${member.user.tag}** (\`${member.user.id}\`) left the guild, but they have **${loadedBots.length}** bots on the list. They consist of: **${loadedBots.map(b => b.name).join(', ')}**.`);
+    if (member.guild.id !== config.ids.mainServer) return;
+    
+    const staffChannel = client.channels.get(config.ids.staffChannel);
+    
+    if (member.user.bot) {
+        const bot = await r.table('bots').get(member.user.id);
+        if (!bot) return;
+        
+        staffChannel.send(`**${member.user.tag}** (\`${member.user.id}\`) left the main server, but is currently listed. Their owner is **${bot.ownerID}** (<@${bot.ownerID}>).`);
     }
-    if (member.bot) {
-        if (!loadedBots.map(b => b.id).includes(member.user.id)) return;
-        const bot = loadedBots[member.user.id];
-        const modChannel = client.channels.get(config.ids.staffChannel);
-        modChannel.send(`**${member.user.tag}** (\`${member.user.id}\`) left the guild, but they are a bot currently on the list. Their owner is **${bot.ownerID}** (<@${bot.ownerID}>).)`);        
+    else {
+        const bots = await r.table('bots').filter({ ownerID: member.user.id });
+        if (!bots.length) return;
+        
+        staffChannel.send(`**${member.user.tag}** (\`${member.user.id}\`) left the main server, but they have **${bots.length}** bot${bots.length === 1 ? '' : 's'} on the list. They are: **${bots.map(b => b.name).join(', ')}**.`);
     }
 });
