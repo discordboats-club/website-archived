@@ -110,12 +110,14 @@ client.on('guildMemberRemove', async (member) => {
         const bot = await r.table('bots').get(member.user.id);
         if (!bot) return;
         
-        staffChannel.send(`**${member.user.tag}** (\`${member.user.id}\`) left the main server, but is currently listed. Their owner is **${bot.ownerID}** (<@${bot.ownerID}>).`);
+        const owner = await client.users.fetch(bot.ownerID);
+        
+        staffChannel.send(`**${member.user.tag}** (\`${member.user.id}\`) left the main server, but is currently listed. Its owner is **${owner.tag}** (\`${owner.id}\`>)\nDelete it at: <${config.baseURL}/dashboard/bot/${member.user.id}/manage>`);
     }
     else {
         const bots = await r.table('bots').filter({ ownerID: member.user.id });
         if (!bots.length) return;
         
-        staffChannel.send(`**${member.user.tag}** (\`${member.user.id}\`) left the main server, but they have **${bots.length}** bot${bots.length === 1 ? '' : 's'} on the list. They are: **${bots.map(b => b.name).join(', ')}**.`);
+        staffChannel.send(`**${member.user.tag}** (\`${member.user.id}\`) left the main server, but they have **${bots.length}** bot${bots.length === 1 ? '' : 's'} on the list. They are:\n${bots.map(b => ` - ${b.name} (Deletion URL: <${config.baseURL}/dashboard/bot/${b.id}/manage>)`).join('\n')}`);
     }
 });
