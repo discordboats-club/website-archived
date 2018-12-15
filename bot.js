@@ -1,7 +1,7 @@
 const { inspect } = require('util');
 const { Client } = require("discord.js");
 const { r } = require("./ConstantStore");
-const client = module.exports = new Client({disableEveryone: true});
+const client = module.exports = new Client({ disableEveryone: true });
 const config = require("./config.json");
 client.login(config.token);
 
@@ -13,7 +13,7 @@ client.once('ready', () => {
 });
 
 
-client.on("message", async (msg) => {
+client.on("message", async msg => {
     if (msg.author.bot || msg.author.id === client.user.id) return;
     const prefix = "dbc ";
     
@@ -101,7 +101,7 @@ client.on('guildMemberAdd', async member => {
 	member.roles.add(config.ids.botRole).catch(() => {});
 });
 
-client.on('guildMemberRemove', async (member) => {
+client.on('guildMemberRemove', async member => {
     if (member.guild.id !== config.ids.mainServer) return;
     
     const staffChannel = client.channels.get(config.ids.staffChannel);
