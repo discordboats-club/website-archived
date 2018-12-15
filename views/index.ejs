@@ -20,9 +20,9 @@
         </div>
         <div class="main">
             <div class="container">
+                <%- include("parts/searchBar") %>
                 <h3>Popular Bots</h3>
                 <hr>
-                <%- include("parts/searchBar") %>
                 <% if (rawBots.length == 0) { %>
                     <p>There's no bots on this site at the moment. <a href="/dashboard/new">Add one?</a></p>
                 <% } else { %>
