@@ -1,11 +1,12 @@
 const { inspect } = require('util');
 const { Client } = require("discord.js");
 const { r } = require("./ConstantStore");
+const { resolveUser } = require('./Util.js');
 const client = module.exports = new Client({ disableEveryone: true });
 const config = require("./config.json");
 client.login(config.token);
 
-const evalUsers = ['233823931830632449', '326055601916608512', '221659063312842752'];
+const color = 7506394;
 
 client.once('ready', () => {
     console.log(`[discord] logged in as ${client.user.tag}`);
@@ -34,7 +35,7 @@ client.on("message", async msg => {
         break;
 
         case 'eval':
-            if (evalUsers.indexOf(msg.author.id) === -1) return;
+            if (config.evalUsers.indexOf(msg.author.id) === -1) return;
             
             const input = args.join(' ');
             if (!input) return msg.channel.send('Input is required');
@@ -57,6 +58,59 @@ client.on("message", async msg => {
             msg.channel.send(message);
             break;
 
+	case 'botinfo':
+		const bot = await resolveUser(msg, args, client);
+		if (!bot) return msg.channel.send('A user mention, id, or tag is required');
+		if (!bot.bot) return msg.channel.send('The given user is not a bot');
+
+		const botRow = await r.table('bots').get(bot.id);
+		if (!botRow) return msg.channel.send('That bot is not listed on discordboats.club');
+
+		const owner = await client.users.fetch(botRow.ownerID);
+
+		const embed = {
+			title: `Bot Info - ${bot.tag}`,
+			color,
+			thumbnail: {
+				url: bot.displayAvatarURL()
+			},
+			description: botRow.shortDescription,
+			footer: {
+				text: `Bot Info | Requested by ${msg.author.username}`,
+				icon_url: client.user.displayAvatarURL()
+			},
+			fields: [
+				{
+					name: 'Prefix',
+					value: botRow.prefix,
+					inline: true
+				},
+				{
+					name: 'Tag',
+					value: bot.tag,
+					inline: true
+				},
+				{
+					name: 'Owner',
+					value: owner.toString(),
+					inline: true
+				},
+				{
+					name: 'Library',
+					value: botRow.library || 'Unknown',
+					inline: true
+				},
+				{
+					name: 'Links',
+					value: [botRow.github && `[Repo](${botRow.github})`, botRow.website && `[Website](${botRow.website})`, `[Invite](${botRow.invite})`].filter(l => l).join(' | ') || 'No Links',
+					inline: true
+				}
+			]
+		};
+
+		msg.channel.send({ embed });
+		break;
+
         case 'help':
         case 'commands':
         case 'cmds':
@@ -66,7 +120,7 @@ client.on("message", async msg => {
                     color: color,
                     footer: {
                         text: `Help | Requested by ${msg.author.username}`,
-                        icon_url: client.user.avatarURL
+                        icon_url: client.user.displayAvatarURL()
                     },
                     fields: [
                         {

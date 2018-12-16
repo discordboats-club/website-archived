@@ -5,6 +5,7 @@
     "baseURL": "https://discordboats.club",
     "callbackURL": "https://discordboats.club/discord/callback",
     "listeningPort": 3000,
+    "evalUsers": [],
     "ids": {
         "logChannel": "",
         "staffRole": "",

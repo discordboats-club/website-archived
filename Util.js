@@ -99,4 +99,27 @@ module.exports = class Utils {
         }
         return false;
     }
+
+	static async resolveUser(msg, args, client) {
+		try {
+			const mention = msg.mentions.users.first();
+			if (mention) return mention;
+
+			if (!args[0]) return false;
+
+			const id = /^(?:<@!?)?(\d{17,19})>?$/.exec(args[0]);
+			if (id) {
+				const user = await client.users.fetch(id[1]);
+				if (user) return user;
+			}
+
+			const userTag = client.users.find(u => u.tag === args[0]);
+			if (userTag) return userTag;
+
+			return false;
+		}
+		catch(e) {
+			return false;
+		}
+	}
 };
