@@ -28,7 +28,7 @@ app.get('/browse', async (req, res) => {
     const bots = await Promise.all((await r.table('bots').filter({ verified: true }).orderBy(r.asc(r.row('name').downcase())).slice(start, start + itemsPerPage)).map(b => Util.attachPropBot(b, req.user)));
     const botChunks = chunk(bots, 4);
 
-    res.render('browse', { user: req.user, rawBots: bots, botChunks });
+    res.render('browse', { user: req.user, rawBots: bots, botChunks, page: page + 1, pages });
 });
 
 app.get("/bot/:id", async (req, res, next) => {
