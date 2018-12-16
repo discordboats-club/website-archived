@@ -1,6 +1,7 @@
 const express = require("express");
 const chunk = require("chunk");
 const ejs = require("ejs");
+const randomstring = require("randomstring");
 const webshot = require("webshot");
 const Util = require("../Util");
 const { r } = require("../ConstantStore");
@@ -51,6 +52,20 @@ app.get("/bot/:id/key", async (req, res, next) => {
             else return res.render("botKey", {bot: rB});
         } else return res.sendStatus(401);
     } else return res.sendStatus(403);
+});
+
+app.get('/bot/:id/reset', async (req, res, next) => {
+	const rB = await r.table('bots').get(req.params.id);
+	if (!rB) return next();
+
+	const bot = await Util.attachPropBot(rB, req.user);
+	if (!bot.verified) return res.sendStatus(403);
+	if (!req.user) return res.sendStatus(401);
+	if (req.user.id !== bot.ownerID) return res.sendStatus(403);
+
+	await r.table('bots').get(req.params.id).update({ apiToken: randomstring.generate(30) });
+
+	res.redirect(`/bot/${req.params.id}/key`);
 });
 
 app.get("/user/:id", async (req, res, next) => {
