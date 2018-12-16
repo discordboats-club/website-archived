@@ -13,10 +13,11 @@ app.get("/", async (req, res) => {
     res.render("index", {user: req.user, rawBots: bots, botChunks});
 });
 
-const itemsPerPage = 20;
+const rowsPerPage = 5;
+const itemsPerPage = rowsPerPage * 4;
 app.get('/browse', async (req, res) => {
     let page = +req.query.page;
-    if (typeof page !== 'number' || page < 1) page = 1;
+    if (typeof page !== 'number' || isNaN(page) || page < 1) page = 1;
 
     const pages = Math.ceil((await r.table('bots').count()) / itemsPerPage);
     if (page > pages) page = pages - 1;
