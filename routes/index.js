@@ -20,7 +20,7 @@ app.get('/browse', async (req, res) => {
     if (typeof page !== 'number' || isNaN(page) || page < 1) page = 1;
 
     const pages = Math.ceil((await r.table('bots').count()) / itemsPerPage);
-    if (page > pages) page = pages - 1;
+    if (page > pages) page = pages;
 
     page--;
 
