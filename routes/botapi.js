@@ -25,6 +25,13 @@ app.get("/bot/me", (req, res) => {
     res.json({ok: "View data property", data: req.bot});
 });
 
+app.get('/bot/me/liked/:id', async (req, res) => {
+	const liked = (await r.table('likes').filter({ botID: req.bot.id, userID: req.params.id }))[0];
+	if (!liked) return res.json({ ok: 'View data property', data: false });
+
+	res.json({ ok: 'View data property', data: liked.createdAt });
+});
+
 app.get("/bot/:id", async (req, res) => {
     let bot = await r.table("bots").get(req.params.id).run();   
     if (!bot || !bot.verified) return res.status(404).json({error: "Bot not found"});
