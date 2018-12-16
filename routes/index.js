@@ -15,7 +15,7 @@ app.get("/", async (req, res) => {
 
 const itemsPerPage = 20;
 app.get('/browse', async (req, res) => {
-    let page = req.query.page;
+    let page = +req.query.page;
     if (typeof page !== 'number' || page < 1) page = 1;
 
     const pages = Math.ceil((await r.table('bots').count()) / itemsPerPage);
