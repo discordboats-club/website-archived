@@ -29,7 +29,7 @@
                     <% } %>
 
                     <% for (let p = 0; p < pages; p++) { %>
-                        <li class="<%= page === p ? 'active grey lighten-3' : 'waves-effect' %>"><a <%- page === p ? 'href="?page=${p + 1}' : 'class="grey-text text-lighten-1"' %> ><%= p + 1 %></a></li>
+                        <li class="<%= page === p ? 'active grey lighten-3' : 'waves-effect' %>"><a <%- page === p ? `href="?page=${p + 1}"` : 'class="grey-text text-lighten-1"' %> ><%= p + 1 %></a></li>
                     <% } %>
 
                     <% if (page === pages - 1) { %>
