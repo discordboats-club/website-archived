@@ -23,7 +23,7 @@
 
                 <ul class="pagination center-align">
                     <% if (page === 0) { %>
-                        <li class="disabled"><a><i class="material-icons cyan-text text-darken-3">chevron_left</i></a></li>
+                        <li class="disabled"><a><i class="material-icons grey-text text-darken-3">chevron_left</i></a></li>
                     <% } else { %>
                         <li class="waves-effect"><a href="?page=<%= page %>"><i class="material-icons grey-text text-lighten-1">chevron_left</i></a></li>
                     <% } %>
@@ -33,7 +33,7 @@
                     <% } %>
 
                     <% if (page === pages - 1) { %>
-                        <li class="disabled"><a><i class="material-icons cyan-text text-darken-3">chevron_right</i></a></li>
+                        <li class="disabled"><a><i class="material-icons grey-text text-darken-3">chevron_right</i></a></li>
                     <% } else { %>
                         <li class="waves-effect"><a href="?page=<%= page + 2 %>"><i class="material-icons grey-text text-lighten-1">chevron_right</i></a></li>
                     <% } %>
