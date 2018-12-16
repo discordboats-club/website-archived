@@ -23,19 +23,19 @@
 
                 <ul class="pagination center-align">
                     <% if (page === 0) { %>
-                        <li class="disabled"><a href="?page=<%= page + 1 %>"><i class="material-icons cyan-text darken-3">chevron_left</i></a></li>
+                        <li class="disabled"><a href="?page=<%= page + 1 %>"><i class="material-icons cyan-text text-darken-3">chevron_left</i></a></li>
                     <% } else { %>
-                        <li class="waves-effect"><a href="?page=<%= page %>"><i class="material-icons cyan-text darken-1">chevron_left</i></a></li>
+                        <li class="waves-effect"><a href="?page=<%= page %>"><i class="material-icons cyan-text text-darken-1">chevron_left</i></a></li>
                     <% } %>
 
                     <% for (let p = 0; p < pages; p++) { %>
-                        <li class="<%= page === p ? 'active light-blue darken-4' : 'waves-effect' %>"><a href="?page=<%= p + 1 %>" <%- page === p ? '' : 'class="cyan-text darken-1"' %> ><%= p + 1 %></a></li>
+                        <li class="<%= page === p ? 'active light-blue darken-4' : 'waves-effect' %>"><a href="?page=<%= p + 1 %>" <%- page === p ? '' : 'class="cyan-text text-darken-1"' %> ><%= p + 1 %></a></li>
                     <% } %>
 
                     <% if (page === pages - 1) { %>
-                        <li class="disabled"><a href="?page=<%= page + 1 %>"><i class="material-icons cyan-text darken-3">chevron_right</i></a></li>
+                        <li class="disabled"><a href="?page=<%= page + 1 %>"><i class="material-icons cyan-text text-darken-3">chevron_right</i></a></li>
                     <% } else { %>
-                        <li class="waves-effect"><a href="?page=<%= page + 2 %>"><i class="material-icons cyan-text darken-1">chevron_right</i></a></li>
+                        <li class="waves-effect"><a href="?page=<%= page + 2 %>"><i class="material-icons cyan-text text-darken-1">chevron_right</i></a></li>
                     <% } %>
                 </ul>
             </div>
