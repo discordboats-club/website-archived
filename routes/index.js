@@ -49,7 +49,7 @@ app.get("/bot/:id/key", async (req, res, next) => {
     if (bot.verified) {
         if (req.user) {
             if (req.user.id !== bot.ownerID) res.sendStatus(403);
-            else return res.render("botKey", {bot: rB});
+            else return res.render("botKey", {bot: rB, user: req.user});
         } else return res.sendStatus(401);
     } else return res.sendStatus(403);
 });
