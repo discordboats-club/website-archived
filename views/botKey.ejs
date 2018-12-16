@@ -5,10 +5,11 @@
     </head>
     <body>
         <div class="header">
-            <h5 class="center-align"><a href="/">Click here to go back home.</a></h5>
+            <%- include("parts/header") %>
         </div>
         <div class="main">
-            <div class="container center-align">
+            <div class="container">
+                <div class="center-align">
                 <h2>API</h2>
                 <p>
                     For Discord bots using the Node.js language, we have an <a href="https://npmjs.org/package/dboats-api">NPM module</a> to make your experience easier! <br>
@@ -39,6 +40,7 @@
         </div>
     </body>
     <footer>
+        <%- include("parts/footer") %>
         <%- include("parts/scripts") %>
     </footer>
 </html>
