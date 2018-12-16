@@ -13,6 +13,24 @@ app.get("/", async (req, res) => {
     res.render("index", {user: req.user, rawBots: bots, botChunks});
 });
 
+const itemsPerPage = 20;
+app.get('/browse', async (req, res) => {
+    let page = req.query.page;
+    if (typeof page !== 'number' || page < 1) page = 1;
+
+    const pages = Math.ceil((await r.table('bots').count()) / itemsPerPage);
+    if (page >= pages) page = pages - 1;
+
+    page--;
+
+    const start = page * itemsPerPage;
+
+    const bots = await r.table('bots').filter({ verified: true }).orderBy(r.desc('name')).between(start, start + itemsPerPage);
+    const butChunks = chunk(bots, 4);
+
+    res.render('browse', { user: req.user, rawBots: bots, botChunks });
+});
+
 app.get("/bot/:id", async (req, res, next) => {
     const rB = await r.table("bots").get(req.params.id).run();
     if (!rB) return next();
