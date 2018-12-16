@@ -28,6 +28,10 @@ app.get('/browse', async (req, res) => {
     const bots = await r.table('bots').filter({ verified: true }).orderBy(r.desc('name')).slice(start, start + itemsPerPage);
     const botChunks = chunk(bots, 4);
 
+    console.log(pages);
+    console.log(page);
+    console.log(start);
+
     res.render('browse', { user: req.user, rawBots: bots, botChunks });
 });
 
