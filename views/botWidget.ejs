@@ -8,7 +8,7 @@
 </head>
 <body>
     <div class="card">
-        <div class="card-content white-text">
+        <div class="card-content">
             <span class="card-title inline">
                 <img src="<%= bot._discordAvatarURL %>" class="circle bot-image inline">
                 <%= bot.name %>
@@ -27,7 +27,8 @@
         font-family: 'Roboto', sans-serif;
     }
     .card, body {
-        background: #252525
+        background: #<%= colors.background %>;
+        color: #<%= colors.text %>;
     }
     .bot-image {
         width: 40vh;

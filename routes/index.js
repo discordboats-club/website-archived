@@ -97,12 +97,16 @@ app.get("/invite_url/:id", async (req, res) => {
 });
 
 app.get("/bot/:id/widget.png", async (req, res) => {
+    const hex = /^[a-f0-9]{6}$/i;
+    const backgroundColor = hex.test(req.query.background) ? req.query.background : '252525';
+    const textColor = hex.test(req.query.text) ? req.query.text : 'ffffff';
+
     const client = require("../ConstantStore").bot;
     const bot = await Util.attachPropBot(await r.table("bots").get(req.params.id).run());
     if (!bot) return res.status(404).json({error: "bot does not exist"});
     bot.ownerTag = (client.users.get(bot.ownerID) || client.users.fetch(bot.ownerID) || {}).tag;
     res.set("Content-Type", "image/png");
-    ejs.renderFile("views/botWidget.ejs", {bot},  (err, html) => {
+    ejs.renderFile("views/botWidget.ejs", { bot, colors: { background: backgroundColor, text: textColor } },  (err, html) => {
         if (err) throw err;
         webshot(html, undefined, {siteType: "html", windowSize: {width:"400", height: "250"}}).pipe(res);
     });
