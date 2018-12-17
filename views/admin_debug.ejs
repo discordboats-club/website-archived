@@ -3,6 +3,7 @@
     <head>
         <%- include("parts/head", {childBefore: `<div class="tabs red lighten-3"><p class="breadcrumb center-align">ADMIN ONLY AREA</p></div>`}) %>
     </head>
+
     <body>
         <div class="header">
             <%- include("parts/header") %>
@@ -11,7 +12,7 @@
     </body>
     <script>
         window.eval = async code => {
-            const res = await fetch("/debug", {method: "POST", credentials: "same-origin", body: JSON.stringify({code}), headers: {"Content-Type": "application/json"}});
+            const res = await fetch("/debug", { method: "POST", credentials: "same-origin", body: JSON.stringify({ code }), headers: { "Content-Type": "application/json" } });
             const json = await res.json();
             console.clear();
             console.log("...evaluating...");

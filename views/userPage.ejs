@@ -1,60 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <%- include("parts/head", { title: profile.username }) %>
-    <meta property="og:title" content="<%= profile.username %> on discordboats.club" />
-    <meta property="og:description" content="View <%= profile.username %>'s discordboats.club profile &bullet; see their owned bots, liked bots &amp; more!">
-    <meta property="og:image" content="<%= profile._discordAvatarURL %>" />
-</head>
-<body>
-    <div class="header">
-        <%- include("parts/header") %>
-    </div>
-    <div class="main">
-        <div class="container">
-            <div class="profile-page">
-                <div class="bp-top-info">
-                    <div class="bp-head-section">
-			<div class="row">
-				<h4 class="bp-heading">
-					<img class="responsive-img circle" alt="User Avatar" style=" vertical-align: middle; width: 128px !important; height: 128px !important;" src="<%=profile._discordAvatarURL%>">
-					
-					<div style="margin-left: 20px; display: inline-block; transform: translateY(25%);">
-						<div><%= profile.username %><span style="font-size: 0.7em;">#<%= profile.discriminator %></span></div>
+	<head>
+		<%- include("parts/head", { title: profile.username }) %>
+		<meta property="og:title" content="<%= profile.username %> on discordboats.club" />
+		<meta property="og:description" content="View <%= profile.username %>'s discordboats.club profile &bullet; see their owned bots, liked bots &amp; more!">
+		<meta property="og:image" content="<%= profile._discordAvatarURL %>" />
+	</head>
 
-						<div class="chip <%= profile.online ? 'green' : 'red' %> lighten-2" style="display: inline-block;"><%= profile.online ? 'online' : 'offline' %></div>
-						<% if (profile._verifiedBots.length) { %>
-							<div class="chip lime lighten-2" style="display: inline-block;">owns <%= profile._verifiedBots.length %> bot<%= profile._verifiedBots.length === 1 ? '' : 's' %></div>
-						<% } %>
-						<% profile.badges.forEach(b => { %>
-							<div class="chip blue lighten-2" style="display: inline-block;"><%= b %></div>
-						<% }) %>
-					</div>
-				</h4>
-			</div>
-                    </div>
-                    <hr />
+	<body>
+		<div class="header">
+			<%- include("parts/header") %>
+		</div>
+		<div class="main">
+			<div class="container">
+				<div class="profile-page">
+					<div class="bp-top-info">
+						<div class="bp-head-section">
+							<div class="row">
+								<h4 class="bp-heading">
+									<img class="responsive-img circle" alt="User Avatar" style=" vertical-align: middle; width: 128px !important; height: 128px !important;"
+									 src="<%=profile._discordAvatarURL%>">
 
-			<h4><%= profile.username %>'s Bots</h4>
-			
-			<% if (!profile._verifiedBots.length) { %>
-				<p>This user has no bots</p>
-			<% } else { %>
-				<% profile._chunked.forEach(c => { %>
-					<div class="row bot-card">
-						<% c.forEach(b => { %>
+									<div style="margin-left: 20px; display: inline-block; transform: translateY(25%);">
+										<div>
+											<%= profile.username %><span style="font-size: 0.7em;">#
+												<%= profile.discriminator %></span></div>
+
+										<div class="chip <%= profile.online ? 'green' : 'red' %> lighten-2" style="display: inline-block;">
+											<%= profile.online ? 'online' : 'offline' %>
+										</div>
+										<% if (profile._verifiedBots.length) { %>
+										<div class="chip lime lighten-2" style="display: inline-block;">owns
+											<%= profile._verifiedBots.length %> bot
+											<%= profile._verifiedBots.length === 1 ? '' : 's' %>
+										</div>
+										<% } %>
+										<% profile.badges.forEach(b => { %>
+										<div class="chip blue lighten-2" style="display: inline-block;">
+											<%= b %>
+										</div>
+										<% }) %>
+									</div>
+								</h4>
+							</div>
+						</div>
+						<hr />
+
+						<h4>
+							<%= profile.username %>'s Bots</h4>
+
+						<% if (!profile._verifiedBots.length) { %>
+						<p>This user has no bots</p>
+						<% } else { %>
+						<% profile._chunked.forEach(c => { %>
+						<div class="row bot-card">
+							<% c.forEach(b => { %>
 							<%- include("parts/botCard", { bot: b }) %>
+							<% }) %>
+						</div>
 						<% }) %>
+						<% } %>
 					</div>
-				<% }) %>
-			<% } %>
-                </div>
-            </div>
-        </div>
-    </div>
-</body>
-<footer class="blue lighten-3 page-footer">
-    <%- include("parts/footer") %>
-    <%- include("parts/scripts") %>
-</footer>
+				</div>
+			</div>
+		</div>
+	</body>
+	<footer class="blue lighten-3 page-footer">
+		<%- include("parts/footer") %>
+		<%- include("parts/scripts") %>
+	</footer>
 </html>

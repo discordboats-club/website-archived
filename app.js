@@ -3,7 +3,7 @@ const session = require("express-session");
 const passport = require("passport");
 const Discord = require("passport-discord");
 const logger = require('morgan');
-const {ensureLoggedIn} = require("connect-ensure-login");
+const { ensureLoggedIn } = require("connect-ensure-login");
 const compress = require("compression");
 const { r } = require("./ConstantStore");
 const config = require("./config");
@@ -27,7 +27,7 @@ app.use((req, res, next) => {
     } else {
         next();
     }
-}); 
+});
 
 app.use(compress());
 app.use(minifyHTML({
@@ -45,7 +45,7 @@ app.use(minifyHTML({
 app.use(express.static("static"));
 app.use(express.json());
 app.use("/api/public", require("./routes/botapi"));
-app.use(session({saveUninitialized: true, resave: false, name: "discordboats_session", secret: require("./ConstantStore").secret, store: new RethinkStore(require("./ConstantStore").r)}));
+app.use(session({ saveUninitialized: true, resave: false, name: "discordboats_session", secret: require("./ConstantStore").secret, store: new RethinkStore(require("./ConstantStore").r) }));
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -65,7 +65,7 @@ passport.use(new Discord({
     let user = await r.table("users").get(profile.id).run();
     if (!user) {
         user = {
-            id: profile.id, 
+            id: profile.id,
             username: profile.username,
             discordAT: accessToken,
             discordRT: refreshToken,
@@ -73,7 +73,7 @@ passport.use(new Discord({
             badges: []
         };
     }
-    await r.table("users").insert(user, {conflict: "update"}).run();
+    await r.table("users").insert(user, { conflict: "update" }).run();
     done(undefined, profile);
 }));
 
@@ -83,7 +83,7 @@ app.use("/dashboard", ensureLoggedIn("/discord/login"), require("./routes/dashbo
 app.use("/api", require("./routes/api"));
 
 app.use((req, res) => {
-    res.status(404).render("404", {user: req.user});
+    res.status(404).render("404", { user: req.user });
 });
 
 app.listen(port, () => {

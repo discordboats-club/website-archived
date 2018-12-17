@@ -1,6 +1,7 @@
 <form action="/search" method="get">
     <div class="input-field col s12">
-        <input type="text" id="searchbox" class="autocomplete" autocomplete="off" name="q" <%- typeof searchQuery !== "undefined" ? `value="${searchQuery}"` : "" %>>
+        <input type="text" id="searchbox" class="autocomplete" autocomplete="off" name="q" <%- typeof searchQuery !=="undefined"
+            ? `value="${searchQuery}" ` : "" %>>
         <label for="searchbox">Search</label>
     </div>
 </form>

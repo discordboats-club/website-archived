@@ -3,6 +3,7 @@
     <head>
         <%- include("../parts/head") %>
     </head>
+
     <body>
         <div class="header">
             <%- include("../parts/header") %>
@@ -13,11 +14,11 @@
                 <subtitle>Bots queued for verification.</subtitle>
                 <hr>
                 <% if (rawBots.length == 0) { %>
-                    <p>Oh, there are currently no bots queued for verification. Your job is done.</p>
+                <p>Oh, there are currently no bots queued for verification. Your job is done.</p>
                 <% } else { %>
-                    <div class="bot-cards">
-                        <%- chunks.map(chunk => `<div class="row bot-card">${chunk.map(bot => include("../parts/botCard", {bot, queue: true, config})).join("")}</div>`).join("") %>
-                    </div>
+                <div class="bot-cards">
+                    <%- chunks.map(chunk => `<div class="row bot-card">${chunk.map(bot => include("../parts/botCard", {bot, queue: true, config})).join("")}</div>`).join("") %>
+                </div>
                 <% } %>
             </div>
         </div>

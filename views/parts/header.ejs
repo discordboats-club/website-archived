@@ -1,9 +1,9 @@
 <% if (typeof user == 'object') { %>
-    <ul id="profile-dropdown" class="dropdown-content">
-            <li><a href="/user/<%=user.id%>">Profile</a></li>
-            <li><a href="/dashboard">Dashboard</a></li>
-            <li><a id="log-out-indd">Log Out</a></li>
-    </ul>
+<ul id="profile-dropdown" class="dropdown-content">
+    <li><a href="/user/<%=user.id%>">Profile</a></li>
+    <li><a href="/dashboard">Dashboard</a></li>
+    <li><a id="log-out-indd">Log Out</a></li>
+</ul>
 <% } %>
 
 <nav class="blue lighten-3 nav-extended">
@@ -14,9 +14,11 @@
             <li><a href="/browse">Browse</a></li>
             <!-- <li><a href="#">F.A.Q.</a></li> -->
             <% if (typeof user !== 'object') { %>
-                <li><a href="/discord/login">Login</a></li>
+            <li><a href="/discord/login">Login</a></li>
             <% } else { %>
-                <li id="user-profile-navbar-item"><a href="#" class="dropdown-trigger" data-target="profile-dropdown" id="profile-dropdown-trigger"><b><i class="fas fa-user-circle"></i></b> <%= user.username %></a></li>
+            <li id="user-profile-navbar-item"><a href="#" class="dropdown-trigger" data-target="profile-dropdown" id="profile-dropdown-trigger"><b><i
+                            class="fas fa-user-circle"></i></b>
+                    <%= user.username %></a></li>
             <% } %>
         </ul>
     </div>

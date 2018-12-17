@@ -1,5 +1,6 @@
 <% if (typeof title == 'string') { %>
-<title><%= title %> &bullet; Discord Boats</title>
+<title>
+  <%= title %> &bullet; Discord Boats</title>
 <% } else { %>
 <title>Discord Boats</title>
 <% } %>
@@ -10,8 +11,10 @@
 <link rel="stylesheet" href="/style.css">
 
 <!-- Font awesome -->
-<script defer src="https://use.fontawesome.com/releases/v5.0.8/js/solid.js" integrity="sha384-+Ga2s7YBbhOD6nie0DzrZpJes+b2K1xkpKxTFFcx59QmVPaSA8c7pycsNaFwUK6l" crossorigin="anonymous"></script>
-<script defer src="https://use.fontawesome.com/releases/v5.0.8/js/fontawesome.js" integrity="sha384-7ox8Q2yzO/uWircfojVuCQOZl+ZZBg2D2J5nkpLqzH1HY0C1dHlTKIbpRz/LG23c" crossorigin="anonymous"></script>
+<script defer src="https://use.fontawesome.com/releases/v5.0.8/js/solid.js" integrity="sha384-+Ga2s7YBbhOD6nie0DzrZpJes+b2K1xkpKxTFFcx59QmVPaSA8c7pycsNaFwUK6l"
+  crossorigin="anonymous"></script>
+<script defer src="https://use.fontawesome.com/releases/v5.0.8/js/fontawesome.js" integrity="sha384-7ox8Q2yzO/uWircfojVuCQOZl+ZZBg2D2J5nkpLqzH1HY0C1dHlTKIbpRz/LG23c"
+  crossorigin="anonymous"></script>
 
 <!-- mobile viewing -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +23,7 @@
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-128851399-1"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
+  function gtag() { dataLayer.push(arguments); }
   gtag('js', new Date());
 
   gtag('config', 'UA-128851399-1');
@@ -33,17 +36,18 @@
 <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css" />
 <script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js"></script>
 <script>
-window.addEventListener("load", function(){
-window.cookieconsent.initialise({
-  "palette": {
-    "popup": {
-      "background": localStorage.getItem("lightTheme") == "true" ? "#90CAF9" : "#004379"
-    },
-    "button": {
-      "background": "#f44336"
-    }
-  },
-  "position": "top",
-  "static": true
-})});
+  window.addEventListener("load", function () {
+    window.cookieconsent.initialise({
+      "palette": {
+        "popup": {
+          "background": localStorage.getItem("lightTheme") == "true" ? "#90CAF9" : "#004379"
+        },
+        "button": {
+          "background": "#f44336"
+        }
+      },
+      "position": "top",
+      "static": true
+    })
+  });
 </script>

@@ -4,23 +4,31 @@
             <a href="/bot/<%= bot.id %>"><img src="<%= bot._discordAvatarURL %>" class="bot-image" alt="Bot Profile Picture"></a>
         </div>
         <div class="card-content white-text">
-            <span class="card-title"><%= bot.name %></span>
-            <p class="bot-card-desc"><%= bot.shortDescription %></p>
+            <span class="card-title">
+                <%= bot.name %></span>
+            <p class="bot-card-desc">
+                <%= bot.shortDescription %>
+            </p>
 
-            <div class="card-server-count chip <%= bot.online ? 'green' : 'red' %> lighten-2"><%= bot.online ? 'online' : 'offline' %></div>
+            <div class="card-server-count chip <%= bot.online ? 'green' : 'red' %> lighten-2">
+                <%= bot.online ? 'online' : 'offline' %>
+            </div>
             <% if (bot.servers) { %>
-            <div class="card-server-count chip lime lighten-2"><%= bot.servers %> servers</div>
+            <div class="card-server-count chip lime lighten-2">
+                <%= bot.servers %> servers</div>
             <% } %>
         </div>
         <div class="card-action">
-            <a href="/invite_url/<%=bot.id%>" <%- typeof queue !== 'undefined' ? 'target="_blank"' : '' %>>Invite</a>
+            <a href="/invite_url/<%=bot.id%>" <%- typeof queue !=='undefined' ? 'target="_blank"' : '' %>>Invite</a>
             <a href="/bot/<%= bot.id %>">View</a>
             <% if (typeof queue !== "undefined") { %>
-            <a class="accept-button" href="https://discordapp.com/oauth2/authorize?client_id=<%= bot.id %>&scope=bot&guild_id=<%= config.ids.mainServer %>" target="_blank"><strong>Accept</strong></a>
+            <a class="accept-button" href="https://discordapp.com/oauth2/authorize?client_id=<%= bot.id %>&scope=bot&guild_id=<%= config.ids.mainServer %>"
+                target="_blank"><strong>Accept</strong></a>
             <a class="deny-button modal-trigger" data-target="deny-modal-<%= bot.id %>" href="#"><strong>Deny</strong></a>
-	    <div id="deny-modal-<%= bot.id %>" class="modal" data-bot-id="<%= bot.id %>">
+            <div id="deny-modal-<%= bot.id %>" class="modal" data-bot-id="<%= bot.id %>">
                 <div class="modal-content">
-                    <h5>Deny <%= bot.name %>?</h5>
+                    <h5>Deny
+                        <%= bot.name %>?</h5>
                     <div class="input-field">
                         <input type="text" id="deny-reason-<%= bot.id %>" />
                         <label for="deny-reason-<%= bot.id %>">Reason</label>

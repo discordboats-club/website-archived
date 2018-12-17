@@ -1,6 +1,6 @@
 window.APIClient = class APIClient {
     static async logOut() {
-        await fetch("/api/logout", {credentials: "same-origin", method: "POST"});
+        await fetch("/api/logout", { credentials: "same-origin", method: "POST" });
     }
     /**
      * @param {Object} bot 
@@ -8,12 +8,13 @@ window.APIClient = class APIClient {
      */
     static async createBot(bot) {
         // id, shortDescription, longDescription, invite, website, library
-        const res = await fetch("/api/bot", { method: "POST",
-        body: JSON.stringify(bot),
-        headers: {
-            "Content-Type": "application/json"
-        },
-        credentials: "same-origin"
+        const res = await fetch("/api/bot", {
+            method: "POST",
+            body: JSON.stringify(bot),
+            headers: {
+                "Content-Type": "application/json"
+            },
+            credentials: "same-origin"
         });
         const data = await res.json();
         if (data.error && !data.details) {
@@ -21,7 +22,7 @@ window.APIClient = class APIClient {
         } else if (data.error && data.details) {
             throw new Error(`${data.error} ${data.details.join(", ")}`)
         } else if (data.ok) {
-            return {ok: data.ok};
+            return { ok: data.ok };
         } else {
             throw new Error("Bad response");
         }
@@ -32,19 +33,19 @@ window.APIClient = class APIClient {
      * @returns {Promise<Object>} json response from the api.
      */
     static async deleteBot(id) {
-        const res = await fetch("/api/bot/"+encodeURI(id), { method: "DELETE", credentials: "same-origin" });
+        const res = await fetch("/api/bot/" + encodeURI(id), { method: "DELETE", credentials: "same-origin" });
         const data = await res.json();
         if (data.error) {
             throw new Error(data.error);
         } else if (data.ok) {
-            return {ok: data.ok};
+            return { ok: data.ok };
         } else {
             throw new Error("Bad response");
         }
     }
 
     static async verifyBot(verified, reason, id) {
-        const res = await fetch('/api/bot/mod/verify', { method: 'POST', credentials: 'same-origin', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ verified, reason, botID: id}) });
+        const res = await fetch('/api/bot/mod/verify', { method: 'POST', credentials: 'same-origin', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ verified, reason, botID: id }) });
         const data = await res.json();
         if (data.error) {
             throw new Error(data.error);
@@ -58,23 +59,23 @@ window.APIClient = class APIClient {
     static async editBot(bot) {
         let botNoId = Object.assign({}, bot);
         delete botNoId.id;
-        const res = await fetch("/api/bot/"+bot.id, {method: "PATCH", credentials: "same-origin", headers: { "Content-Type": "application/json"}, body: JSON.stringify(botNoId)});
+        const res = await fetch("/api/bot/" + bot.id, { method: "PATCH", credentials: "same-origin", headers: { "Content-Type": "application/json" }, body: JSON.stringify(botNoId) });
         const data = await res.json();
         if (data.error) {
             throw new Error(data.error);
         } else if (data.ok) {
-            return {ok: data.ok};
+            return { ok: data.ok };
         } else {
             throw new Error("Bad response");
         }
     }
     static async likeBot(botID) {
-        const res = await fetch(`/api/bot/${botID}/like`, {method: "POST", credentials: "same-origin"});
+        const res = await fetch(`/api/bot/${botID}/like`, { method: "POST", credentials: "same-origin" });
         const data = await res.json();
         if (data.error) {
             throw new Error(data.error);
         } else if (data.ok) {
-            return {ok: data.ok};
+            return { ok: data.ok };
         } else {
             throw new Error("Bad response");
         }

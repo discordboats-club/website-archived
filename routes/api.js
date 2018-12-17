@@ -7,12 +7,12 @@ const { r, bot: client } = require("../ConstantStore");
 const randomString = require("randomstring");
 const Util = require("../Util");
 // datamined from the discord api docs
-const libList = module.exports.libList = ["discordcr","Discord.Net","DSharpPlus","dscord","DiscordGo","Discord4j","JDA","discord.js","Eris","Discordia","RestCord","Yasmin","discord.py","disco","discordrb","discord-rs","Sword"];
+const libList = module.exports.libList = ["discordcr", "Discord.Net", "DSharpPlus", "dscord", "DiscordGo", "Discord4j", "JDA", "discord.js", "Eris", "Discordia", "RestCord", "Yasmin", "discord.py", "disco", "discordrb", "discord-rs", "Sword"];
 const config = require('../config.json');
 
 
 snekfetch.get("https://gist.githubusercontent.com/RONTheCookie/c209f333d14fd85b3b6ae00243bff2cd/raw/dd5a159320ea5faa54c8616315b3deccfd601b3e/badbots.txt").then(res => {
-    let raw = res.text.toString();
+    let raw = res.body.toString();
     badBots = raw.split("\n").map(bt => bt.split(" ")[0]);
     console.log(`[api-route] loaded ${badBots.length} bad bots.`);
 });
@@ -20,8 +20,8 @@ snekfetch.get("https://gist.githubusercontent.com/RONTheCookie/c209f333d14fd85b3
 app.get("/search/autocomplete", async (req, res) => {
     const q = req.query.q;
     if (typeof q !== "string") return res.sendStatus(400);
-    const bots = (await r.table("bots").filter(bot => bot("name").downcase().match("^"+q.toLowerCase()).and(bot("verified"))).pluck("name").limit(5).run()).map(bot => bot.name);
-    res.json({ok: "View data property", data: bots});
+    const bots = (await r.table("bots").filter(bot => bot("name").downcase().match("^" + q.toLowerCase()).and(bot("verified"))).pluck("name").limit(5).run()).map(bot => bot.name);
+    res.json({ ok: "View data property", data: bots });
 });
 
 
@@ -29,12 +29,12 @@ app.get("/search/autocomplete", async (req, res) => {
 app.use((req, res, next) => {
     if (req.isAuthenticated()) next();
     else {
-        res.status(401).json({error: "not_authenticated"});
+        res.status(401).json({ error: "not_authenticated" });
     }
 });
 
 app.get("/", (req, res) => {
-    res.json({ok: "you found the api!"});
+    res.json({ ok: "you found the api!" });
 });
 
 
@@ -43,10 +43,10 @@ const newBotSchema = Joi.object().required().keys({
     id: Joi.string().length(18).required(),
     longDescription: Joi.string().max(12000).required(),
     prefix: Joi.string().max(50).required(),
-    invite: Joi.string().uri({scheme: ["https", "http"]}).required(),
-    website: Joi.string().uri({scheme: ["https", "http"]}),
+    invite: Joi.string().uri({ scheme: ["https", "http"] }).required(),
+    website: Joi.string().uri({ scheme: ["https", "http"] }),
     library: Joi.string(),
-    github: Joi.string().uri({scheme: ["https"]}) // gh is just https
+    github: Joi.string().uri({ scheme: ["https"] }) // gh is just https
 });
 
 
@@ -54,24 +54,24 @@ const newBotSchema = Joi.object().required().keys({
 app.post("/bot", async (req, res) => {
     const client = require("../ConstantStore").bot;
     if (Util.handleJoi(newBotSchema, req, res)) return;
-    const data = Util.filterUnexpectedData(req.body, {inviteClicks: 0, pageViews: 0, apiToken: randomString.generate(30), ownerID: req.user.id, createdAt: +new Date(), verified: false}, newBotSchema);
-    if (data.library && !libList.includes(data.library)) return res.status(400).json({error: "Invalid Library"});
-    if (badBots.includes(data.id)) res.status(403).json({error: "Blacklisted bot."});
+    const data = Util.filterUnexpectedData(req.body, { inviteClicks: 0, pageViews: 0, apiToken: randomString.generate(30), ownerID: req.user.id, createdAt: +new Date(), verified: false }, newBotSchema);
+    if (data.library && !libList.includes(data.library)) return res.status(400).json({ error: "Invalid Library" });
+    if (badBots.includes(data.id)) res.status(403).json({ error: "Blacklisted bot." });
 
     const botUser = client.users.get(data.id) || await client.users.fetch(data.id);
     if (!client.users.get(data.ownerID) || !await client.users.fetch(data.ownerID)) return res.status(403).json({ error: "Owner is not in Discord guild" });
-    if (!botUser) return res.status(404).json({error: "Invalid Bot ID"});
-    if (!botUser.bot) return res.status(400).json({error: "Bot can only be a bot"});
+    if (!botUser) return res.status(404).json({ error: "Invalid Bot ID" });
+    if (!botUser.bot) return res.status(400).json({ error: "Bot can only be a bot" });
     data.name = botUser.username;
 
     // does bot already exist?
     const dbeBot = await r.table("bots").get(data.id).run();
-    if (dbeBot) return res.status(302).json({error: "Bot already exists"});
+    if (dbeBot) return res.status(302).json({ error: "Bot already exists" });
 
 
     // everything looks good.
     await r.table("bots").insert(data).run();
-    res.status(200).json({ok: "Created bot"});
+    res.status(200).json({ ok: "Created bot" });
     client.channels.get(config.ids.logChannel).send(`📥 <@${req.user.id}> added ${botUser.username} (<@&${config.ids.staffRole}>).`);
 });
 
@@ -79,38 +79,38 @@ const editBotSchema = Joi.object().required().keys({
     shortDescription: Joi.string().max(200),
     longDescription: Joi.string().max(12000),
     prefix: Joi.string().max(50),
-    invite: Joi.string().uri({scheme: ["https", "http"]}),
-    website: Joi.string().uri({scheme: ["https", "http"]}),
+    invite: Joi.string().uri({ scheme: ["https", "http"] }),
+    website: Joi.string().uri({ scheme: ["https", "http"] }),
     library: Joi.string(),
-    github: Joi.string().uri({scheme: ["https"]})
+    github: Joi.string().uri({ scheme: ["https"] })
 });
 
 app.patch("/bot/:id", async (req, res) => {
     const client = require("../ConstantStore").bot;
     if (Util.handleJoi(editBotSchema, req, res)) return;
     const bot = await r.table("bots").get(req.params.id).run();
-    if (!bot) return res.status(404).json({error: "Unknown bot"});
+    if (!bot) return res.status(404).json({ error: "Unknown bot" });
     if (req.user.id === bot.ownerID || req.user.admin || req.user.mod) {
-        const data = Util.filterUnexpectedData(req.body, {editedAt: +new Date()}, editBotSchema);
-        if (data.library && !libList.includes(data.library)) return res.status(400).json({error: "Invalid Library"});
+        const data = Util.filterUnexpectedData(req.body, { editedAt: +new Date() }, editBotSchema);
+        if (data.library && !libList.includes(data.library)) return res.status(400).json({ error: "Invalid Library" });
         const botUser = client.users.get(bot.id) || await client.users.fetch(bot.id);
-        
+
         await r.table("bots").get(bot.id).update(data).run();
         client.channels.get(config.ids.logChannel).send(`✏ <@${req.user.id}> edited ${botUser.username}.`);
-        res.json({ok: "edited bot"});
-    } else res.status(403).json({error: "You do not own this bot"});
+        res.json({ ok: "edited bot" });
+    } else res.status(403).json({ error: "You do not own this bot" });
 });
 
 app.delete("/bot/:id", async (req, res) => {
     const bot = await r.table("bots").get(req.params.id).run();
-    if (!bot) return await res.status(404).json({error: "Bot does not exist"});
+    if (!bot) return await res.status(404).json({ error: "Bot does not exist" });
     if (req.user.id === bot.ownerID || req.user.admin || req.user.mod) {
         await r.table("bots").get(req.params.id).delete().run();
         const botUser = client.users.get(bot.id) || await client.users.fetch(bot.id);
         client.channels.get(config.ids.logChannel).send(`🗑 <@${req.user.id}> deleted ${botUser.username}.`);
-        client.guilds.get(config.ids.mainServer).member(botUser.id).kick('Bot deleted').catch(() => {});
-        res.status(200).json({ok: "Deleted bot."});
-    } else res.status(403).json({error: "You do not own this bot"});
+        client.guilds.get(config.ids.mainServer).member(botUser.id).kick('Bot deleted').catch(() => { });
+        res.status(200).json({ ok: "Deleted bot." });
+    } else res.status(403).json({ error: "You do not own this bot" });
 });
 
 app.patch("/bot", async (req, res) => {
@@ -164,12 +164,13 @@ app.post("/logout", (req, res) => {
 });
 
 app.get("/me", (req, res) => {
-    res.json({id: req.user.id,
-            discord: {
-                username: req.user.username
-            },
-            warning: "This API endpoint is a legacy one and does not provide all info about the user."
-        });
+    res.json({
+        id: req.user.id,
+        discord: {
+            username: req.user.username
+        },
+        warning: "This API endpoint is a legacy one and does not provide all info about the user."
+    });
 });
 
 const modVerifyBotSchema = Joi.object().required().keys({
@@ -180,50 +181,50 @@ const modVerifyBotSchema = Joi.object().required().keys({
 
 app.post("/bot/mod/verify", async (req, res) => {
     const client = require("../ConstantStore").bot;
-    if (!(req.user.mod || req.user.admin)) return res.status(403).json({error: "No permission"});
+    if (!(req.user.mod || req.user.admin)) return res.status(403).json({ error: "No permission" });
     if (Util.handleJoi(modVerifyBotSchema, req, res)) return;
     const data = Util.filterUnexpectedData(req.body, {}, modVerifyBotSchema);
     const bot = await Util.attachPropBot(await r.table("bots").get(data.botID).run());
     const botUser = client.users.get(bot.id) || client.users.fetch(bot.id);
-    if (!bot) return res.status(404).json({error: "Bot does not exist"});
+    if (!bot) return res.status(404).json({ error: "Bot does not exist" });
     const discordOwner = client.users.get(bot.ownerID);
     const staffUser = client.users.get(req.user.id) || client.users.fetch(req.user.id);
     if (data.verified) {
         try {
             await discordOwner.send(`🎉 Your bot, ${bot.name}, was verified by ${staffUser.tag}!`);
-        } catch (e) {}
+        } catch (e) { }
         client.channels.get(config.ids.logChannel).send(`🎉 ${botUser.username} by <@${bot.ownerID}> was verified by ${staffUser}!`);
-        await r.table("bots").get(bot.id).update({verified: true}).run();
+        await r.table("bots").get(bot.id).update({ verified: true }).run();
     } else {
-	console.log(data.reason);
-        if (!data.reason || !data.reason.trim()) return res.status(400).json({error: "A reason is required"});
-        try { 
+        console.log(data.reason);
+        if (!data.reason || !data.reason.trim()) return res.status(400).json({ error: "A reason is required" });
+        try {
             await discordOwner.send(`❌ Your bot, ${bot.name}, was rejected by ${staffUser.tag}. Check <#${config.ids.logChannel}> for more information.`);
-        } catch (e) {}
+        } catch (e) { }
         client.channels.get(config.ids.logChannel).send(`❌ ${botUser.tag} by <@${bot.ownerID}> was rejected by ${staffUser}.\nReason: \`${data.reason}\``);
         await r.table("bots").get(bot.id).delete().run();
     }
 
     try {
-        client.guilds.get(config.ids.verificationServer).members.get(bot.id).kick().catch(() => {});
+        client.guilds.get(config.ids.verificationServer).members.get(bot.id).kick().catch(() => { });
     }
-    catch(e) {}
+    catch (e) { }
 
-    if (data.verified) client.guilds.get(config.ids.mainServer).members.get(bot.ownerID).roles.add(config.ids.botDeveloperRole).catch(() => {});
+    if (data.verified) client.guilds.get(config.ids.mainServer).members.get(bot.ownerID).roles.add(config.ids.botDeveloperRole).catch(() => { });
 
-    res.status(200).json({ok: "Applied actions"});
+    res.status(200).json({ ok: "Applied actions" });
 });
 
 app.post("/bot/:id/like", async (req, res) => {
     const bot = await r.table("bots").get(req.params.id).run();
-    if (!bot) return res.status(404).json({error: "Bot does not exist"});
-    let existingLike = (await r.table("likes").filter({userID: req.user.id, botID: bot.id}).run())[0];
+    if (!bot) return res.status(404).json({ error: "Bot does not exist" });
+    let existingLike = (await r.table("likes").filter({ userID: req.user.id, botID: bot.id }).run())[0];
     if (existingLike) {
         await r.table("likes").get(existingLike.id).delete().run();
-        res.json({ok: "Unliked bot"});
+        res.json({ ok: "Unliked bot" });
     } else {
-        await r.table("likes").insert({userID: req.user.id, botID: bot.id, createdAt: Date.now()}).run();
-        res.json({ok: "Liked bot"});
+        await r.table("likes").insert({ userID: req.user.id, botID: bot.id, createdAt: Date.now() }).run();
+        res.json({ ok: "Liked bot" });
     }
 });
 
