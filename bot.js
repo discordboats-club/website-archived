@@ -82,7 +82,7 @@ client.on("message", async msg => {
 			fields: [
 				{
 					name: 'Prefix',
-					value: botRow.prefix || 'Unknown',
+					value: botRow.prefix.trim() || 'Unknown',
 					inline: true
 				},
 				{
