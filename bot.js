@@ -74,7 +74,7 @@ client.on("message", async msg => {
 			thumbnail: {
 				url: bot.displayAvatarURL()
 			},
-			description: botRow.shortDescription,
+			description: botRow.shortDescription || 'No short description',
 			footer: {
 				text: `Bot Info | Requested by ${msg.author.username}`,
 				icon_url: client.user.displayAvatarURL()
@@ -82,7 +82,7 @@ client.on("message", async msg => {
 			fields: [
 				{
 					name: 'Prefix',
-					value: botRow.prefix,
+					value: botRow.prefix || 'Unknown',
 					inline: true
 				},
 				{
