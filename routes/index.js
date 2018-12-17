@@ -16,21 +16,44 @@ app.get("/", async (req, res) => {
 
 const rowsPerPage = 5;
 const itemsPerPage = rowsPerPage * 4;
+
+const sortBy = [
+    ['Name', 'name', r.row('name').downcase()],
+    ['Server Count', 'servers', r.row('servers')],
+    ['Views', 'views', r.row('pageViews')],
+    ['Invites', 'invites', r.row('inviteClicks')],
+    ['Added Date', 'created', r.row('createdAt')]
+];
+const defaultSortBy = 'name';
+
+const orders = [
+    ['Ascending', 'asc'],
+    ['Descending', 'desc']
+];
+const defaultOrder = 'asc';
+
 app.get('/browse', async (req, res) => {
     let page = +req.query.page;
     if (typeof page !== 'number' || isNaN(page) || page < 1) page = 1;
 
-    const pages = Math.ceil((await r.table('bots').count()) / itemsPerPage);
+    const items = await r.table('bots').count();
+    const pages = Math.ceil(items / itemsPerPage);
     if (page > pages) page = pages;
 
     page--;
 
+    let sort = sortBy.find(s => s[1] === req.query.sort) ? req.query.sort : defaultSortBy;
+    let order = orders.find(o => o[1] === req.query.order) ? req.query.order : defaultOrder;
+
+    sort = sortBy.find(s => s[1] === sort);
+    order = orders.find(o => o[1] === order);
+
     const start = page * itemsPerPage;
 
-    const bots = await Promise.all((await r.table('bots').filter({ verified: true }).orderBy(r.asc(r.row('name').downcase())).slice(start, start + itemsPerPage)).map(b => Util.attachPropBot(b, req.user)));
+    const bots = await Promise.all((await r.table('bots').filter({ verified: true }).orderBy(r[order[1]](sort[2])).slice(start, start + itemsPerPage)).map(b => Util.attachPropBot(b, req.user)));
     const botChunks = chunk(bots, 4);
 
-    res.render('browse', { user: req.user, rawBots: bots, botChunks, page, pages });
+    res.render('browse', { user: req.user, rawBots: bots, botChunks, itemsPerPage, items, page, pages, sorting: { sorts: sortBy, current: sort[1] }, ordering: { orders, current: order[1] } });
 });
 
 app.get("/bot/:id", async (req, res, next) => {

@@ -29,6 +29,23 @@ controlEle.addEventListener("change", e => {
     processThemeState();
 });
 
+$(document).ready(() => {
+	$('select').formSelect();
+
+	const sortSelect = $('#sortSelect');
+	const orderSelect = $('#orderSelect');
+
+	if (!sortSelect || !orderSelect) return;
+
+	const selects = [sortSelect, orderSelect];
+
+	selects.forEach(s => {
+		s.change(() => {
+			window.location = s.find('option:selected').val();
+		});
+	});
+});
+
 $(window).ready(async () => {
     $(".accept-button").click((e) => {
         let card = e.target.parentElement.parentElement.parentElement.parentElement;
