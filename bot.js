@@ -128,8 +128,12 @@ client.on("message", async msg => {
                             value: `Lists all bot commands\n\n**Usage:**\n\`${prefix}[help|cmds|commands]\``
                         },
                         {
+                            name: 'Botinfo',
+                            value: `Supplies info for a bot\n\n**Usage:**\n\`${prefix}botinfo <bot>\``
+                        },
+                        {
                             name: 'Say',
-                            value: `Makes the bot say something\n\n**Usage:**\n\`${prefix} <message>\``
+                            value: `Makes the bot say something\n\n**Usage:**\n\`${prefix}say <message>\``
                         },
                         {
                             name: 'Eval',
