@@ -137,7 +137,7 @@ client.on("message", async msg => {
                         },
                         {
                             name: 'Eval',
-                            value: `Evaluate some code with the bot\n\n**Usage:**\n\`${prefix} <code>\``
+                            value: `Evaluate some code with the bot\n\n**Usage:**\n\`${prefix}eval <code>\``
                         },
                         {
                             name: 'Ping',
