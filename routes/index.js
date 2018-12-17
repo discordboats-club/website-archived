@@ -125,7 +125,9 @@ app.get("/bot/:id/widget.png", async (req, res) => {
     const textColor = hex.test(req.query.text) ? req.query.text : 'ffffff';
 
     const client = require("../ConstantStore").bot;
-    const bot = await Util.attachPropBot(await r.table("bots").get(req.params.id).run());
+    const botRow = await r.table("bots").get(req.params.id);
+    if (!botRow) return res.status(404).json({error: "bot does not exist"});
+    const bot = await Util.attachPropBot(botRow);
     if (!bot) return res.status(404).json({error: "bot does not exist"});
     bot.ownerTag = (client.users.get(bot.ownerID) || client.users.fetch(bot.ownerID) || {}).tag;
     res.set("Content-Type", "image/png");
