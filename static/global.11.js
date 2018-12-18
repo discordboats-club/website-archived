@@ -138,7 +138,7 @@ $(window).ready(async () => {
         M.FormSelect.init($("select#newbot"), { classes: "newbot-dd-wrap" });
         $("form").submit(async e => {
             e.preventDefault();
-            let lib = M.FormSelect.getInstance($("select")).getSelectedValues()[0];
+            let lib = $("select").val();
             if (lib === "none") lib = undefined;
             try {
                 await api.editBot({
