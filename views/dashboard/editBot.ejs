@@ -13,7 +13,7 @@
                 <h4>Edit
                     <%= bot.name %>
                 </h4>
-                <subtitle>Here you can edit your bot, once you edit it, it will need to be reverified.</subtitle>
+                <subtitle>Edit your bot's details and information.</subtitle>
                 <hr>
                 <div class="row">
                     <form class="col s12" id="new-bot-form" data-bot-id="<%= bot.id %>">
@@ -83,8 +83,7 @@
                                 <input id="vanity_url" type="text" class="validate" minlength="4" maxlength="12" value="<%= bot.vanityURL %>">
                                 <label for="vanity_url">Vanity URL (optional)</label>
                             </div>
-                            <p class="col s6">The Vanity URL overrides the default path for your bot (/bot/:id) with
-                                /bot/:vanity</p>
+                            <p class="col s6">You can optionally add a vanity URL, so your bot can be viewed from <code>discordboats.club/bot/[vanity]</code>, as well as <code>discordboats.club/bot/[id]</code></p>
                         </div>
                         <div class="row">
                             <div class="input-field col s6">
