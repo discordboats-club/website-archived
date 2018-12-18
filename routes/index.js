@@ -9,7 +9,7 @@ const config = require('../config.json');
 const app = module.exports = express.Router();
 
 app.get("/", async (req, res) => {
-    const bots = await Promise.all((await r.table("bots").filter({ verified: true }).orderBy(r.desc("servers")).limit(13 * 2).run()).map(bot => Util.attachPropBot(bot, req.user)));
+    const bots = await Promise.all((await r.table("bots").filter({ verified: true }).orderBy(r.desc("servers")).limit(4 * 6).run()).map(bot => Util.attachPropBot(bot, req.user)));
     const botChunks = chunk(bots, 4); // 4 bots per 
     res.render("index", { user: req.user, rawBots: bots, botChunks });
 });
