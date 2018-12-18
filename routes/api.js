@@ -83,7 +83,7 @@ const editBotSchema = Joi.object().required().keys({
     website: Joi.string().uri({ scheme: ["https", "http"] }),
     library: Joi.string(),
     github: Joi.string().uri({ scheme: ["https"] }),
-    vanityURL: Joi.string().token().min(4).max(12),
+    vanityURL: Joi.string().token().min(4).max(12).allow(null),
     likeWebhook: Joi.string().uri({ scheme: ['http', 'https'] })
 });
 

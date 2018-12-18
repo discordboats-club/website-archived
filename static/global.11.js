@@ -149,8 +149,8 @@ $(window).ready(async () => {
                     github: undefIfEmpty($('#bot_github').val()),
                     shortDescription: undefIfEmpty($('#bot_description').val()),
                     longDescription: undefIfEmpty($('#bot_description-full').val()),
-                    vanityURL: undefIfEmpty($('#vanity_url').val()),
-                    likeWebhook: undefIfEmpty($('#like_webhook').val())
+                    vanityURL: $('#vanity_url').val() || null,
+                    likeWebhook: $('#like_webhook').val() || null
                 });
                 localStorage.setItem("toastOnNext", "Edited bot");
                 document.location.replace(`/bot/${e.target.getAttribute("data-bot-id")}`);
