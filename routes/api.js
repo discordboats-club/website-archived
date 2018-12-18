@@ -1,7 +1,7 @@
 const express = require("express");
 const app = module.exports = express.Router();
 const Joi = require("joi");
-const snekfetch = require("snekfetch");
+const fetch = require("node-fetch");
 let badBots = [];
 const { r, bot: client } = require("../ConstantStore");
 const randomString = require("randomstring");
@@ -11,9 +11,8 @@ const libList = module.exports.libList = ["discordcr", "Discord.Net", "DSharpPlu
 const config = require('../config.json');
 
 
-snekfetch.get("https://gist.githubusercontent.com/RONTheCookie/c209f333d14fd85b3b6ae00243bff2cd/raw/dd5a159320ea5faa54c8616315b3deccfd601b3e/badbots.txt").then(res => {
-    let raw = res.body.toString();
-    badBots = raw.split("\n").map(bt => bt.split(" ")[0]);
+fetch("https://gist.githubusercontent.com/RONTheCookie/c209f333d14fd85b3b6ae00243bff2cd/raw/dd5a159320ea5faa54c8616315b3deccfd601b3e/badbots.txt").then(res => res.text()).then(res => {
+    badBots = res.split("\n").map(bt => bt.split(" ")[0]);
     console.log(`[api-route] loaded ${badBots.length} bad bots.`);
 });
 
