@@ -118,7 +118,8 @@ $(window).ready(async () => {
                     shortDescription: undefIfEmpty($('#bot_description').val()),
                     longDescription: undefIfEmpty($('#bot_description-full').val()),
                     vanityURL: undefIfEmpty($('#vanity_url').val()),
-                    likeWebhook: undefIfEmpty($('#like_webhook').val())
+                    likeWebhook: undefIfEmpty($('#like_webhook').val()),
+                    webhookAuth: undefIfEmpty($('#webhook_auth').val())
                 });
                 M.toast({ html: "Submitted new bot." });
                 document.location.replace("/bot/" + e.target[0].value);
@@ -149,8 +150,9 @@ $(window).ready(async () => {
                     github: undefIfEmpty($('#bot_github').val()),
                     shortDescription: undefIfEmpty($('#bot_description').val()),
                     longDescription: undefIfEmpty($('#bot_description-full').val()),
-                    vanityURL: $('#vanity_url').val() || null,
-                    likeWebhook: $('#like_webhook').val() || null
+                    vanityURL: undefIfEmpty($('#vanity_url').val()),
+                    likeWebhook: undefIfEmpty($('#like_webhook').val()),
+                    webhookAuth: undefIfEmpty($('#webhook_auth').val())
                 });
                 localStorage.setItem("toastOnNext", "Edited bot");
                 document.location.replace(`/bot/${e.target.getAttribute("data-bot-id")}`);

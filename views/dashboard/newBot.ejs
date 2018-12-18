@@ -76,7 +76,7 @@
                         </div>
                         <div class="row">
                             <div class="input-field col s6">
-                                <input id="vanity_url" type="text" class="validate">
+                                <input id="vanity_url" type="text" class="validate" minlength="4" maxlength="12">
                                 <label for="vanity_url">Vanity URL (optional)</label>
                             </div>
                             <p class="col s6">The Vanity URL overrides the default path for your bot (/bot/:id) with
@@ -90,6 +90,14 @@
                             <p class="col s6">If you need to get when a user likes your bot, you can set up a webhook
                                 server, and the address to that server goes here so it can be notified. See the API
                                 Documentation for more details</p>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <input id="webhook_auth" type="text" class="validate">
+                                <label for="webhook_auth">Like Webhook Auth (required with a like webhook)</label>
+                            </div>
+                            <p class="col s6">The text to put into the Authorization header to make sure the request is
+                                from the dboats server</p>
                         </div>
                         <div class="row">
                             <button class="btn waves-effect waves-light" type="submit" name="action" id="nb-submit">Submit

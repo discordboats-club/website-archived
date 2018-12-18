@@ -45,8 +45,9 @@ const newBotSchema = Joi.object().required().keys({
     library: Joi.string(),
     github: Joi.string().uri({ scheme: ["https"] }), // gh is just https
     vanityURL: Joi.string().token().min(4).max(12),
-    likeWebhook: Joi.string().uri({ scheme: ['http', 'https'] })
-});
+    likeWebhook: Joi.string().uri({ scheme: ['http', 'https'] }),
+    webhookAuth: Joi.string()
+}).with('likeWebhook', 'webhookAuth');
 
 
 // bot resource
@@ -83,9 +84,10 @@ const editBotSchema = Joi.object().required().keys({
     website: Joi.string().uri({ scheme: ["https", "http"] }),
     library: Joi.string(),
     github: Joi.string().uri({ scheme: ["https"] }),
-    vanityURL: Joi.string().token().min(4).max(12).allow(null),
-    likeWebhook: Joi.string().uri({ scheme: ['http', 'https'] })
-});
+    vanityURL: Joi.string().token().min(4).max(12),
+    likeWebhook: Joi.string().uri({ scheme: ['http', 'https'] }),
+    webhookAuth: Joi.string()
+}).with('likeWebhook', 'webhookAuth');
 
 app.patch("/bot/:id", async (req, res) => {
     const client = require("../ConstantStore").bot;
@@ -96,6 +98,9 @@ app.patch("/bot/:id", async (req, res) => {
         const data = Util.filterUnexpectedData(req.body, { editedAt: +new Date() }, editBotSchema);
         if (data.library && !libList.includes(data.library)) return res.status(400).json({ error: "Invalid Library" });
         if (data.vanityURL && (await r.table('bots').filter({ vanityURL: data.vanityURL }))[0]) return res.status(400).json({ error: 'Vanity URL taken' });
+        if (!data.vanityURL) data.vanityURL = null;
+        if (!data.likeWebhook) data.likeWebhook = null;
+        if (!data.webhookAuth) data.webhookAuth = null;
         const botUser = client.users.get(bot.id) || await client.users.fetch(bot.id);
 
         await r.table("bots").get(bot.id).update(data).run();
