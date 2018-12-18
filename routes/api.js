@@ -97,7 +97,8 @@ app.patch("/bot/:id", async (req, res) => {
     if (req.user.id === bot.ownerID || req.user.admin || req.user.mod) {
         const data = Util.filterUnexpectedData(req.body, { editedAt: +new Date() }, editBotSchema);
         if (data.library && !libList.includes(data.library)) return res.status(400).json({ error: "Invalid Library" });
-        if (data.vanityURL && (await r.table('bots').filter({ vanityURL: data.vanityURL }))[0]) return res.status(400).json({ error: 'Vanity URL taken' });
+        const vanityTaken = (await r.table('bots').filter({ vanityURL: data.vanityURL }))[0];
+        if (data.vanityURL && vanityTaken && vanityTaken.id !== bot.id) return res.status(400).json({ error: 'Vanity URL taken' });
         if (!data.vanityURL) data.vanityURL = null;
         if (!data.likeWebhook) data.likeWebhook = null;
         if (!data.webhookAuth) data.webhookAuth = null;
