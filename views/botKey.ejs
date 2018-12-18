@@ -34,18 +34,41 @@
                         <code class="red-text">GET /api/public/user/:id</code> - get public user info.<br>
                         <br>
                         The POST body for the stats endpoint should look like this, replacing 1337 with your bot's
-                        server count.<br>
-                        <code>
+                        server count.
+                        <p class="left-align red-text">
+                            <code>
                         {<br>
-                            "server_count": 1337<br>
-                        }<br>
-                    </code>
+                        &nbsp;&nbsp;&nbsp;&nbsp;"server_count": 1337<br>
+                        }
                     </p>
-                    <hr>
-                    <p>Do not share your API key. Your API key is...</p>
-                    <code class="red-text"><%= bot.apiToken %></code>
-                    <br>
-                    <a class="waves-effect waves-light btn" href="/bot/<%= bot.id %>/reset">Reset your API key</a>
+                    </code>
+                        </p>
+                        <hr>
+                        <h4>Webhooks</h4>
+                        <p>To get when a user likes or unlikes your bot, discordboats.club has a webhook feature</p>
+                        <p>To use this, you create a web server (the <a href="https://npmjs.org/package/dboats-api">NPM
+                                module</a> supports this as well) to listen on a port and path for a POST request. When
+                            you
+                            receive the POST request, it will have an Authorization header (set to what you set it to
+                            on
+                            the bot create/edit page) and it can be used to verify that the webhook is from
+                            discordboats.club. Once validated, you can see the JSON body in the request to get
+                            information.
+                            The body will look like this:</p>
+                        <p class="left-align red-text">
+                            <code>
+                                    {<br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;"event": "like/unlike",<br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;"botId": "the id of the bot that got liked/unliked",<br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;"userId": "the id of the user that liked/unliked"<br>
+                                    }
+                                </code>
+                        </p>
+                        <hr>
+                        <p>Do not share your API key. Your API key is...</p>
+                        <code class="red-text"><%= bot.apiToken %></code>
+                        <br>
+                        <a class="waves-effect waves-light btn" href="/bot/<%= bot.id %>/reset">Reset your API key</a>
                 </div>
             </div>
     </body>
