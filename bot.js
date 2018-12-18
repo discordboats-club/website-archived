@@ -1,10 +1,13 @@
-const { inspect } = require('util');
+const { inspect, promisify } = require('util');
+const cp = require('child_process');
 const { Client } = require("discord.js");
 const { r } = require("./ConstantStore");
 const { resolveUser } = require('./Util.js');
 const client = module.exports = new Client({ disableEveryone: true });
 const config = require("./config.json");
 client.login(config.token);
+
+const exec = promisify(cp.exec);
 
 const color = 7506394;
 
@@ -56,6 +59,21 @@ client.on("message", async msg => {
             if (message.length > 2000) return msg.channel.send(`${inputMessage} Output: \`\`\`\nOver 2000 characters\n\`\`\``);
 
             msg.channel.send(message);
+            break;
+
+        case 'pull':
+            if (config.evalUsers.indexOf(msg.author.id) === -1) return;
+
+            try {
+                const result = await exec('git pull');
+                await msg.channel.send(`Pulled successfully! Restarting... \`\`\`\n${result.stderr || result.stdout}\n\`\`\``);
+
+                process.exit();
+            }
+            catch (e) {
+                msg.channel.send(`Error pulling: \`\`\`\n${e}\n\`\`\``);
+            }
+
             break;
 
         case 'botinfo':
