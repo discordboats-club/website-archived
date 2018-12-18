@@ -1,5 +1,5 @@
 .DS_Store
-config.ts
+/config.ts
 node_modules
 /dist
 
