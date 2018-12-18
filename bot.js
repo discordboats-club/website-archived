@@ -66,7 +66,7 @@ client.on("message", async msg => {
 
             try {
                 const result = await exec('git pull origin old');
-                await msg.channel.send(`Pulled successfully! Restarting... \`\`\`\n${result.stderr || result.stdout}\n\`\`\``);
+                await msg.channel.send(`Pulled successfully! Restarting... \`\`\`\n${result.stdout + result.stderr}\n\`\`\``);
 
                 process.exit();
             }
