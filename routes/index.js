@@ -141,12 +141,16 @@ app.get("/bot/:id/widget.png", async (req, res) => {
     });
 });
 
+app.get('/certification', (req, res) => {
+    res.render('certification', { user: req.user });
+});
+
 app.get("/terms", (req, res) => {
-    res.render("terms");
+    res.render("terms", { user: req.user });
 });
 
 app.get("/privacy", (req, res) => {
-    res.render("privacy");
+    res.render("privacy", { user: req.user });
 });
 
 app.get("/stats", async (req, res) => {
