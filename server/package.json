@@ -1,0 +1,21 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "yarn build && node dist/src/index.js"
+  },
+  "repository": "https://gitlab.com/discordboats.club/website",
+  "author": "sdf",
+  "license": "Apache 2.0",
+  "private": true,
+  "dependencies": {
+    "@types/koa": "^2.0.47",
+    "@types/koa-router": "^7.0.35",
+    "@types/node": "^10.12.15",
+    "koa": "^2.6.2",
+    "koa-router": "^7.4.0",
+    "typescript": "^3.2.2"
+  }
+}
