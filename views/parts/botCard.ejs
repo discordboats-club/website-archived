@@ -1,7 +1,7 @@
 <div class="col s12 m3" id="<%= bot.id %>">
     <div class="card hoverable blue-grey darken-1">
         <div class="card-image bot-image-container">
-            <a href="/bot/<%= bot.id %>"><img src="<%= bot._discordAvatarURL %>" class="bot-image" alt="Bot Profile Picture"></a>
+            <a href="/bot/<%= bot.vanityURL || bot.id %>"><img src="<%= bot._discordAvatarURL %>" class="bot-image" alt="Bot Profile Picture"></a>
         </div>
         <div class="card-content white-text">
             <span class="card-title">
@@ -20,7 +20,7 @@
         </div>
         <div class="card-action">
             <a href="/invite_url/<%=bot.id%>" <%- typeof queue !=='undefined' ? 'target="_blank"' : '' %>>Invite</a>
-            <a href="/bot/<%= bot.id %>">View</a>
+            <a href="/bot/<%= bot.vanityURL || bot.id %>">View</a>
             <% if (typeof queue !== "undefined") { %>
             <a class="accept-button" href="https://discordapp.com/oauth2/authorize?client_id=<%= bot.id %>&scope=bot&guild_id=<%= config.ids.mainServer %>"
                 target="_blank"><strong>Accept</strong></a>

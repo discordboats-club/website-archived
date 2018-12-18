@@ -116,7 +116,9 @@ $(window).ready(async () => {
                     invite: undefIfEmpty($('#bot_invite').val()) || `https://discordapp.com/oauth2/authorize?client_id=${encodeURI(e.target[0].value)}&scope=bot&permissions=0`,
                     github: undefIfEmpty($('#bot_github').val()),
                     shortDescription: undefIfEmpty($('#bot_description').val()),
-                    longDescription: undefIfEmpty($('#bot_description-full').val())
+                    longDescription: undefIfEmpty($('#bot_description-full').val()),
+                    vanityURL: undefIfEmpty($('#vanity_url').val()),
+                    likeWebhook: undefIfEmpty($('#like_webhook').val())
                 });
                 M.toast({ html: "Submitted new bot." });
                 document.location.replace("/bot/" + e.target[0].value);
@@ -146,7 +148,9 @@ $(window).ready(async () => {
                     invite: undefIfEmpty($('#bot_invite').val()) || `https://discordapp.com/oauth2/authorize?client_id=${encodeURI(e.target[0].value)}&scope=bot&permissions=0`,
                     github: undefIfEmpty($('#bot_github').val()),
                     shortDescription: undefIfEmpty($('#bot_description').val()),
-                    longDescription: undefIfEmpty($('#bot_description-full').val())
+                    longDescription: undefIfEmpty($('#bot_description-full').val()),
+                    vanityURL: undefIfEmpty($('#vanity_url').val()),
+                    likeWebhook: undefIfEmpty($('#like_webhook').val())
                 });
                 localStorage.setItem("toastOnNext", "Edited bot");
                 document.location.replace(`/bot/${e.target.getAttribute("data-bot-id")}`);
