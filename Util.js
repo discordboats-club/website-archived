@@ -2,6 +2,8 @@ const marked = require("marked");
 const Joi = require("joi");
 const moment = require("moment");
 const chunk = require("chunk");
+const fetch = require('node-fetch');
+
 module.exports = class Utils {
     /**
      * @param {Object} bot 
@@ -13,21 +15,21 @@ module.exports = class Utils {
         const { r } = require("./ConstantStore");
         const botUser = client.users.get(bot.id) || await client.users.fetch(bot.id);
         bot.online = botUser.presence.status !== "offline";
-        bot._discordAvatarURL = botUser.displayAvatarURL({format: "png", size: 512});
-        bot._markedDescription = marked(bot.longDescription, {sanitize: true});
+        bot._discordAvatarURL = botUser.displayAvatarURL({ format: "png", size: 512 });
+        bot._markedDescription = marked(bot.longDescription, { sanitize: true });
         bot._ownerViewing = user.id === bot.ownerID;
-        bot._comments = await r.table("comments").filter({botID: bot.id}).run();
+        bot._comments = await r.table("comments").filter({ botID: bot.id }).run();
         try {
             bot._ownerTag = client.users.get(bot.ownerID).tag;
         }
-        catch(e) {
+        catch (e) {
             bot._ownerTag = "Unknown#0000";
         }
         if (user.id) {
-            const like = (await r.table("likes").filter({userID: user.id, botID: bot.id}).run())[0];
+            const like = (await r.table("likes").filter({ userID: user.id, botID: bot.id }).run())[0];
             bot._userLikes = !!like;
         }
-        bot.likeCount = await r.table("likes").filter({botID: bot.id}).count().run();
+        bot.likeCount = await r.table("likes").filter({ botID: bot.id }).count().run();
         return bot;
     }
     /**
@@ -63,10 +65,10 @@ module.exports = class Utils {
         const client = require("./ConstantStore").bot;
         const { r } = require("./ConstantStore");
         const discordUser = client.users.get(user.id) || await client.users.fetch(user.id);
-	user.online = discordUser.presence.status !== 'offline';
-	user.discriminator = discordUser.discriminator;
+        user.online = discordUser.presence.status !== 'offline';
+        user.discriminator = discordUser.discriminator;
         user._discordAvatarURL = discordUser.displayAvatarURL({ format: "png", size: 512 });
-        user._bots = await Promise.all((await r.table("bots").filter({ownerID: user.id})).map(b => Utils.attachPropBot(b)));
+        user._bots = await Promise.all((await r.table("bots").filter({ ownerID: user.id })).map(b => Utils.attachPropBot(b)));
         user._verifiedBots = user._bots.filter(bot => bot.verified);
         user._chunked = chunk(user._verifiedBots, 4);
         if (user.mod) user.badges.push("Moderator");
@@ -91,35 +93,55 @@ module.exports = class Utils {
         if (wdjt.error) {
             if (!wdjt.error.isJoi) {
                 console.error("Error while running Joi.", wdjt.error);
-                res.status(500).json({error: "Internal Server Error"});
+                res.status(500).json({ error: "Internal Server Error" });
                 return true;
             }
-            res.status(400).json({error: wdjt.error.name, details: wdjt.error.details.map(item => item.message)});
+            res.status(400).json({ error: wdjt.error.name, details: wdjt.error.details.map(item => item.message) });
             return true;
         }
         return false;
     }
 
-	static async resolveUser(msg, args, client) {
-		try {
-			const mention = msg.mentions.users.first();
-			if (mention) return mention;
+    static async resolveUser(msg, args, client) {
+        try {
+            const mention = msg.mentions.users.first();
+            if (mention) return mention;
 
-			if (!args[0]) return false;
+            if (!args[0]) return false;
 
-			const id = /^(?:<@!?)?(\d{17,19})>?$/.exec(args[0]);
-			if (id) {
-				const user = await client.users.fetch(id[1]);
-				if (user) return user;
-			}
+            const id = /^(?:<@!?)?(\d{17,19})>?$/.exec(args[0]);
+            if (id) {
+                const user = await client.users.fetch(id[1]);
+                if (user) return user;
+            }
 
-			const userTag = client.users.find(u => u.tag === args[0]);
-			if (userTag) return userTag;
+            const userTag = client.users.find(u => u.tag === args[0]);
+            if (userTag) return userTag;
 
-			return false;
-		}
-		catch(e) {
-			return false;
-		}
-	}
+            return false;
+        }
+        catch (e) {
+            return false;
+        }
+    }
+
+    static async likeWebhook(url, auth, event, botId, userId) {
+        const body = JSON.stringify({
+            event,
+            botId,
+            userId
+        });
+
+        try {
+            await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Authorization': auth,
+                    'Content-Type': 'application/json'
+                },
+                body
+            });
+        }
+        catch (e) { }
+    }
 };

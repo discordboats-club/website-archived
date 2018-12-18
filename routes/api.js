@@ -228,6 +228,9 @@ app.post("/bot/:id/like", async (req, res) => {
     const bot = await r.table("bots").get(req.params.id).run();
     if (!bot) return res.status(404).json({ error: "Bot does not exist" });
     let existingLike = (await r.table("likes").filter({ userID: req.user.id, botID: bot.id }).run())[0];
+
+    if (bot.likeWebhook) Util.likeWebhook(bot.likeWebhook, bot.webhookAuth, existingLike ? 'unlike' : 'like', bot.id, req.user.id);
+
     if (existingLike) {
         await r.table("likes").get(existingLike.id).delete().run();
         res.json({ ok: "Unliked bot" });
