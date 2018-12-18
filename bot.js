@@ -65,7 +65,7 @@ client.on("message", async msg => {
             if (config.evalUsers.indexOf(msg.author.id) === -1) return;
 
             try {
-                const result = await exec('git pull');
+                const result = await exec('git pull origin old');
                 await msg.channel.send(`Pulled successfully! Restarting... \`\`\`\n${result.stderr || result.stdout}\n\`\`\``);
 
                 process.exit();
