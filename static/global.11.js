@@ -71,7 +71,7 @@ $(window).ready(async () => {
     M.Dropdown.init(document.querySelector("#profile-dropdown-trigger"), { ecoverTrigger: false });
 
     if (document.querySelector("#searchbox")) {
-        const searchBoxM = M.Autocomplete.init(document.querySelector("#searchbox"), { data: {}, limit: 10 });
+        const searchBoxM = M.Autocomplete.init(document.querySelector("#searchbox"), { data: {}, limit: 10, onAutocomplete: () => $('#searchbox').parent().parent().submit() });
         document.querySelector("#searchbox").addEventListener("input", $.throttle(1000, async e => {
             const res = await fetch("/api/search/autocomplete?q=" + encodeURI(e.target.value));
             const body = await res.json();
