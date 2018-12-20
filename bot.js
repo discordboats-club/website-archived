@@ -1,14 +1,13 @@
 const { inspect, promisify } = require('util');
 const cp = require('child_process');
-const { Client } = require("discord.js");
-const { r } = require("./ConstantStore");
+const { Client } = require('discord.js');
+const { r } = require('./ConstantStore');
 const { resolveUser } = require('./Util.js');
 const client = module.exports = new Client({ disableEveryone: true });
-const config = require("./config.json");
+const config = require('./config.json');
 client.login(config.token);
 
 const exec = promisify(cp.exec);
-
 const color = 7506394;
 
 client.once('ready', () => {
@@ -16,36 +15,29 @@ client.once('ready', () => {
     client.user.setActivity('over discordboats.club', { type: 'WATCHING' });
 });
 
-
-client.on("message", async msg => {
+client.on('message', async msg => {
     if (msg.author.bot || msg.author.id === client.user.id) return;
-    const prefix = "dbc ";
-
+    const prefix = 'dbc ';
     if (!msg.content.startsWith(prefix)) return;
-
     const args = msg.content.slice(prefix.length).split(/ +/g);
     const cmd = args.shift().toLowerCase();
-
     switch (cmd) {
-        case "ping":
-            const ping = await msg.channel.send(":ping_pong: Ping!");
+        case 'ping':
+            const ping = await msg.channel.send(':ping_pong: Ping!');
             ping.edit(`:clock1030: Pong! ${ping.createdTimestamp - msg.createdTimestamp}ms response\n:sparkling_heart:  ${Math.round(client.ws.ping)}ms API heartbeat`);
             break;
 
-        case "say":
-            if (!msg.guild || msg.guild.id !== '482022278758924298') return;
+        case 'say':
+            if (!msg.guild || msg.guild.id !== '482022278758924298' || msg.guild.id == config.ids.mainServer && !msg.member.roles.has(config.ids.staffRole)) return;
             msg.channel.send(args.join(' '), { disableEveryone: true });
             break;
 
         case 'eval':
             if (config.evalUsers.indexOf(msg.author.id) === -1) return;
-
             const input = args.join(' ');
             if (!input) return msg.channel.send('Input is required');
-
             let result = null;
             let error = false;
-
             try {
                 result = await eval(input);
             }
@@ -53,43 +45,34 @@ client.on("message", async msg => {
                 result = e.toString();
                 error = true;
             }
-
             const inputMessage = `Input:\`\`\`js\n${input}\n\`\`\``;
             const message = `${inputMessage} Output:\`\`\`js\n${error ? result : inspect(result)}\n\`\`\``;
             if (message.length > 2000) return msg.channel.send(`${inputMessage} Output: \`\`\`\nOver 2000 characters\n\`\`\``);
-
             msg.channel.send(message);
             break;
 
         case 'pull':
             if (config.evalUsers.indexOf(msg.author.id) === -1) return;
-
             try {
                 const result = await exec('git pull origin old');
                 await msg.channel.send(`Pulled successfully! Restarting... \`\`\`\n${result.stderr + result.stdout}\n\`\`\``);
-
                 process.exit();
             }
             catch (e) {
                 msg.channel.send(`Error pulling: \`\`\`\n${e}\n\`\`\``);
             }
-
             break;
 
         case 'botinfo':
             const bot = await resolveUser(msg, args, client);
             if (!bot) return msg.channel.send('A user mention, id, or tag is required');
             if (!bot.bot) return msg.channel.send('The given user is not a bot');
-
             const botRow = await r.table('bots').get(bot.id);
             if (!botRow) return msg.channel.send('That bot is not listed on discordboats.club');
-
             const owner = await client.users.fetch(botRow.ownerID);
-
             const embed = {
                 title: `Bot Info - ${bot.tag}`,
                 color,
-                url: `${config.baseURL}bot/${botRow.vanityURL || bot.id}`,
                 thumbnail: {
                     url: bot.displayAvatarURL()
                 },
@@ -126,23 +109,18 @@ client.on("message", async msg => {
                     }
                 ]
             };
-
             msg.channel.send({ embed });
             break;
 
         case 'bots':
             const user = await resolveUser(msg, args, client) || msg.author;
             if (user.bot) return msg.channel.send('A bot can\'t own bots!');
-
             const you = user.id === msg.author.id;
-
             const userBots = await r.table('bots').filter({ ownerID: user.id });
             if (!userBots.length) return msg.channel.send(`${you ? 'You' : 'That user'} ${you ? 'have' : 'has'} no bots`);
-
             const botsEmbed = {
                 title: `${you ? 'Your' : `${user.username}'s`} bot${userBots.length === 1 ? '' : 's'}`,
                 color,
-                url: `${config.baseURL}user/${user.id}`,
                 thumbnail: {
                     url: user.displayAvatarURL()
                 },
@@ -152,7 +130,6 @@ client.on("message", async msg => {
                     icon_url: client.user.displayAvatarURL()
                 },
             };
-
             msg.channel.send({ embed: botsEmbed });
             break;
 
@@ -193,34 +170,27 @@ client.on("message", async msg => {
             });
             break;
     }
-
 });
 
 client.on('guildMemberAdd', async member => {
     if (member.guild.id !== config.ids.mainServer) return;
     const bot = await r.table('bots').get(member.id);
     if (!bot || !bot.verified) return;
-
     member.roles.add(config.ids.botRole).catch(() => { });
 });
 
 client.on('guildMemberRemove', async member => {
     if (member.guild.id !== config.ids.mainServer) return;
-
     const staffChannel = client.channels.get(config.ids.staffChannel);
-
     if (member.user.bot) {
         const bot = await r.table('bots').get(member.user.id);
         if (!bot) return;
-
         const owner = await client.users.fetch(bot.ownerID);
-
         staffChannel.send(`**${member.user.tag}** (\`${member.user.id}\`) left the main server, but is currently listed. Its owner is **${owner.tag}** (\`${owner.id}\`>)\nDelete it at: <${config.baseURL}/dashboard/bot/${member.user.id}/manage>`);
     }
     else {
         const bots = await r.table('bots').filter({ ownerID: member.user.id });
         if (!bots.length) return;
-
         staffChannel.send(`**${member.user.tag}** (\`${member.user.id}\`) left the main server, but they have **${bots.length}** bot${bots.length === 1 ? '' : 's'} on the list. They are:\n${bots.map(b => ` - ${b.name} (Deletion URL: <${config.baseURL}/dashboard/bot/${b.id}/manage>)`).join('\n')}`);
     }
 });
