@@ -10,6 +10,7 @@
             <div slot="actions" id="toolbar--actions">
                  <ui-button
                   type="secondary"
+                  style="color: white;"
                    v-for="route of toolbarRoutes"
                     :key="route.name"
                     :disabled="shouldDisableRoute(route)"
