@@ -20,14 +20,14 @@ export default {
 }
 </script>
 
-<style module>
+<style>
 *,
 *::before,
 *::after {
     box-sizing: border-box;
 }
 body {
-    margin: 0;
+    margin: 0px;
 }
 div#app {
     display: flex;

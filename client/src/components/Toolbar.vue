@@ -4,6 +4,7 @@
             brand="discordboats.club"
             text-color="white"
             :title="this.$router.currentRoute.name"
+            style="background: #303030"
             type="colored">
             <!-- Remove any stupid navigation icon that's meant for mobile on PC -->
             <div slot="icon"></div>
