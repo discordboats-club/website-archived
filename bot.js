@@ -89,7 +89,7 @@ client.on("message", async msg => {
             const embed = {
                 title: `Bot Info - ${bot.tag}`,
                 color,
-                url: `${config.baseURL}bot/${bot.vanityURL || bot.id}`,
+                url: `${config.baseURL}bot/${botRow.vanityURL || bot.id}`,
                 thumbnail: {
                     url: bot.displayAvatarURL()
                 },
