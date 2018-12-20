@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="toolbar">
         <ui-toolbar
             brand="discordboats.club"
             text-color="white"

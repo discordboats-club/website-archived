@@ -1,7 +1,14 @@
 <template>
   <div id="app">
-        <Toolbar></Toolbar>
-        <router-view/>
+        <header>
+            <Toolbar></Toolbar>
+        </header>
+        <main>
+            <router-view/>
+        </main>
+        <footer>
+            
+        </footer>
   </div>
 </template>
 <script>
@@ -13,7 +20,7 @@ export default {
 }
 </script>
 
-<style>
+<style module>
 *,
 *::before,
 *::after {
@@ -21,6 +28,14 @@ export default {
 }
 body {
     margin: 0;
+}
+div#app {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+main {
+    flex: 1 0 auto;
 }
 html {
     font-size: 100%;
