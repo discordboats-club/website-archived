@@ -28,7 +28,7 @@ client.on('message', async msg => {
             break;
 
         case 'say':
-            if (!msg.guild || msg.guild.id !== '482022278758924298' || msg.guild.id == config.ids.mainServer && msg.member.roles.has(config.ids.staffRole)) return;
+            if (!msg.guild || msg.guild.id !== '482022278758924298' || msg.guild.id == config.ids.mainServer && !msg.member.roles.has(config.ids.staffRole)) return;
             msg.channel.send(args.join(' '), { disableEveryone: true });
             break;
 
