@@ -89,7 +89,7 @@ client.on("message", async msg => {
             const embed = {
                 title: `Bot Info - ${bot.tag}`,
                 color,
-                url: `${config.baseURL}/bot/${bot.id}`,
+                url: `${config.baseURL}bot/${bot.vanityURL || bot.id}`,
                 thumbnail: {
                     url: bot.displayAvatarURL()
                 },
@@ -142,7 +142,7 @@ client.on("message", async msg => {
             const botsEmbed = {
                 title: `${you ? 'Your' : `${user.username}'s`} bot${userBots.length === 1 ? '' : 's'}`,
                 color,
-                url: `${config.baseURL}/user/${user.id}`,
+                url: `${config.baseURL}user/${user.id}`,
                 thumbnail: {
                     url: user.displayAvatarURL()
                 },

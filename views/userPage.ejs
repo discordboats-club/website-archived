@@ -31,8 +31,7 @@
 										</div>
 										<% if (profile._verifiedBots.length) { %>
 										<div class="chip lime lighten-2" style="display: inline-block;">owns
-											<%= profile._verifiedBots.length %> bot
-											<%= profile._verifiedBots.length === 1 ? '' : 's' %>
+											<%= profile._verifiedBots.length %> bot<%= profile._verifiedBots.length === 1 ? '' : 's' %>
 										</div>
 										<% } %>
 										<% profile.badges.forEach(b => { %>
