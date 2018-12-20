@@ -1,6 +1,7 @@
 import Vue from "vue"
 import Router from "vue-router"
 import Home from "./views/Home.vue"
+import Legal from "./views/Legal.vue"
 import AnthonySucksWithHisShittyParticlesJS from "./views/AnthonySucksWithHisShittyParticlesJS.vue"
 Vue.use(Router)
 
@@ -15,6 +16,11 @@ export default new Router({
         path: "/aswhspj",
         name: "AnthonySucksWithHisShittyParticlesJS",
         component: AnthonySucksWithHisShittyParticlesJS
+    },
+    {
+        path: "/legal",
+        name: "Legal",
+        component: Legal
     }
     // { Lazy load example, don"t have to worry about this for now
     //   path: "/about",
