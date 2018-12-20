@@ -5,8 +5,7 @@
         <p class="footer--mftt">discordboats.club</p>
             <p>discordboats.club is a constantly growing directory for Discord bots. discordboats.club is not affiliated with, endorsed by, supported by and/or sponsored by Discord in any way, shape or form.</p>
         </div>
-        <div class="paddingBoy"></div>
-        <div>
+        <div style="flex-grow: 1;">
             <p class="footer--mftt">Links</p>
             <div class="flexLinks">
                 <router-link v-for="r in linkRoutes" :key="r.path" :to="r.path">{{r.name}}</router-link>
@@ -46,6 +45,7 @@ export default {
 }
 .mainFooter {
     display: flex;
+    max-width: 100%;
 }
 .whatisthis {
     display: flex;
@@ -56,9 +56,6 @@ export default {
     /* mftt is main footer title text */
     text-align: center;
     font-size: 1.3em;
-}
-.paddingBoy {
-    width: 15vw;
 }
 .flexLinks {
     display: flex;
