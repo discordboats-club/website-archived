@@ -3,6 +3,11 @@ const Joi = require("joi");
 const moment = require("moment");
 const chunk = require("chunk");
 const fetch = require('node-fetch');
+const sanitizeHtml = require('sanitize-html');
+
+const htmlOptions = {
+    allowedTags: ['style', 'h1', 'h2', ...sanitizeHtml.defaults.allowedTags]
+};
 
 module.exports = class Utils {
     /**
@@ -16,7 +21,11 @@ module.exports = class Utils {
         const botUser = client.users.get(bot.id) || await client.users.fetch(bot.id);
         bot.online = botUser.presence.status !== "offline";
         bot._discordAvatarURL = botUser.displayAvatarURL({ format: "png", size: 512 });
-        bot._markedDescription = marked(bot.longDescription, { sanitize: true });
+
+        const description = bot.certified ? sanitizeHtml(bot.longDescription, htmlOptions) : bot.longDescription;
+        console.log(description);
+        bot._markedDescription = marked(description, { sanitize: bot.certified ? false : true });
+
         bot._ownerViewing = user.id === bot.ownerID;
         bot._comments = await r.table("comments").filter({ botID: bot.id }).run();
         try {

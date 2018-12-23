@@ -44,7 +44,6 @@ const newBotSchema = Joi.object().required().keys({
     website: Joi.string().uri({ scheme: ["https", "http"] }),
     library: Joi.string(),
     github: Joi.string().uri({ scheme: ["https"] }), // gh is just https
-    vanityURL: Joi.string().token().min(4).max(12),
     likeWebhook: Joi.string().uri({ scheme: ['http', 'https'] }),
     webhookAuth: Joi.string()
 }).with('likeWebhook', 'webhookAuth');
@@ -56,7 +55,6 @@ app.post("/bot", async (req, res) => {
     if (Util.handleJoi(newBotSchema, req, res)) return;
     const data = Util.filterUnexpectedData(req.body, { inviteClicks: 0, pageViews: 0, apiToken: randomString.generate(30), ownerID: req.user.id, createdAt: +new Date(), verified: false }, newBotSchema);
     if (data.library && !libList.includes(data.library)) return res.status(400).json({ error: "Invalid Library" });
-    if (data.vanityURL && (await r.table('bots').filter({ vanityURL: data.vanityURL }))[0]) return res.status(400).json({ error: 'Vanity URL taken' });
     if (badBots.includes(data.id)) res.status(403).json({ error: "Blacklisted bot." });
 
     const botUser = client.users.get(data.id) || await client.users.fetch(data.id);
@@ -97,9 +95,14 @@ app.patch("/bot/:id", async (req, res) => {
     if (req.user.id === bot.ownerID || req.user.admin || req.user.mod) {
         const data = Util.filterUnexpectedData(req.body, { editedAt: +new Date() }, editBotSchema);
         if (data.library && !libList.includes(data.library)) return res.status(400).json({ error: "Invalid Library" });
-        const vanityTaken = (await r.table('bots').filter({ vanityURL: data.vanityURL }))[0];
-        if (data.vanityURL && vanityTaken && vanityTaken.id !== bot.id) return res.status(400).json({ error: 'Vanity URL taken' });
-        if (!data.vanityURL) data.vanityURL = null;
+
+        if (bot.certified) {
+            const vanityTaken = (await r.table('bots').filter({ vanityURL: data.vanityURL }))[0];
+            if (data.vanityURL && vanityTaken && vanityTaken.id !== bot.id) return res.status(400).json({ error: 'Vanity URL taken' });
+            if (!data.vanityURL) data.vanityURL = null;
+        }
+        else data.vanityURL = null;
+
         if (!data.likeWebhook) data.likeWebhook = null;
         if (!data.webhookAuth) data.webhookAuth = null;
         const botUser = client.users.get(bot.id) || await client.users.fetch(bot.id);

@@ -117,7 +117,6 @@ $(window).ready(async () => {
                     github: undefIfEmpty($('#bot_github').val()),
                     shortDescription: undefIfEmpty($('#bot_description').val()),
                     longDescription: undefIfEmpty($('#bot_description-full').val()),
-                    vanityURL: undefIfEmpty($('#vanity_url').val()),
                     likeWebhook: undefIfEmpty($('#like_webhook').val()),
                     webhookAuth: undefIfEmpty($('#webhook_auth').val())
                 });

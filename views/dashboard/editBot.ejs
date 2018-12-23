@@ -76,9 +76,11 @@
                                 <label for="bot_description-full">Full Description</label>
                             </div>
                             <p><a href="https://en.wikipedia.org/wiki/Markdown">Markdown formatting</a> is supported in
-                                the Full Description.</p>
+                                the Full Description.
+                                <%= bot.certified && 'You may also use HTML (including the style tag), because your bot is certified.' %>
+                            </p>
                         </div>
-                        <div class="row">
+                        <div class="row" style="display: <%= bot.certified ? 'block' : 'none' %>">
                             <div class="input-field col s6">
                                 <input id="vanity_url" type="text" class="validate" minlength="4" maxlength="12" value="<%= bot.vanityURL %>">
                                 <label for="vanity_url">Vanity URL (optional)</label>

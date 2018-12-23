@@ -29,6 +29,7 @@
     "randomstring": "^1.1.5",
     "rethinkdbdash": "^2.3.31",
     "rollbar": "^2.4.5",
+    "sanitize-html": "^1.20.0",
     "session-rethinkdb": "^2.0.1",
     "webshot": "^0.18.0"
   },
