@@ -23,7 +23,6 @@ module.exports = class Utils {
         bot._discordAvatarURL = botUser.displayAvatarURL({ format: 'png', size: 512 });
 
         const description = bot.certified ? sanitizeHtml(bot.longDescription, htmlOptions) : bot.longDescription;
-        console.log(description);
         bot._markedDescription = marked(description, { sanitize: bot.certified ? false : true });
 
         bot._ownerViewing = user.id === bot.ownerID;
