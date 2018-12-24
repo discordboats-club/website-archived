@@ -1,7 +1,7 @@
-const marked = require("marked");
-const Joi = require("joi");
-const moment = require("moment");
-const chunk = require("chunk");
+const marked = require('marked');
+const Joi = require('joi');
+const moment = require('moment');
+const chunk = require('chunk');
 const fetch = require('node-fetch');
 const sanitizeHtml = require('sanitize-html');
 
@@ -11,39 +11,48 @@ const htmlOptions = {
 
 module.exports = class Utils {
     /**
-     * @param {Object} bot 
+     * @param {Object} bot
      * @param user
      * @returns {Object}
      */
     static async attachPropBot(bot, user = {}) {
-        const client = require("./ConstantStore").bot;
-        const { r } = require("./ConstantStore");
-        const botUser = client.users.get(bot.id) || await client.users.fetch(bot.id);
-        bot.online = botUser.presence.status !== "offline";
-        bot._discordAvatarURL = botUser.displayAvatarURL({ format: "png", size: 512 });
+        const client = require('./ConstantStore').bot;
+        const { r } = require('./ConstantStore');
+        const botUser = client.users.get(bot.id) || (await client.users.fetch(bot.id));
+        bot.online = botUser.presence.status !== 'offline';
+        bot._discordAvatarURL = botUser.displayAvatarURL({ format: 'png', size: 512 });
 
         const description = bot.certified ? sanitizeHtml(bot.longDescription, htmlOptions) : bot.longDescription;
         console.log(description);
         bot._markedDescription = marked(description, { sanitize: bot.certified ? false : true });
 
         bot._ownerViewing = user.id === bot.ownerID;
-        bot._comments = await r.table("comments").filter({ botID: bot.id }).run();
+        bot._comments = await r
+            .table('comments')
+            .filter({ botID: bot.id })
+            .run();
         try {
             bot._ownerTag = client.users.get(bot.ownerID).tag;
-        }
-        catch (e) {
-            bot._ownerTag = "Unknown#0000";
+        } catch (e) {
+            bot._ownerTag = 'Unknown#0000';
         }
         if (user.id) {
-            const like = (await r.table("likes").filter({ userID: user.id, botID: bot.id }).run())[0];
+            const like = (await r
+                .table('likes')
+                .filter({ userID: user.id, botID: bot.id })
+                .run())[0];
             bot._userLikes = !!like;
         }
-        bot.likeCount = await r.table("likes").filter({ botID: bot.id }).count().run();
+        bot.likeCount = await r
+            .table('likes')
+            .filter({ botID: bot.id })
+            .count()
+            .run();
         return bot;
     }
     /**
      * Hides sensetive and internal data from bots.
-     * @param {Object} bot 
+     * @param {Object} bot
      */
     static hidePropsBot(bot) {
         delete bot._discordAvatarURL;
@@ -68,20 +77,21 @@ module.exports = class Utils {
     }
     /**
      * @param {Object} user
-     * @returns {Object} 
+     * @returns {Object}
      */
     static async attachPropUser(user) {
-        const client = require("./ConstantStore").bot;
-        const { r } = require("./ConstantStore");
-        const discordUser = client.users.get(user.id) || await client.users.fetch(user.id);
+        const client = require('./ConstantStore').bot;
+        const { r } = require('./ConstantStore');
+        const discordUser = client.users.get(user.id) || (await client.users.fetch(user.id));
         user.online = discordUser.presence.status !== 'offline';
         user.discriminator = discordUser.discriminator;
-        user._discordAvatarURL = discordUser.displayAvatarURL({ format: "png", size: 512 });
-        user._bots = await Promise.all((await r.table("bots").filter({ ownerID: user.id })).map(b => Utils.attachPropBot(b)));
+        user._discordAvatarURL = discordUser.displayAvatarURL({ format: 'png', size: 512 });
+        user._bots = await Promise.all((await r.table('bots').filter({ ownerID: user.id })).map(b => Utils.attachPropBot(b)));
         user._verifiedBots = user._bots.filter(bot => bot.verified);
         user._chunked = chunk(user._verifiedBots, 4);
-        if (user.mod) user.badges.push("Moderator");
-        if (user.admin) user.badges.push("Administrator");
+        if (user.mod) user.badges.push('Moderator');
+        if (user.admin) user.badges.push('Administrator');
+        if (user._bots.find(b => b.certified)) user.badges.push('Certified Developer');
         return user;
     }
     /**
@@ -101,8 +111,8 @@ module.exports = class Utils {
         const wdjt = Joi.validate(req.body, schema); // What Does Joi Think (wdjt)
         if (wdjt.error) {
             if (!wdjt.error.isJoi) {
-                console.error("Error while running Joi.", wdjt.error);
-                res.status(500).json({ error: "Internal Server Error" });
+                console.error('Error while running Joi.', wdjt.error);
+                res.status(500).json({ error: 'Internal Server Error' });
                 return true;
             }
             res.status(400).json({ error: wdjt.error.name, details: wdjt.error.details.map(item => item.message) });
@@ -128,8 +138,7 @@ module.exports = class Utils {
             if (userTag) return userTag;
 
             return false;
-        }
-        catch (e) {
+        } catch (e) {
             return false;
         }
     }
@@ -145,12 +154,11 @@ module.exports = class Utils {
             await fetch(url, {
                 method: 'POST',
                 headers: {
-                    'Authorization': auth,
+                    Authorization: auth,
                     'Content-Type': 'application/json'
                 },
                 body
             });
-        }
-        catch (e) { }
+        } catch (e) {}
     }
 };
