@@ -170,9 +170,9 @@ client.on('message', async msg => {
             });
         case 'christmas':
             if (msg.member.roles.find((role) => role.name === '🎄 2018')) return msg.channel.send('<:customX:485196473441583134> You already have the "Christmas 2018" role. If you want to have it removed contact a staff member.');
+            msg.channel.send("<:customCheck:485196148064256019> Christmas 2018 role successfully added. 🎄:gift:")
             msg.member.roles.add("526904923733098506", 'Christmas 2018 command ran.').catch(err => {
                     msg.channel.send('<:customX:485196473441583134> Error running this command.')
-            msg.channel.send("<:customCheck:485196148064256019> Christmas 2018 role successfully added. 🎄:gift:")
             });
             break;
     }
