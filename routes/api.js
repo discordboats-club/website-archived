@@ -101,7 +101,7 @@ app.patch("/bot/:id", async (req, res) => {
             if (data.vanityURL && vanityTaken && vanityTaken.id !== bot.id) return res.status(400).json({ error: 'Vanity URL taken' });
             if (!data.vanityURL) data.vanityURL = null;
         }
-        else data.vanityURL = null;
+        else data.vanityURL = bot.vanityURL || null;
 
         if (!data.likeWebhook) data.likeWebhook = null;
         if (!data.webhookAuth) data.webhookAuth = null;
