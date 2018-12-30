@@ -1,8 +1,7 @@
+const { readFileSync } = require('fs');
 const express = require("express");
 const app = module.exports = express.Router();
 const Joi = require("joi");
-const fetch = require("node-fetch");
-let badBots = [];
 const { r, bot: client } = require("../ConstantStore");
 const randomString = require("randomstring");
 const Util = require("../Util");
@@ -10,11 +9,8 @@ const Util = require("../Util");
 const libList = module.exports.libList = ["discordcr", "Discord.Net", "DSharpPlus", "dscord", "DiscordGo", "Discord4j", "JDA", "discord.js", "Eris", "Discordia", "RestCord", "Yasmin", "discord.py", "disco", "discordrb", "discord-rs", "Sword"];
 const config = require('../config.json');
 
-
-fetch("https://gitlab.com/discordboats.club/website/raw/old/badbots.txt").then(res => res.text()).then(res => {
-    badBots = res.split("\n").map(bt => bt.split(" ")[0]);
-    console.log(`[api-route] loaded ${badBots.length} bad bots.`);
-});
+const badBots = readFileSync('./badbots.txt', 'utf-8').split('\n').map(b => b.split(' ')[0]);
+console.log(`[api-route] loaded ${badBots.length} bad bots.`);
 
 app.get("/search/autocomplete", async (req, res) => {
     const q = req.query.q;
