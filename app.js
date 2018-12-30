@@ -66,7 +66,6 @@ passport.use(new Discord({
     if (!user) {
         user = {
             id: profile.id,
-            username: profile.username,
             discordAT: accessToken,
             discordRT: refreshToken,
             createdAt: new Date().getTime(),

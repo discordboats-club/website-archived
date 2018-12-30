@@ -61,7 +61,6 @@ app.post("/bot", async (req, res) => {
     if (!client.users.get(data.ownerID) || !await client.users.fetch(data.ownerID)) return res.status(403).json({ error: "Owner is not in Discord guild" });
     if (!botUser) return res.status(404).json({ error: "Invalid Bot ID" });
     if (!botUser.bot) return res.status(400).json({ error: "Bot can only be a bot" });
-    data.name = botUser.username;
 
     // does bot already exist?
     const dbeBot = await r.table("bots").get(data.id).run();

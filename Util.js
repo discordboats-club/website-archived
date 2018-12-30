@@ -20,6 +20,7 @@ module.exports = class Utils {
         const { r } = require('./ConstantStore');
         const botUser = client.users.get(bot.id) || (await client.users.fetch(bot.id));
         bot.online = botUser.presence.status !== 'offline';
+        bot.name = botUser.username;
         bot._discordAvatarURL = botUser.displayAvatarURL({ format: 'png', size: 512 });
 
         const description = bot.certified ? sanitizeHtml(bot.longDescription, htmlOptions) : bot.longDescription;
@@ -83,6 +84,7 @@ module.exports = class Utils {
         const { r } = require('./ConstantStore');
         const discordUser = client.users.get(user.id) || (await client.users.fetch(user.id));
         user.online = discordUser.presence.status !== 'offline';
+        user.username = discordUser.username;
         user.discriminator = discordUser.discriminator;
         user._discordAvatarURL = discordUser.displayAvatarURL({ format: 'png', size: 512 });
         user._bots = await Promise.all((await r.table('bots').filter({ ownerID: user.id })).map(b => Utils.attachPropBot(b)));
