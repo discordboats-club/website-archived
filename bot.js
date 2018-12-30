@@ -16,7 +16,10 @@ client.once('ready', () => {
 });
 
 client.on('message', async msg => {
+    if (msg.author.id === '527780276852752404') return msg.delete({ reason: 'No advertising 😡' });
+    
     if (msg.author.bot || msg.author.id === client.user.id) return;
+    
     const prefix = 'dbc ';
     if (!msg.content.startsWith(prefix)) return;
     const args = msg.content.slice(prefix.length).split(/ +/g);
