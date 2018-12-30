@@ -11,7 +11,7 @@ const libList = module.exports.libList = ["discordcr", "Discord.Net", "DSharpPlu
 const config = require('../config.json');
 
 
-fetch("https://gist.githubusercontent.com/RONTheCookie/c209f333d14fd85b3b6ae00243bff2cd/raw/dd5a159320ea5faa54c8616315b3deccfd601b3e/badbots.txt").then(res => res.text()).then(res => {
+fetch("https://gitlab.com/discordboats.club/website/raw/old/badbots.txt").then(res => res.text()).then(res => {
     badBots = res.split("\n").map(bt => bt.split(" ")[0]);
     console.log(`[api-route] loaded ${badBots.length} bad bots.`);
 });
@@ -100,7 +100,7 @@ app.patch("/bot/:id", async (req, res) => {
             if (data.vanityURL && vanityTaken && vanityTaken.id !== bot.id) return res.status(400).json({ error: 'Vanity URL taken' });
             if (!data.vanityURL) data.vanityURL = null;
         }
-        else data.vanityURL = null;
+        else data.vanityURL = bot.vanityURL || null;
 
         if (!data.likeWebhook) data.likeWebhook = null;
         if (!data.webhookAuth) data.webhookAuth = null;

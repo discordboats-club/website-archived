@@ -168,7 +168,6 @@ client.on('message', async msg => {
                     ]
                 }
             });
-            break;
     }
 });
 
