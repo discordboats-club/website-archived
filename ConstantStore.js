@@ -16,7 +16,7 @@ module.exports = class ConstantStore {
     }
 };
 
-const r = module.exports.r = require("rethinkdbdash")({db: "discordboatsclubv1", port: 28016 });
+const r = module.exports.r = require("rethinkdbdash")({db: "discordboatsclubv1", port: 28015 });
 const bot = module.exports.bot = require("./bot");
 
 /* To use this, you just require("./getConstants").r and it'll give you the database. Same with bot.*/
