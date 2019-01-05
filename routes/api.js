@@ -71,7 +71,7 @@ app.post("/bot", async (req, res) => {
 
 const editBotSchema = Joi.object().required().keys({
     shortDescription: Joi.string().max(200),
-    longDescription: Joi.string().max(12000),
+    longDescription: Joi.string().min(50).max(12000),
     prefix: Joi.string().max(50),
     invite: Joi.string().uri({ scheme: ["https", "http"] }),
     website: Joi.string().uri({ scheme: ["https", "http"] }),
