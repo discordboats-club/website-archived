@@ -34,7 +34,7 @@ app.get("/", (req, res) => {
 const newBotSchema = Joi.object().required().keys({
     shortDescription: Joi.string().max(200).required(),
     id: Joi.string().length(18).required(),
-    longDescription: Joi.string().max(12000).required(),
+    longDescription: Joi.string().min(50).max(12000).required(),
     prefix: Joi.string().max(50).required(),
     invite: Joi.string().uri({ scheme: ["https", "http"] }).required(),
     website: Joi.string().uri({ scheme: ["https", "http"] }),
