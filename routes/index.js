@@ -18,7 +18,7 @@ app.get('/', async (req, res) => {
             .run()).map(bot => Util.attachPropBot(bot, req.user))
     );
     const botChunks = chunk(bots, 4); // 4 bots per
-    res.render('index', { user: req.user ? await Util.attachPropUser(req.user) : null, rawBots: bots, botChunks });
+    res.render('index', { user: req.user ? await Util.attachPropUser(req.user) : undefined, rawBots: bots, botChunks });
 });
 
 const rowsPerPage = 5;
@@ -64,7 +64,7 @@ app.get('/browse', async (req, res) => {
     const botChunks = chunk(bots, 4);
 
     res.render('browse', {
-        user: req.user ? await Util.attachPropUser(req.user) : null,
+        user: req.user ? await Util.attachPropUser(req.user) : undefined,
         rawBots: bots,
         botChunks,
         itemsPerPage,
@@ -88,7 +88,7 @@ app.get('/bot/:id', async (req, res, next) => {
     }
     const bot = await Util.attachPropBot(rB, req.user);
     if (!bot.verified && !((req.user ? req.user.mod || req.user.admin : false) || req.user.id === rB.ownerID)) return res.sendStatus(404); // pretend it doesnt exist lol
-    res.render('botPage', { user: req.user ? await Util.attachPropUser(req.user) : null, bot });
+    res.render('botPage', { user: req.user ? await Util.attachPropUser(req.user) : undefined, bot });
     await r
         .table('bots')
         .get(req.params.id)
@@ -106,7 +106,7 @@ app.get('/bot/:id/key', async (req, res, next) => {
     if (bot.verified) {
         if (req.user) {
             if (req.user.id !== bot.ownerID) res.sendStatus(403);
-            else return res.render('botKey', { bot: rB, user: req.user ? await Util.attachPropUser(req.user) : null });
+            else return res.render('botKey', { bot: rB, user: req.user ? await Util.attachPropUser(req.user) : undefined });
         } else return res.sendStatus(401);
     } else return res.sendStatus(403);
 });
@@ -135,7 +135,7 @@ app.get('/user/:id', async (req, res, next) => {
         .run();
     if (!user) return next();
     user = await Util.attachPropUser(user);
-    res.render('userPage', { user: req.user ? await Util.attachPropUser(req.user) : null, profile: user });
+    res.render('userPage', { user: req.user ? await Util.attachPropUser(req.user) : undefined, profile: user });
 });
 
 app.get('/search', async (req, res) => {
@@ -161,7 +161,7 @@ app.get('/search', async (req, res) => {
     );
 
     const botChunks = chunk(bots, 4);
-    res.render('search', { bots, botChunks, user: req.user ? await Util.attachPropUser(req.user) : null, searchQuery: text });
+    res.render('search', { bots, botChunks, user: req.user ? await Util.attachPropUser(req.user) : undefined, searchQuery: text });
 });
 
 app.get('/invite_url/:id', async (req, res) => {
@@ -198,15 +198,15 @@ app.get('/bot/:id/widget.png', async (req, res) => {
 });
 
 app.get('/certification', async (req, res) => {
-    res.render('certification', { user: req.user ? await Util.attachPropUser(req.user) : null });
+    res.render('certification', { user: req.user ? await Util.attachPropUser(req.user) : undefined });
 });
 
 app.get('/terms', async (req, res) => {
-    res.render('terms', { user: req.user ? await Util.attachPropUser(req.user) : null });
+    res.render('terms', { user: req.user ? await Util.attachPropUser(req.user) : undefined });
 });
 
 app.get('/privacy', async (req, res) => {
-    res.render('privacy', { user: req.user ? await Util.attachPropUser(req.user) : null });
+    res.render('privacy', { user: req.user ? await Util.attachPropUser(req.user) : undefined });
 });
 
 app.get('/stats', async (req, res) => {
@@ -227,6 +227,6 @@ app.get('/stats', async (req, res) => {
             .table('bots')
             .sum('inviteClicks')
             .run(),
-        user: req.user ? await Util.attachPropUser(req.user) : null
+        user: req.user ? await Util.attachPropUser(req.user) : undefined
     });
 });
