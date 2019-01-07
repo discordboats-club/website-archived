@@ -139,16 +139,9 @@ app.get('/user/:id', async (req, res, next) => {
 });
 
 app.get('/search', async (req, res) => {
-    var chk1 = req.query.q.includes('<');
-    var chk2 = req.query.q.includes('>');
-    var chk3 = req.query.q.includes('onload');
-    var chk4 = req.query.q.includes(';');
-    if(chk1 === "true") {res.status(400).end();}
-    if(chk2 === "true") {res.status(400).end();}
-    if(chk3 === "true") {res.status(400).end();}
-    if(chk4 === "true") {res.status(400).end();}
     if (typeof req.query.q !== 'string') return res.status(403).json({ error: 'expected query q' });
-    const text = req.query.q.toLowerCase();
+    var query = req.query.q.replace(/[!@#$%^&*()/{}?;"-<>=_+~`]/g, '');
+    const text = query.toLowerCase();
     const bots = await Promise.all(
         (await r
             .table('bots')
