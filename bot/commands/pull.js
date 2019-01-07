@@ -1,3 +1,7 @@
+const { promisify } = require('util');
+const cp = require('child_process');
+const exec = promisify(cp.exec);
+
 module.exports = {
     help: {
         description: 'pulls from the github origin `old` branch'
