@@ -3,7 +3,7 @@ const cp = require('child_process');
 const { Client } = require('discord.js');
 const { r } = require('./ConstantStore');
 const { resolveUser } = require('./Util.js');
-const client = module.exports = new Client({ disableEveryone: true });
+const client = (module.exports = new Client({ disableEveryone: true }));
 const config = require('./config.json');
 client.login(config.token);
 
@@ -40,8 +40,7 @@ client.on('message', async msg => {
             let error = false;
             try {
                 result = await eval(input);
-            }
-            catch (e) {
+            } catch (e) {
                 result = e.toString();
                 error = true;
             }
@@ -57,8 +56,7 @@ client.on('message', async msg => {
                 const result = await exec('git pull origin old');
                 await msg.channel.send(`Pulled successfully! Restarting... \`\`\`\n${result.stderr + result.stdout}\n\`\`\``);
                 process.exit();
-            }
-            catch (e) {
+            } catch (e) {
                 msg.channel.send(`Error pulling: \`\`\`\n${e}\n\`\`\``);
             }
             break;
@@ -113,8 +111,8 @@ client.on('message', async msg => {
             break;
 
         case 'bots':
-            const user = await resolveUser(msg, args, client) || msg.author;
-            if (user.bot) return msg.channel.send('A bot can\'t own bots!');
+            const user = (await resolveUser(msg, args, client)) || msg.author;
+            if (user.bot) return msg.channel.send("A bot can't own bots!");
             const you = user.id === msg.author.id;
             const userBots = await r.table('bots').filter({ ownerID: user.id });
             if (!userBots.length) return msg.channel.send(`${you ? 'You' : 'That user'} ${you ? 'have' : 'has'} no bots`);
@@ -128,7 +126,7 @@ client.on('message', async msg => {
                 footer: {
                     text: `User Bots | Requested by ${msg.author.username}`,
                     icon_url: client.user.displayAvatarURL()
-                },
+                }
             };
             msg.channel.send({ embed: botsEmbed });
             break;
@@ -175,7 +173,7 @@ client.on('guildMemberAdd', async member => {
     if (member.guild.id !== config.ids.mainServer) return;
     const bot = await r.table('bots').get(member.id);
     if (!bot || !bot.verified) return;
-    member.roles.add(config.ids.botRole).catch(() => { });
+    member.roles.add(config.ids.botRole).catch(() => {});
 });
 
 client.on('guildMemberRemove', async member => {
@@ -185,11 +183,18 @@ client.on('guildMemberRemove', async member => {
         const bot = await r.table('bots').get(member.user.id);
         if (!bot) return;
         const owner = await client.users.fetch(bot.ownerID);
-        staffChannel.send(`**${member.user.tag}** (\`${member.user.id}\`) left the main server, but is currently listed. Its owner is **${owner.tag}** (\`${owner.id}\`>)\nDelete it at: <${config.baseURL}/dashboard/bot/${member.user.id}/manage>`);
-    }
-    else {
+        staffChannel.send(
+            `**${member.user.tag}** (\`${member.user.id}\`) left the main server, but is currently listed. Its owner is **${owner.tag}** (\`${owner.id}\`>)\nDelete it at: <${
+                config.baseURL
+            }/dashboard/bot/${member.user.id}/manage>`
+        );
+    } else {
         const bots = await r.table('bots').filter({ ownerID: member.user.id });
         if (!bots.length) return;
-        staffChannel.send(`**${member.user.tag}** (\`${member.user.id}\`) left the main server, but they have **${bots.length}** bot${bots.length === 1 ? '' : 's'} on the list. They are:\n${bots.map(b => ` - ${b.name} (Deletion URL: <${config.baseURL}/dashboard/bot/${b.id}/manage>)`).join('\n')}`);
+        staffChannel.send(
+            `**${member.user.tag}** (\`${member.user.id}\`) left the main server, but they have **${bots.length}** bot${bots.length === 1 ? '' : 's'} on the list. They are:\n${bots
+                .map(b => ` - ${b.name} (Deletion URL: <${config.baseURL}/dashboard/bot/${b.id}/manage>)`)
+                .join('\n')}`
+        );
     }
 });
