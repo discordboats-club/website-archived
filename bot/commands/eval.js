@@ -1,3 +1,6 @@
+const { inspect } = require('util');
+const { r } = require('../../ConstantStore');
+
 module.exports = {
     help: {
         description: 'evaluate js (runs of evalUsers)'
