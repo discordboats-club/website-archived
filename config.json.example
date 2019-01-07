@@ -7,7 +7,7 @@
     "listeningPort": 3000,
     "evalUsers": [],
     "botPrefix": "dbc ",
-    "embedColor": 7506394
+    "embedColor": 7506394,
     "ids": {
         "logChannel": "",
         "staffRole": "",
