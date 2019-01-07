@@ -1,5 +1,5 @@
-const randomstring = require("randomstring");
-const fs = require("fs");
+const randomstring = require('randomstring');
+const fs = require('fs');
 let secret;
 
 module.exports = class ConstantStore {
@@ -7,10 +7,10 @@ module.exports = class ConstantStore {
      * @returns {String}
      */
     static get secret() {
-        if (fs.existsSync("secret")) return fs.readFileSync("secret").toString();
+        if (fs.existsSync('secret')) return fs.readFileSync('secret').toString();
         else {
             secret = randomstring.generate(500);
-            fs.writeFileSync("secret", secret);
+            fs.writeFileSync('secret', secret);
             return secret;
         }
     }
