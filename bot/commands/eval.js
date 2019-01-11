@@ -1,5 +1,6 @@
 const { inspect } = require('util');
-const { r } = require('../../ConstantStore');
+const { r } = require('../../ConstantStore')
+const Discord = require('discord.js');
 
 module.exports = {
     help: {
