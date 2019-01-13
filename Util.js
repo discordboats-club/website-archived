@@ -21,7 +21,7 @@ module.exports = class Utils {
         const botUser = client.users.get(bot.id) || (await client.users.fetch(bot.id));
         bot.online = botUser.presence.status !== 'offline';
         bot.name = botUser.username;
-        bot._discordAvatarURL = botUser.displayAvatarURL({ format: 'png', size: 512 });
+        bot._discordAvatarURL = botUser.displayAvatarURL({ size: 512 });
 
         const description = bot.certified ? sanitizeHtml(bot.longDescription, htmlOptions) : bot.longDescription;
         bot._markedDescription = marked(description, { sanitize: bot.certified ? false : true });
