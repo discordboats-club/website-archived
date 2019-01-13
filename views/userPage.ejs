@@ -23,8 +23,7 @@
 
 									<div style="margin-left: 20px; display: inline-block; transform: translateY(25%);">
 										<div>
-											<%= profile.username %><span style="font-size: 0.7em;">#
-												<%= profile.discriminator %></span></div>
+											<%= profile.username %><span style="font-size: 0.7em;">#<%= profile.discriminator %></span></div>
 
 										<div class="chip <%= profile.online ? 'green' : 'red' %> lighten-2" style="display: inline-block;">
 											<%= profile.online ? 'online' : 'offline' %>
