@@ -3,8 +3,7 @@ const { r } = require('../ConstantStore');
 const { readdir } = require('fs').promises;
 const client = module.exports = new Client({ disableEveryone: true });
 
-const config = require('../config.json');
-client.config = config;
+client.config = require('../config.json');
 client.commands = new Map();
 
 client.login(config.token);
