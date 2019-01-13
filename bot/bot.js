@@ -6,7 +6,7 @@ const client = module.exports = new Client({ disableEveryone: true });
 client.config = require('../config.json');
 client.commands = new Map();
 
-client.login(config.token);
+client.login(client.config.token);
 
 (async () => {
     try {
