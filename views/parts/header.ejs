@@ -17,7 +17,7 @@
             <% if (typeof user !== 'object') { %>
             <li><a href="/discord/login">Login</a></li>
             <% } else { %>
-                <li id="user-profile-navbar-item"><a href="#" class="dropdown-trigger" data-target="profile-dropdown" id="profile-dropdown-trigger"> <img class="responsive-img circle" alt="User Avatar" style=" vertical-align: middle; width: 32px !important; height: 32px !important;"src="<%=user._discordAvatarURL%>"> <%= user.username %></a></li>
+                <li id="user-profile-navbar-item"><a href="#" class="dropdown-trigger" data-target="profile-dropdown" id="profile-dropdown-trigger"> <img class="responsive-img circle" alt="User Avatar" style=" vertical-align: middle; width: 38px !important; height: 38px !important;"src="<%=user._discordAvatarURL%>"></a></li>
             <% } %>
         </ul>
     </div>
