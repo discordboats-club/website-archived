@@ -34,6 +34,10 @@ module.exports.run = async (client, msg) => {
                 {
                     name: 'Ping',
                     value: 'Responds with the bot ping and response time'
+                },
+                {
+                    name: 'Uptime',
+                    value: 'Responds with the site\'s uptime'
                 }
             ]
         }
