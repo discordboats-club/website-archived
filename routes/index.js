@@ -163,7 +163,7 @@ app.get('/search?:q', async (req, res) => {
     );
 
     const botChunks = chunk(bots, 4);
-    res.render('search', { bots, botChunks, user: req.user ? await Util.attachPropUser(req.user) : null, searchQuery: text });
+    res.render('search', { bots, botChunks, user: req.user ? await Util.attachPropUser(req.user) : undefined, searchQuery: text });
 });
 
 app.get('/invite_url/:id', async (req, res) => {
