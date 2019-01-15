@@ -139,6 +139,7 @@ app.get('/user/:id', async (req, res, next) => {
 });
 
 app.get('/search?:q', async (req, res) => {
+    console.log(req);
     if (typeof req.query.q !== 'string') return res.status(403).json({ error: 'expected query q' });
     const query = req.query.q.toLowerCase();
     const text = req.query.q.replace(/<([^>]+)>/gi, "");
