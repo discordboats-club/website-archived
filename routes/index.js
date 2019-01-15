@@ -138,9 +138,10 @@ app.get('/user/:id', async (req, res, next) => {
     res.render('userPage', { user: req.user ? await Util.attachPropUser(req.user) : undefined, profile: user });
 });
 
-app.get('/search', async (req, res) => {
+app.get('/search?:q', async (req, res) => {
     if (typeof req.query.q !== 'string') return res.status(403).json({ error: 'expected query q' });
-    const text = req.query.q.toLowerCase();
+    const query = req.query.q.toLowerCase();
+    const text = req.query.q.replace(/<([^>+)/gi, "");
     const bots = await Promise.all(
         (await r
             .table('bots')
