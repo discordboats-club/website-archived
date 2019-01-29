@@ -7,7 +7,8 @@ module.exports = {
 module.exports.run = async (client, msg) => {
     let s;
     s = Math.round(client.uptime / 1000);
-    let d = Math.round(Math.floor(s / 86400));
+    let d = Math.round(Math.floor(s / 86400))
+    s %= 86400;
     let h = Math.round(Math.floor(s / 3600));
     s %= 3600;
     let m = Math.round(Math.floor(s / 60));
