@@ -8,8 +8,9 @@ function undefIfEmpty(str) {
     return str.trim() === '' ? undefined : str;
 }
 
-// Particles
+/* Particles
 particlesJS.load('snow', '/particles.json');
+*/
 
 // Theme control
 const controlEle = document.querySelector('#themeControl');
