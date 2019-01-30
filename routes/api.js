@@ -293,7 +293,7 @@ app.post('/bot/mod/verify', async (req, res) => {
     const staffUser = client.users.get(req.user.id) || client.users.fetch(req.user.id);
     if (data.verified) {
         try {
-            await discordOwner.send(`🎉 ${bot.tag} was verified by ${staffUser.tag}!`);
+            await discordOwner.send(`🎉 "${bot.name}"" was verified by ${staffUser.tag}!`);
         } catch (e) {}
         client.channels.get(config.ids.logChannel).send(`🎉 ${botUser.username} by <@${bot.ownerID}> was verified by ${staffUser}!`);
         await r
