@@ -97,12 +97,15 @@ app.post('/bot', async (req, res) => {
         newBotSchema
     );
     if (data.library && !libList.includes(data.library)) return res.status(400).json({ error: 'Invalid Library' });
-    if (badBots.includes(data.id)) res.status(403).json({ error: 'Blacklisted bot.' });
+    if (badBots.includes(data.id)) res.status(403).json({ error: 'Blacklisted bot' });
 
     const botUser = client.users.get(data.id) || (await client.users.fetch(data.id));
-    if (!client.users.get(data.ownerID) || !(await client.users.fetch(data.ownerID))) return res.status(403).json({ error: 'Owner is not in Discord guild' });
-    if (!botUser) return res.status(404).json({ error: 'Invalid Bot ID' });
-    if (!botUser.bot) return res.status(400).json({ error: 'Bot can only be a bot' });
+    if (!botUser) return res.status(404).json({ error: 'Invalid bot ID' });
+    if (!botUser.bot) return res.status(400).json({ error: 'ID doesn\'t belong to a bot' });
+    
+    // check for user in guild -tony
+    const user = await client.guilds.get(config.ids.mainServer).members.get(data.ownerID);
+    if (!user) return res.status(403).json({ error: 'You must join our server to add bots' });
 
     // does bot already exist?
     const dbeBot = await r
@@ -169,7 +172,7 @@ app.patch('/bot/:id', async (req, res) => {
             .update(data)
             .run();
         client.channels.get(config.ids.logChannel).send(`✏ <@${req.user.id}> edited ${botUser.username}.`);
-        res.json({ ok: 'edited bot' });
+        res.json({ ok: 'Edited bot' });
     } else res.status(403).json({ error: 'You do not own this bot' });
 });
 
