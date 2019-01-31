@@ -48,7 +48,7 @@ module.exports.run = async (client, msg, args) => {
             },
             {
                 name: 'Links',
-                value: [botRow.id && `[Page](${client.config.baseURL}/bot/${botRow.id$})`, botRow.github && `[Repo](${botRow.github})`, botRow.website && `[Website](${botRow.website})`, `[Invite](${botRow.invite})`].filter(l => l).join(' | ') || 'No Links',
+                value: [bot.id && `[Page](${client.config.baseURL}/bot/${bot.id$})`, botRow.github && `[Repo](${botRow.github})`, botRow.website && `[Website](${botRow.website})`, `[Invite](${botRow.invite})`].filter(l => l).join(' | ') || 'No Links',
                 inline: true
             }
         ]
