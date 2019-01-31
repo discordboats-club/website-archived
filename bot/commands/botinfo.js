@@ -53,6 +53,16 @@ module.exports.run = async (client, msg, args) => {
                inline: true
             },
             {
+               name: 'Page Views',
+               value: botRow.pageViews ? botRow.pageViews : 0,
+               inline: true
+            },
+            {
+               name: 'Invites',
+               value: `${botRow.name} has been invited ${botRow.inviteClicks ? botRow.inviteClicks : 0} times.`,
+               inline: true
+            },
+            {
                 name: 'Links',
                 value: [page, botRow.github && `[Repo](${botRow.github})`, botRow.website && `[Website](${botRow.website})`, `[Invite](${botRow.invite})`].filter(l => l).join(' | ') || 'No Links',
                 inline: true
