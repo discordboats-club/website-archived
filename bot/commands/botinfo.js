@@ -14,6 +14,7 @@ module.exports.run = async (client, msg, args) => {
     const botRow = await r.table('bots').get(bot.id);
     if (!botRow) return msg.channel.send('That bot is not listed on discordboats.club');
     const owner = await client.users.fetch(botRow.ownerID);
+    const page = `[Page](${client.config.baseURL}/bot/${bot.id})`;
     const embed = {
         title: `Bot Info - ${bot.tag}`,
         color: client.config.embedColor,
@@ -48,7 +49,7 @@ module.exports.run = async (client, msg, args) => {
             },
             {
                 name: 'Links',
-                value: [bot.id && `[Page](${client.config.baseURL}/bot/${bot.id$})`, botRow.github && `[Repo](${botRow.github})`, botRow.website && `[Website](${botRow.website})`, `[Invite](${botRow.invite})`].filter(l => l).join(' | ') || 'No Links',
+                value: [page, botRow.github && `[Repo](${botRow.github})`, botRow.website && `[Website](${botRow.website})`, `[Invite](${botRow.invite})`].filter(l => l).join(' | ') || 'No Links',
                 inline: true
             }
         ]
