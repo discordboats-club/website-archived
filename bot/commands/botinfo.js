@@ -13,7 +13,8 @@ module.exports.run = async (client, msg, args) => {
     if (!bot.bot) return msg.channel.send('The given user is not a bot');
     const botRow = await r.table('bots').get(bot.id);
     if (!botRow) return msg.channel.send('That bot is not listed on discordboats.club');
-    const owner = await client.users.fetch(botRow.ownerID);
+    const owner = await client.users.fetch(botRow.ownerID)
+    const uploaded = new Date(await botRow.createdAt).toLocaleDateString('en-GB', { 	day : 'numeric', month : 'short', year : 'numeric' });
     const page = `[Page](${client.config.baseURL}/bot/${bot.id})`;
     const embed = {
         title: `Bot Info - ${bot.tag}`,
@@ -40,6 +41,11 @@ module.exports.run = async (client, msg, args) => {
             {
                 name: 'Owner',
                 value: owner.toString(),
+                inline: true
+            },
+            {
+                name: 'Uploaded',
+                value: uploaded,
                 inline: true
             },
             {
