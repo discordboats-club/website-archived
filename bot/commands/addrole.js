@@ -9,7 +9,7 @@ module.exports.run = async (client, msg, args) => {
     let member = msg.guild.member(msg.mentions.users.first()) || msg.guild.members.get(args[0]);
     if (!member) return msg.channel.send(`<:customX:485196473441583134> Couldn't find that user`)
     let rolle = args.slice(1).join(' ');
-    if (!role) return msg.channel.send(`<customX:485196473441583134> Please specifiy a role`);
+    if (!rolle) return msg.channel.send(`<customX:485196473441583134> Please specifiy a role`);
     let gRole = msg.guild.roles.find(role => role.name === rolle) 
     if (!gRole) return msg.channel.send(`<:customX:485196473441583134> Couldn't find that role`);
 
