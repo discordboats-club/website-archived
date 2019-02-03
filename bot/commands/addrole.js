@@ -8,9 +8,9 @@ module.exports.run = async (client, msg, args) => {
     if (!msg.member.permissions.has("MANAGE_SERVER")) return msg.reply("you cannot use this command!");
     let member = msg.guild.member(msg.mentions.users.first()) || msg.guild.members.get(args[0]);
     if (!member) return msg.channel.send(`<:customX:485196473441583134> Couldn't find that user`)
-    let role = args.slice(1).join(' ');
+    let rolle = args.slice(1).join(' ');
     if (!role) return msg.channel.send(`<customX:485196473441583134> Please specifiy a role`);
-    let gRole = msg.guild.roles.find(`name`, role);
+    let gRole = msg.guild.roles.find(role => role.name === rolle) 
     if (!gRole) return msg.channel.send(`<:customX:485196473441583134> Couldn't find that role`);
 
     if (member.roles.has(gRole.id)) return msg.channel.send(`<:customX:485196473441583134> That user already has that role`);
