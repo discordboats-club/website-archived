@@ -14,7 +14,7 @@ module.exports.run = async (client, msg, args) => {
     if (!gRole) return msg.channel.send(`<:customX:485196473441583134> Couldn't find that role`);
 
     if (!member.roles.has(gRole.id)) return msg.channel.send(`<:customX:485196473441583134> That user doesn't have that role`);
-    member.roles.remove(gRole.id, `remrole cmd used to remove ${gRole.name} from ${member.tag}`).then(() => {
+    member.roles.remove(gRole.id, `remrole cmd used to remove ${gRole.name} from ${member.user.tag}`).then(() => {
         msg.channel.send(`<:customCheck:485196148064256019> Removed role **${gRole.name}** from <@${member.id}>. `)
     }).catch((e) => {
         msg.channel.send(`<:customX:485196473441583134> An unexpected error has occurred while removing the role from <@${member.id}>. The error has been logged.`);
