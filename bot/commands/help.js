@@ -28,6 +28,14 @@ module.exports.run = async (client, msg) => {
                     value: `Makes the bot say something\n\n**Usage:**\n\`${client.config.botPrefix}say <message>\``
                 },
                 {
+                    name: 'Addrole',
+                    value: `Gives a role to a person\n\n**Usage:**\n\`${client.config.botPrefix}addrole <user> <role>\``
+                },
+                {
+                    name: 'Remrole',
+                    value: `Removes a role from a person\n\n**Usage:**\n\`${client.config.botPrefix}remrole <user> <role>\``
+                },
+                {
                     name: 'Eval',
                     value: `Evaluate some code with the bot\n\n**Usage:**\n\`${client.config.botPrefix}eval <code>\``
                 },
