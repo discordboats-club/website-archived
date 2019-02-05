@@ -56,7 +56,7 @@ client.on('message', async msg => {
             await command.run(client, msg, args);
 
         } catch (e) {
-            console.error(`Error while running the ${command.name} event:`);
+            console.error(`Error while running the ${command.name} command:`);
             console.error(e);
         }
 });
