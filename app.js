@@ -103,7 +103,8 @@ app.use((req, res) => {
     res.status(404).render('404', { user: req.user });
 });
 
-setInterval( async (bots = await r.table('bots'), hours = 8) => { 
+setInterval( async (hours = 8) => { 
+    const bots = await r.table('bots')
     bots.forEach(async(bot) => {
         const user = await client.users.fetch(bot.id);
         if (!user || !user.id) return;
