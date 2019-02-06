@@ -5,14 +5,13 @@ const Discord = require('passport-discord');
 const logger = require('morgan');
 const { ensureLoggedIn } = require('connect-ensure-login');
 const compress = require('compression');
-const { r } = require('./ConstantStore');
+const { r, client } = require('./ConstantStore');
 const config = require('./config');
 const minifyHTML = require('express-minify-html');
 const RethinkStore = require('session-rethinkdb')(session);
 const port = process.env.PORT || require('./config.json').listeningPort || 3000;
 
 const app = (module.exports = express());
-// const client = require("./bot");
 
 app.use(require('helmet')());
 app.set('view engine', 'ejs');
@@ -103,6 +102,15 @@ app.use('/api', require('./routes/api'));
 app.use((req, res) => {
     res.status(404).render('404', { user: req.user });
 });
+
+setInterval( async (bots = await r.table('bots'), hours = 8) => { 
+    bots.forEach(async(bot) => {
+        const user = await client.users.fetch(bot.id);
+        if (!user || !user.id) return;
+        await r.table('bots').get(bot.id).update({ name: user.username });
+    });
+    console.log('[Automatic] Updated names of users.');
+}, hours * 60 * 60 * 1000);
 
 app.listen(port, () => {
     console.log(`Listening on port ${port}.`);
