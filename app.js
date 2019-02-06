@@ -6,6 +6,9 @@ const logger = require('morgan');
 const { ensureLoggedIn } = require('connect-ensure-login');
 const compress = require('compression');
 const { r, client } = require('./ConstantStore');
+const { promisify } = require('util');
+const cp = require('child_process');
+const exec = promisify(cp.exec);
 const config = require('./config');
 const minifyHTML = require('express-minify-html');
 const RethinkStore = require('session-rethinkdb')(session);
@@ -111,6 +114,13 @@ setInterval( async () => {
         await r.table('bots').get(bot.id).update({ name: user.username });
     });
     console.log('[Automatic] Updated names of users.');
+    if (!config.automaticBackup) return;
+    try {
+        const result = await exec('cd /home/dboats/backup && rethinkdb dump -e discordboatsclubv1 && cd ../dboats');
+        console.log('[Automatic] Backing up the database...');
+    } catch (e) {
+        console.log('[Error] with backup: ' + e.toString());
+    }
 }, 8 * 60 * 60 * 1000);
 
 app.listen(port, () => {
