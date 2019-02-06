@@ -103,7 +103,7 @@ app.use((req, res) => {
     res.status(404).render('404', { user: req.user });
 });
 
-setInterval( async (hours = 8) => { 
+setInterval( async () => { 
     const bots = await r.table('bots')
     bots.forEach(async(bot) => {
         const user = await client.users.fetch(bot.id);
@@ -111,7 +111,7 @@ setInterval( async (hours = 8) => {
         await r.table('bots').get(bot.id).update({ name: user.username });
     });
     console.log('[Automatic] Updated names of users.');
-}, hours * 60 * 60 * 1000);
+}, 8 * 60 * 60 * 1000);
 
 app.listen(port, () => {
     console.log(`Listening on port ${port}.`);
