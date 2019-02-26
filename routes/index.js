@@ -140,8 +140,9 @@ app.get('/user/:id', async (req, res, next) => {
 
 app.get('/search', async (req, res) => {
     if (typeof req.query.q !== 'string') return res.status(403).json({ error: 'expected query q' });
-    const query = req.query.q.toLowerCase();
-    const text = req.query.q.replace(/<([^>]+)>/gi, "");
+    //const query = req.query.q.toLowerCase();
+    const text = req.query.q.toLowerCase();
+    //const text = req.query.q.replace(/<([^>]+)>/gi, "");
     const bots = await Promise.all((await r.table("bots").filter(bot => {
         return bot("name").downcase().match(text).and(bot("verified"))
     }).orderBy(bot => {
