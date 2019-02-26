@@ -142,24 +142,11 @@ app.get('/search', async (req, res) => {
     if (typeof req.query.q !== 'string') return res.status(403).json({ error: 'expected query q' });
     const query = req.query.q.toLowerCase();
     const text = req.query.q.replace(/<([^>]+)>/gi, "");
-    const bots = await Promise.all(
-        (await r
-            .table('bots')
-            .filter(bot => {
-                return bot('name')
-                    .downcase()
-                    .match(text)
-                    .and(bot('verified'));
-            })
-            .orderBy(bot => {
-                return bot('name')
-                    .downcase()
-                    .split(text)
-                    .count();
-            })
-            .limit(2 * 4)
-            .run()).map(bot => Util.attachPropBot(bot, req.user))
-    );
+    const bots = await Promise.all((await r.table("bots").filter(bot => {
+        return bot("name").downcase().match(text).and(bot("verified"))
+    }).orderBy(bot => {
+        return bot("name").downcase().split(text).count()
+    }).limit(2*4).run()).map(bot => Util.attachPropBot(bot, req.user)));
 
     const botChunks = chunk(bots, 4);
     res.render('search', { bots, botChunks, user: req.user ? await Util.attachPropUser(req.user) : undefined, searchQuery: text });
