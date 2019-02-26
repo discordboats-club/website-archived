@@ -149,7 +149,7 @@ app.get('/search', async (req, res) => {
     }).limit(2*4).run()).map(bot => Util.attachPropBot(bot, req.user)));
 
     const botChunks = chunk(bots, 4);
-    res.render('search', { bots, botChunks, user: req.user ? await Util.attachPropUser(req.user) : undefined, searchQuery: text });
+    res.render("search", {bots, botChunks, user: req.user, searchQuery: text});
 });
 
 app.get('/invite_url/:id', async (req, res) => {
