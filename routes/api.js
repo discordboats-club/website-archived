@@ -27,7 +27,8 @@ const libList = (module.exports.libList = [
     'discordrb',
     'serenity',
     'SwiftDiscord',
-    'Sword'
+    'Sword',
+    'Other'
 ]);
 const config = require('../config.json');
 
