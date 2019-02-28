@@ -7,7 +7,6 @@ const randomString = require('randomstring');
 const Util = require('../Util');
 // datamined from the discord api docs
 const libList = (module.exports.libList = [
-    'Select One',
     'discordcr',
     'Nyxx',
     'Discord.Net',
