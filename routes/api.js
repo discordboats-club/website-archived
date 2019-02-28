@@ -8,21 +8,25 @@ const Util = require('../Util');
 // datamined from the discord api docs
 const libList = (module.exports.libList = [
     'discordcr',
+    'Nyxx',
     'Discord.Net',
     'DSharpPlus',
-    'dscord',
+    'Nostrum',
+    'coxir',
     'DiscordGo',
-    'Discord4j',
+    'Discord4J',
+    'Javacord',
     'JDA',
     'discord.js',
     'Eris',
     'Discordia',
     'RestCord',
     'Yasmin',
-    'discord.py',
     'disco',
+    'discord.py',
     'discordrb',
-    'discord-rs',
+    'serenity',
+    'SwiftDiscord',
     'Sword'
 ]);
 const config = require('../config.json');
