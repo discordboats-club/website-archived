@@ -4,7 +4,7 @@ Discord bot list.
 
 ### Self hosting the bot list for development
 
-Please don't host this bot list publicly.
+
 
 We've only tested this on Windows and Linux at the moment, feel free to make a PR editing this README file if you've found it to work on other OSes too.
 * Clone the repository.
