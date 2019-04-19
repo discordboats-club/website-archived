@@ -21,7 +21,7 @@ module.exports = {
         description: 'Certify boat'
     },
     options: {
-        ownerOnly: true
+        ownerOnly: false
     },
     aliases: ['c']
 };
