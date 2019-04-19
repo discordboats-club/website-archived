@@ -18,7 +18,7 @@ const path = require('path');
 
 
 const app = (module.exports = express());
-app.use(expressSitemapXml(getUrls, 'https://botlistuniverse.ga'))
+app.use(expressSitemapXml(getUrls, 'https://discordboats.club'))
 
 async function getUrls () {
   return await getUrlsFromDatabase()

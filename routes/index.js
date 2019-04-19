@@ -312,6 +312,26 @@ app.get('/staff', async (req, res) => {
     res.render('staffList', { user: req.user ? await Util.attachPropUser(req.user) : undefined, staff: staffusers, StaffFounders: staffusersFounder, staffnonFounder: staffusersNonFounder, staffChunks: staffChunks, staffChunksFounder: staffChunksFounders, staffChunksNonFounder: staffChunksNonFounder, config, staffChunksMods: staffChunksMods, staffChunksAdmins: staffChunksAdmins});
 	});
 app.get('/admin', async (req, res) => {
+
+    /*
+    const bots = await Promise.all(
+        (await r
+            .table('bots')
+            .filter({ verified: false })
+            .run()).map(bot => Util.attachPropBot(bot, req.user))
+    );
+    const botChunks = chunk(bots, 4);
+    res.render('staff/queue', { user: req.user ? await Util.attachPropUser(req.user) : undefined, chunks: botChunks, rawBots: bots, config });
+     */
+
+    const BotQbots = await Promise.all(
+        (await r
+            .table('bots')
+            .filter({ verified: false })
+            .run()).map(bot => Util.attachPropBot(bot, req.user))
+    );
+    const BotQbotChunks = chunk(BotQbots, 4);
+
     if (!(req.user.mod || req.user.admin)) return res.status(403).json({ error: 'No permission' });
-    res.render('admin', { user: req.user ? await Util.attachPropUser(req.user) : undefined });
+    res.render('admin', { user: req.user ? await Util.attachPropUser(req.user) : undefined, botqueue: {chunks: BotQbotChunks, rawBots: BotQbots}, config });
 });
