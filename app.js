@@ -59,6 +59,7 @@ app.use('/unused', express.static(__dirname + '/unused'));
 app.use(express.static('static'));
 app.use(express.json());
 app.use('/api/public', require('./routes/botapi'));
+app.use('/certify' , require('./routes/certificationRoute'));
 app.use(session({ saveUninitialized: true, resave: false, name: 'discordboats_session', secret: require('./ConstantStore').secret, store: new RethinkStore(require('./ConstantStore').r) }));
 app.use(passport.initialize());
 app.use(passport.session());
