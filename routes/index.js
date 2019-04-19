@@ -253,7 +253,7 @@ app.get('/staff', async (req, res) => {
 			
 			staffusersRaw.forEach(async function(item, index){
 				if(item.staff){
-					if(item.badges.includes("Founder")){
+					if(item.staffFounder){
 						staffusersFounder.push(item)
 					} else {
 						
