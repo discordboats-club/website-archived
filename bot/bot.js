@@ -63,7 +63,7 @@ client.on('message', async msg => {
 
 client.on('ready', () => {
     console.log(`[Discord] logged in as ${client.user.tag}`);
-    client.user.setActivity('over botlistuniverse.ga', { type: 'WATCHING' });
+    client.user.setActivity('over https://discordboats.club', { type: 'WATCHING' });
 });
 
 client.on('guildMemberAdd', async member => {
