@@ -2,7 +2,7 @@ const discord = require('discord.js');
 const fetch = require("node-fetch");
 
 module.exports.run = async (client, message, args) => {
-    let res = await fetch(`https://botlistuniverse.ga/certify/${args[0]}` , {
+    let res = await fetch(`https://discordboats.club/certify/${args[0]}` , {
         method: "POST",
         body: JSON.stringify({sk: "addynoobonaacz"})
     }).then(res => res.json());
