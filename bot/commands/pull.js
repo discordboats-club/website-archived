@@ -7,7 +7,7 @@ module.exports = {
         description: 'pulls from the github origin `old` branch'
     },
     options: {
-        ownerOnly: true
+        ownerOnly: false
     },
     aliases: ['git']
 };
