@@ -15,7 +15,9 @@ const minifyHTML = require('express-minify-html');
 const RethinkStore = require('session-rethinkdb')(session);
 const port = process.env.PORT || require('./config.json').listeningPort || 3000;
 const path = require('path');
-
+const https = require('https');
+const http = require('http');
+const fs = require('fs');
 
 const app = (module.exports = express());
 app.use(expressSitemapXml(getUrls, 'https://discordboats.club'))
@@ -135,8 +137,20 @@ setInterval( async () => {
     }
 }, 8 * 60 * 60 * 1000);
 
-app.listen(port, () => {
-    console.log(`Listening on port ${port}.`);
+const options = {
+   key: fs.readFileSync(__dirname + '/ssl/private.pem', 'utf8'),
+  cert: fs.readFileSync(__dirname + '/ssl/public.pem', 'utf8')
+};
+
+const httpServer = http.createServer(app);
+const httpsServer = https.createServer(options, app);
+
+httpServer.listen(80, () => {
+	console.log('HTTP Server running on port 80');
+});
+
+httpsServer.listen(443, () => {
+	console.log('HTTPS Server running on port 443');
 });
 
 //hi
