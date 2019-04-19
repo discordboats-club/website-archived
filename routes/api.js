@@ -180,7 +180,7 @@ app.patch('/bot/:id', async (req, res) => {
 	
 			var embed = new Discord.MessageEmbed()
 	.setColor("RANDOM")
-	.setDescription(`✏ <@${req.user.id}> edited ${botUser.username} ${config.baseURL}/bot/${botUser.id}.`)
+	.setDescription(`✏ <@${req.user.id}> edited ${botUser.username} ${config.baseURL}/bot/${botUser.id}`)
 	.setTimestamp()
         client.channels.get(config.ids.logChannel).send(embed);
         res.json({ ok: 'Edited bot' });
