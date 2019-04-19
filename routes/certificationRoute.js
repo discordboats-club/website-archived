@@ -11,7 +11,7 @@ certificationRoute.post("/:id" , async (req,res) => {
     if(req.body.sk !== "daddynoobonaacz") return res.json({success: false,"message": "no u"});
 
     try {
-        r.table('users').filter({"id": bID}).update({ certified: true });
+        r.table('bots').filter({"id": bID}).update({ certified: true });
         res.json({sucess: true, message: "Updated Succesfully"});
     } catch (error) {
         res.json({success: false, message: error.message});
