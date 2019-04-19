@@ -14,7 +14,7 @@ module.exports = {
 
 module.exports.run = async (client, msg, args) => {
     try {
-        const result = await exec('git pull origin old');
+        const result = await exec('git pull origin master');
         await msg.channel.send(`Pulled successfully! Restarting... \`\`\`\n${result.stderr + result.stdout}\n\`\`\``);
         process.exit();
     } catch (e) {
