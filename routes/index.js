@@ -312,5 +312,6 @@ app.get('/staff', async (req, res) => {
     res.render('staffList', { user: req.user ? await Util.attachPropUser(req.user) : undefined, staff: staffusers, StaffFounders: staffusersFounder, staffnonFounder: staffusersNonFounder, staffChunks: staffChunks, staffChunksFounder: staffChunksFounders, staffChunksNonFounder: staffChunksNonFounder, config, staffChunksMods: staffChunksMods, staffChunksAdmins: staffChunksAdmins});
 	});
 app.get('/admin', async (req, res) => {
+    if (!(req.user.mod || req.user.admin)) return res.status(403).json({ error: 'No permission' });
     res.render('admin', { user: req.user ? await Util.attachPropUser(req.user) : undefined });
 });
