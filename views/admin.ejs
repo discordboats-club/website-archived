@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <%- include("parts/head", { title: 'Admin Panel' }) %>
+		<meta property="og:title" content="discordboats.club" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://botlistuniverse.ga" />
+
+        <meta property="og:site_name" content="discordboats.club">
+        <meta name="theme-color" content="#90CAF9">
+        <meta name="title" content="Admin Panel">
+    </head>
+
+    <body>
+        <div class="header">
+            <%- include("parts/header") %>
+        </div>
+        <div class="main">
+            <div class="container">
+                <div class="row">
+                    <h3>Admin Panel</h3>
+                    <hr>
+					<br>
+					<br>
+                    <a href="staff/queue" class="square blue btn btn-orange btn-1x">Staff Bot Queue</a>
+					<a href="/staff" class="square blue btn btn-red btn-1x">Staff Users</a>
+					
+                </div>
+               
+        </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <footer>
+        <%- include("parts/footer") %>
+        <%- include("parts/scripts") %>
+    </footer>
+</html>
