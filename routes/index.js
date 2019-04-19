@@ -333,5 +333,6 @@ app.get('/admin', async (req, res) => {
     const BotQbotChunks = chunk(BotQbots, 4);
 
     if (!(req.user.mod || req.user.admin)) return res.status(403).json({ error: 'No permission' });
-    res.render('admin', { user: req.user ? await Util.attachPropUser(req.user) : undefined, botqueue: {chunks: BotQbotChunks, rawBots: BotQbots}, config });
+    res.render('admin', { user: req.user ? await Util.attachPropUser(req.user) : undefined, botqueue: {chunks: BotQbotChunks, rawBots: BotQbots},
+        config });
 });
