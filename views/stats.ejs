@@ -11,22 +11,21 @@
         <div class="header">
             <%- include("parts/header") %>
         </div>
-<div class="w3-container">
-  <h2>Statistics</h2>
-</div>
+
 
 <div class="w3-row-padding">
+ <div class="w3-card w3-round w3-white">
+        <div class="w3-container">
+         <h4 class="w3-center">Statistics</h4>
+       
+         <hr>
+         <p><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i><%= botCount %> # of Bots</p>
+         <p><i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i><%= userCount %> # of Users</p>
+         <p><i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"><%= likeCount %> # of Likes</p>
+ <p><i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i><%= botsInvited %> # of Bots Invited</p>
+        </div>
+      </div>
 
-<div class="w3-third w3-margin-bottom">
-  <ul class="w3-ul w3-border w3-center w3-hover-shadow">
-    <li class="w3-black w3-xlarge w3-padding-32">Stats</li>
-    <li class="w3-padding-16"><b><%= botCount %> # of Bots</li>
-    <li class="w3-padding-16"><b>10</b><%= userCount %> # of Users</li>
-    <li class="w3-padding-16"><b>10</b><%= likeCount %> # of Likes</li>
-    <li class="w3-padding-16"><%= botsInvited %> # of Bots Invited</li>
-    </li>
-
-              
 
                             </div>
                         </div>
