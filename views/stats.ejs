@@ -10,6 +10,19 @@
         </div>
         <div class="main">
             <div class="container">
+<div class="w3-row-padding w3-center w3-margin-top">
+<div class="w3-third">
+  <div class="w3-card w3-container" style="min-height:328px">
+  <h3>Discord Stats</h3><br>
+  <i class="fa fa-css3 w3-margin-bottom w3-text-theme" style="font-size:120px"></i>
+ <p><%= bot.users.size %> Users Served</p>
+  <p><%= bot.guilds.size %> Servers Connected</p>
+  <p><%= bot.channels.size.toLocaleString() %> Text Channels Seen</p>
+  <p><%= bot.channels.filter(ch => ch.type === "voice").size%> Voice Channels Seen</p>
+  <p>12 Voice Connections</p>
+  </div>
+</div>
+
                 <h3>Statistics</h3>
                 <subtitle>Some interesting stats about Discord Bot Universe</subtitle>
                 <hr>
