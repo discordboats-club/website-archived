@@ -125,7 +125,7 @@ app.post('/bot', async (req, res) => {
     res.status(200).json({ ok: 'Created bot' });
 	var embed = new Discord.MesssageEmbed()
 	.setColor("RANDOM")
-	.setDescription(`📥 <@${req.user.id}> added ${botUser.username} (<@&${config.ids.staffRole}>).`)
+	.setDescription(`📥 <@${req.user.id}> added ${botUser.username} (<@&${config.ids.staffRole}>)`)
     client.channels.get(config.ids.logChannel).send(embed);
 });
 
@@ -202,7 +202,7 @@ app.delete('/bot/:id', async (req, res) => {
         const botUser = client.users.get(bot.id) || (await client.users.fetch(bot.id));
 		var embed = new Discord.MessageEmbed()
 	.setColor("RANDOM")
-	.setDescription(`🗑 <@${req.user.id}> deleted ${botUser.username}.`)
+	.setDescription(`🗑 <@${req.user.id}> deleted ${botUser.username}`)
         client.channels.get(config.ids.logChannel).send(embed);
         client.guilds
             .get(config.ids.mainServer)
@@ -310,11 +310,11 @@ app.post('/bot/mod/verify', async (req, res) => {
     const staffUser = client.users.get(req.user.id) || client.users.fetch(req.user.id);
     if (data.verified) {
         try {
-            await discordOwner.send(`🎉 "${bot.name}" was verified by ${staffUser.tag} ${config.baseURL}/bot/${botUser.id}.!`);
+            await discordOwner.send(`🎉 "${bot.name}" was verified by ${staffUser.tag} ${config.baseURL}/bot/${botUser.id}`);
         } catch (e) {}
 		var embed = new Discord.MessageEmbed()
 	.setColor("RANDOM")
-	.setDescription(`🎉 ${botUser.username} by <@${bot.ownerID}> was verified by ${staffUser}! ${config.baseURL}/bot/${botUser.id}`)
+	.setDescription(`🎉 ${botUser.username} by <@${bot.ownerID}> was verified by ${staffUser} ${config.baseURL}/bot/${botUser.id}`)
 	.setTimestamp()
         client.channels.get(config.ids.logChannel).send(embed);
         await r
@@ -326,7 +326,7 @@ app.post('/bot/mod/verify', async (req, res) => {
         console.log(data.reason);
         if (!data.reason || !data.reason.trim()) return res.status(400).json({ error: 'A reason is required' });
         try {
-            await discordOwner.send(`❌ Your bot, ${bot.name}, was rejected by ${staffUser.tag}. Check <#${config.ids.logChannel}> for more information.`);
+            await discordOwner.send(`❌ Your bot, ${bot.name}, was rejected by ${staffUser.tag}. Check <#${config.ids.logChannel}> for more information`);
         } catch (e) {}
 		var embed = new Discord.MessageEmbed()
 	.setColor("RANDOM")
