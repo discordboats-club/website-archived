@@ -238,12 +238,12 @@ app.get('/Apis', async (req, res) => {
 });
 app.get('/staff', async (req, res) => {
 
-	let staffusersNonFounder = [];
-	let staffusersFounder = [];
+	//let staffusersNonFounder = [];
+	//let staffusersFounder = [];
 	let staffusers = [];
 	
-	let staffMods = [];
-	let staffAdmins = [];
+	//let staffMods = [];
+	//let staffAdmins = [];
 
 	let staffusersRaw = await Promise.all(
         (await r
@@ -253,7 +253,7 @@ app.get('/staff', async (req, res) => {
 			
 			staffusersRaw.forEach(async function(item, index){
 				if(item.staff){
-					if(item.badges.includes("Founder")){
+					/*if(item.badges.includes("Founder")){
 						staffusersFounder.push(item)
 					} else {
 						
@@ -263,9 +263,7 @@ app.get('/staff', async (req, res) => {
 							staffMods.push(item)
 							staffusersNonFounder.push(item)
 						}
-
-						
-					}
+					}*/
 					staffusers.push(item)
 					
 				}
