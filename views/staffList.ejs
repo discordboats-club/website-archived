@@ -29,9 +29,7 @@
 						<h3>Our Staff</h3>
 						<hr>
 						<br>
-						<%- staffChunksFounder.map(chunk => `<div class="row bot-card">${chunk.map(staff => include("parts/staffCard", {staff})).join("")}</div>`).join("") %>
-						<%- staffChunksAdmins.map(chunk => `<div class="row bot-card">${chunk.map(staff => include("parts/staffCard", {staff})).join("")}</div>`).join("") %>
-						<%- staffChunksMods.map(chunk => `<div class="row bot-card">${chunk.map(staff => include("parts/staffCard", {staff})).join("")}</div>`).join("") %>
+						<%- StaffChunk.map(chunk => `<div class="row bot-card">${chunk.map(staff => include("parts/staffCard", {staff})).join("")}</div>`).join("") %>
 					</div>
                 <% } %>
 				

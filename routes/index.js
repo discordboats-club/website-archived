@@ -271,7 +271,7 @@ app.get('/staff', async (req, res) => {
 				}
 			})
 			
-			staffusersNonFounder.sort(function(a, b){
+			/*staffusersNonFounder.sort(function(a, b){
 				if(a.username < b.username) { return -1; }
 				if(a.username > b.username) { return 1; }
 				return 0;
@@ -306,11 +306,13 @@ app.get('/staff', async (req, res) => {
 	const staffChunks = chunk(staffusers, 4);
 	
 	const staffChunksAdmins = chunk(staffAdmins, 4);
-	const staffChunksMods = chunk(staffMods, 4);
+	const staffChunksMods = chunk(staffMods, 4);*/
+	//res.render('staffList', { user: req.user ? await Util.attachPropUser(req.user) : undefined, staff: staffusers, StaffFounders: staffusersFounder, staffnonFounder: staffusersNonFounder, staffChunks: staffChunks, staffChunksFounder: staffChunksFounders, staffChunksNonFounder: staffChunksNonFounder, config, staffChunksMods: staffChunksMods, staffChunksAdmins: staffChunksAdmins});
 
+    const staffChunks = chunk(staffusers, 4);
 
-    res.render('staffList', { user: req.user ? await Util.attachPropUser(req.user) : undefined, staff: staffusers, StaffFounders: staffusersFounder, staffnonFounder: staffusersNonFounder, staffChunks: staffChunks, staffChunksFounder: staffChunksFounders, staffChunksNonFounder: staffChunksNonFounder, config, staffChunksMods: staffChunksMods, staffChunksAdmins: staffChunksAdmins});
-	});
+    res.render('staffList', { user: req.user ? await Util.attachPropUser(req.user) : undefined, staff: staffusers, StaffChunk: staffChunks});
+});
 app.get('/admin', async (req, res) => {
 
     /*
