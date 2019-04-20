@@ -26,19 +26,11 @@
 					<p>There's no bots on this site at the moment. <a href="/dashboard/new">Add one?</a></p>
 					<% } else { %>
 					<div class="bot-cards">
-						<h3>Our Founder(s)</h3>
+						<h3>Our Staff</h3>
 						<hr>
 						<br>
 						<%- staffChunksFounder.map(chunk => `<div class="row bot-card">${chunk.map(staff => include("parts/staffCard", {staff})).join("")}</div>`).join("") %>
-						<br>
-						<h3>Our Administrator(s)</h3>
-						<hr>
-						<br>
 						<%- staffChunksAdmins.map(chunk => `<div class="row bot-card">${chunk.map(staff => include("parts/staffCard", {staff})).join("")}</div>`).join("") %>
-						<br>
-						<h3>Our Moderator</h3>
-						<hr>
-						<br>
 						<%- staffChunksMods.map(chunk => `<div class="row bot-card">${chunk.map(staff => include("parts/staffCard", {staff})).join("")}</div>`).join("") %>
 					</div>
                 <% } %>
