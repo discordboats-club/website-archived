@@ -95,7 +95,7 @@ module.exports = class Utils {
 		if (user._bots.find(b => b.certified)) user.badges.push('Certified Developer');
         if (user.mod) user.badges.push('Moderator');
         if (user.admin) user.badges.push('Administrator');
-		if (user.id === "131417543888863232" || user.id === "398536643172237314" || user.id === "233823931830632449") user.badges.push('Founder');
+		//if (user.id === "131417543888863232" || user.id === "398536643172237314" || user.id === "233823931830632449") user.badges.push('Founder');
         return user;
     }
 	
@@ -120,7 +120,7 @@ module.exports = class Utils {
 		if(user.mod || user.admin) user.staff = true;
 		if(user.admin) user.staffAdmin = true;
 		if(user.mod) user.staffMod = true;
-		if (user.id === "131417543888863232" || user.id === "398536643172237314" || user.id === "233823931830632449") user.badges.push('Founder');
+		//if (user.id === "131417543888863232" || user.id === "398536643172237314" || user.id === "233823931830632449") user.badges.push('Founder');
         if (user.admin) user.badges.push('Administrator');
         if (user.mod) user.badges.push('Moderator');
 		
