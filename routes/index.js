@@ -309,6 +309,25 @@ app.get('/staff', async (req, res) => {
 	const staffChunksMods = chunk(staffMods, 4);*/
 	//res.render('staffList', { user: req.user ? await Util.attachPropUser(req.user) : undefined, staff: staffusers, StaffFounders: staffusersFounder, staffnonFounder: staffusersNonFounder, staffChunks: staffChunks, staffChunksFounder: staffChunksFounders, staffChunksNonFounder: staffChunksNonFounder, config, staffChunksMods: staffChunksMods, staffChunksAdmins: staffChunksAdmins});
 
+    function dynamicSort(property) {
+        var sortOrder = 1;
+
+        if(property[0] === "-") {
+            sortOrder = -1;
+            property = property.substr(1);
+        }
+
+        return function (a,b) {
+            if(sortOrder == -1){
+                return b[property].localeCompare(a[property]);
+            }else{
+                return a[property].localeCompare(b[property]);
+            }
+        }
+    }
+
+    staffusers.sort(dynamicSort("username"))
+
     const staffChunks = chunk(staffusers, 4);
 
     res.render('staffList', { user: req.user ? await Util.attachPropUser(req.user) : undefined, staff: staffusers, StaffChunk: staffChunks});
