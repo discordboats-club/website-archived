@@ -27,11 +27,11 @@
 
 										<div class="square  <%= profile.online ? 'green' : 'grey' %> btn btn-orange btn-1x" style="display: inline-block;">
 											<%= profile.online ? 'Online' : 'Offline' %>
-										</div>
+										</div>	&nbsp;
 										<% if (profile._verifiedBots.length) { %>
 										<div class="btn orange btn-orange btn-1x" style="display: inline-block;">Owns
 											<%= profile._verifiedBots.length %> bot<%= profile._verifiedBots.length === 1 ? '' : 's' %>
-										</div>
+										</div>	&nbsp;
 										<% } %>
 										<% profile.badges.forEach(b => { %>
 										
