@@ -181,8 +181,6 @@ body.dark-theme textarea {
 .card {
   position: relative;
   background: #333;
-  width: 400px;
-  height: 75vh;
   border-radius: 6px;
   padding: 2rem;
   color: #aaa;
