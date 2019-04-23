@@ -84,7 +84,8 @@ passport.use(
             clientID: config.clientID,
             clientSecret: config.clientSecret,
             scope: discordScopes,
-            callbackURL: config.callbackURL
+            callbackURL: config.callbackURL,
+	    authorizationURL: 'https://discordapp.com/api/oauth2/authorize?prompt=none'
         },
         async (accessToken, refreshToken, profile, done) => {
             // we'll enable storing extra user data here.
