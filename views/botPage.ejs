@@ -43,31 +43,30 @@
 								
                                         <% if (bot.library) { %>
                                         <div class="square blue btn btn-orange btn-1x">
-                                            <%= bot.library %>&nbsp;
-
-                                        </div>
+                                            <%= bot.library %>
+                                        </div>&nbsp;
                                         <% } %>
                                         <% if (typeof bot.online == 'boolean') { %>
                                         <div class="square <%= bot.online ? 'green' : 'red' %> btn btn-blue btn-1x">
-                                            <%= bot.online ? 'online' : 'offline' %> &nbsp;
-                                        </div>
+                                            <%= bot.online ? 'online' : 'offline' %> 
+                                        </div>&nbsp;
                                         <% } %>
                                         <% if (bot.servers) { %>
                                         <div class="square blue btn btn-orange btn-1x">
-                                            <%= bot.servers %> servers</div> &nbsp;
+                                            <%= bot.servers %> servers</div>&nbsp;
                                         <% } %>
                                         <% if (!bot.verified) { %>
-                                        <div class="square lime btn btn-orange btn-1x">unverified</div> &nbsp;
+                                        <div class="square lime btn btn-orange btn-1x">unverified</div>&nbsp;
                                         <% } %>
                                         <% if (bot.prefix) { %>
                                         <div class="square purple btn btn-orange btn-1x">
-                                            <%= bot.prefix %> prefix</div> &nbsp;
+                                            <%= bot.prefix %> prefix</div>&nbsp;
                                         <% } %>
                                         <% if (bot._ownerTag) { %>
                                         <a href="/user/<%= bot.ownerID %>">
                                             <div class="square grey btn btn-orange btn-1x">owned by
-                                                <%= bot._ownerTag %>&nbsp;
-                                            </div>
+                                                <%= bot._ownerTag %>
+                                            </div>&nbsp;
                                         </a>
                                         <% } %>
                                         <% if (bot.certified) { %>
