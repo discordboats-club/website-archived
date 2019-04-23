@@ -123,10 +123,7 @@ app.post('/bot', async (req, res) => {
         .run();		
 		
     res.status(200).json({ ok: 'Created bot' });
-	var embed = new Discord.MesssageEmbed()
-	.setColor("RANDOM")
-	.setDescription(`📥 <@${req.user.id}> added ${botUser.username} (<@&${config.ids.staffRole}>)`)
-    client.channels.get(config.ids.logChannel).send(embed);
+    client.channels.get(config.ids.logChannel).send(`📥 <@${req.user.id}> added ${botUser.username} (<@&${config.ids.staffRole}>)`);
 });
 
 const editBotSchema = Joi.object()
@@ -178,11 +175,8 @@ app.patch('/bot/:id', async (req, res) => {
             .update(data)
             .run();
 	
-			var embed = new Discord.MessageEmbed()
-	.setColor("RANDOM")
-	.setDescription(`✏ <@${req.user.id}> edited ${botUser.username} ${config.baseURL}/bot/${botUser.id}`)
-	.setTimestamp()
-        client.channels.get(config.ids.logChannel).send(embed);
+	
+        client.channels.get(config.ids.logChannel).send(`✏ <@${req.user.id}> edited ${botUser.username} ${config.baseURL}/bot/${botUser.id}`);
         res.json({ ok: 'Edited bot' });
     } else res.status(403).json({ error: 'You do not own this bot' });
 });
@@ -200,10 +194,8 @@ app.delete('/bot/:id', async (req, res) => {
             .delete()
             .run();
         const botUser = client.users.get(bot.id) || (await client.users.fetch(bot.id));
-		var embed = new Discord.MessageEmbed()
-	.setColor("RANDOM")
-	.setDescription(`🗑 <@${req.user.id}> deleted ${botUser.username}`)
-        client.channels.get(config.ids.logChannel).send(embed);
+	
+        client.channels.get(config.ids.logChannel).send(`🗑 <@${req.user.id}> deleted ${botUser.username}`);
         client.guilds
             .get(config.ids.mainServer)
             .member(botUser.id)
@@ -312,11 +304,7 @@ app.post('/bot/mod/verify', async (req, res) => {
         try {
             await discordOwner.send(`🎉 "${bot.name}" was verified by ${staffUser.tag} ${config.baseURL}/bot/${botUser.id}`);
         } catch (e) {}
-		var embed = new Discord.MessageEmbed()
-	.setColor("RANDOM")
-	.setDescription(`🎉 ${botUser.username} by <@${bot.ownerID}> was verified by ${staffUser} ${config.baseURL}/bot/${botUser.id}`)
-	.setTimestamp()
-        client.channels.get(config.ids.logChannel).send(embed);
+        client.channels.get(config.ids.logChannel).send(`🎉 ${botUser.username} by <@${bot.ownerID}> was verified by ${staffUser} ${config.baseURL}/bot/${botUser.id}`);
         await r
             .table('bots')
             .get(bot.id)
@@ -328,10 +316,8 @@ app.post('/bot/mod/verify', async (req, res) => {
         try {
             await discordOwner.send(`❌ Your bot, ${bot.name}, was rejected by ${staffUser.tag}. Check <#${config.ids.logChannel}> for more information`);
         } catch (e) {}
-		var embed = new Discord.MessageEmbed()
-	.setColor("RANDOM")
-	.setDescription(`❌ ${botUser.tag} by <@${bot.ownerID}> was rejected by ${staffUser}.\nReason: \`${data.reason}\``)
-        client.channels.get(config.ids.logChannel).send(embed);
+	
+        client.channels.get(config.ids.logChannel).send(`❌ ${botUser.tag} by <@${bot.ownerID}> was rejected by ${staffUser}.\nReason: \`${data.reason}\``);
         await r
             .table('bots')
             .get(bot.id)
