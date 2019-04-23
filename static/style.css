@@ -189,35 +189,4 @@ body.dark-theme textarea {
   overflow: hidden;
   
   &__image-container {
-    margin: -2rem -2rem 1rem -2rem;
-  }
-  
-  &__line {
-  opacity: 0;
-  animation: LineFadeIn .8s .8s forwards ease-in;
-  }
-
-  &__image {
-    opacity: 0;
-    animation: ImageFadeIn .8s 1.4s forwards;
-  }
-
-  &__title {
-    color: white;
-    margin-top: 0;
-    font-weight: 800;
-    letter-spacing: 0.01em;
-  }
-  
-  &__content {
-    margin-top: -1rem;
-    opacity: 0;
-    animation: ContentFadeIn .8s 1.6s forwards;
-  }
-  
-  &__svg {
-    position: absolute;
-    left: 0;
-    top: 115px;
-  }
-}
+    }
