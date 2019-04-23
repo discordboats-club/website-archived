@@ -68,9 +68,6 @@ border-radius: 6px;
 .container {
     padding-top: 2%;
     padding-bottom: 2%;
- display: flex;
-align-items: center;
-  justify-content: center;
 }
 .bp-heading {
     display: inline-block;
