@@ -63,7 +63,7 @@
       <% if (usersData.length == 0) { %>
       <h3 class="title is-3">No users available to list.</h3>
       <% } else { %>
-      <%- userChunk.map(chunk => `${chunk.map(users => include("../../usercard.ejs", {users})).join("")}`).join("") %>
+      <%- userChunk.map(chunk => `${chunk.map(users => include("../userCard.ejs", {users})).join("")}`).join("") %>
       <% } %>
     </div>
   </div>
