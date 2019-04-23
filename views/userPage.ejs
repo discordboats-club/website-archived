@@ -59,7 +59,7 @@
 						<p>This user has no bots</p>
 						<% } else { %>
 						<% profile._chunked.forEach(c => { %>
-						<div class="columns is-multiline is-mobile">
+						<div class="row bot-card">
 							<% c.forEach(b => { %>
 							<%- include("parts/botCard", { bot: b }) %>
 							<% }) %>
