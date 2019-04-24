@@ -40,7 +40,7 @@
             </div>
             <% } %>
             <% if (typeof api !== "undefined" || (typeof user !== 'undefined' && (user.mod || user.admin))) { %>
-            <a class="api-key-button" href="/dashboard/bot/<%= bot.id %>/manage">Manage</a>
+            <a href="/dashboard/bot/<%= bot.id %>/manage">Manage</a>
             <% } %>
         </div>
     </div>
