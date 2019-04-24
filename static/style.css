@@ -64,8 +64,14 @@ border-radius: 6px;
 /* Add some padding inside the card container */
 .container {
   padding: 2px 16px;
+width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
 }
 .container {
+
     padding-top: 2%;
     padding-bottom: 2%;
 }
