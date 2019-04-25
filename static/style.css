@@ -1,6 +1,6 @@
 @import 'https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css';
 @import 'https://fonts.googleapis.com/css?family=Roboto|Material+Icons';
-//@import 'https://unpkg.com/@coreui/coreui/dist/css/coreui.min.css';
+@import 'https://unpkg.com/@coreui/coreui/dist/css/coreui.min.css';
 @import "font-awesome";
 #snow {
     position: fixed;
