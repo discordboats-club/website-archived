@@ -183,3 +183,5 @@ body.dark-theme textarea {
     background-color: #202225 !important;
 }
 .btn-sm
+.align-center {
+  text-align: center; }
