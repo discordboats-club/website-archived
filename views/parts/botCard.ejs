@@ -18,8 +18,8 @@
 
 		<br>	
         </div>
-        <div class="card-content">
-            <a  href="/invite_url/<%=bot.id%>" <%- typeof queue !=='undefined' ? 'target="_blank"' : '' %>Invite</a>
+       <div class="card-action">
+            <a href="/invite_url/<%=bot.id%>" <%- typeof queue !=='undefined' ? 'target="_blank"' : '' %>>Invite</a>
             <a href="/bot/<%= bot.vanityURL || bot.id %>">View</a>
             <% if (typeof queue !== "undefined") { %>
             <a class="accept-button" href="https://discordapp.com/oauth2/authorize?client_id=<%= bot.id %>&scope=bot&guild_id=<%= config.ids.mainServer %>" target="_blank"><strong>Accept</strong></a>
@@ -40,7 +40,7 @@
             </div>
             <% } %>
             <% if (typeof api !== "undefined" || (typeof user !== 'undefined' && (user.mod || user.admin))) { %>
-             <a href="/dashboard/bot/<%= bot.id %>/manage">Manage</a>
+            <a class="api-key-button" href="/dashboard/bot/<%= bot.id %>/manage">Manage</a>
             <% } %>
         </div>
     </div>
