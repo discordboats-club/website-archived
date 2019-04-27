@@ -1,68 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
+
     <head>
         <%- include("parts/head") %>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
 
     <body>
         <div class="header">
             <%- include("parts/header") %>
         </div>
-        <div class="main">
-            <div class="container">
-                <h3>Statistics</h3>
-                <subtitle>Some interesting stats about discordboats.club</subtitle>
-                <hr>
-                <div class="row">
-                    <div class="col s4">
-                        <div class="container">
-                            <div class="center-align">
-                                <h4># of Bots</h4>
-                                <hr>
-                                <h4 class="stat-value">
-                                    <%= botCount %>
-                                </h4>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col s4">
-                        <div class="container">
-                            <div class="center-align">
-                                <h4># of Users</h4>
-                                <hr>
-                                <h4 class="stat-value">
-                                    <%= userCount %>
-                                </h4>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col s4">
-                        <div class="container">
-                            <div class="center-align">
-                                <h4># of Likes</h4>
-                                <hr>
-                                <h4 class="stat-value">
-                                    <%= likeCount %>
-                                </h4>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col s4">
-                        <div class="container">
-                            <div class="center-align">
-                                <h4># of Bots Invited</h4>
-                                <hr>
-                                <h4 class="stat-value">
-                                    <%= botsInvited %>
-                                </h4>
+
+<br>
+<br>
+<br>
+<br>
+  <div class="w3-center m7">
+ <div class="w3-card w3-round w3-grey">
+        <div class="w3-container">
+         <h4 class="w3-center">Statistics</h4>
+       
+         <hr>
+         <p><i class="fa fa-bug fa-fw w3-margin-right w3-text-theme"></i><%= botCount %> # of Bots</p>
+         <p><i class="fa fa-user-circle-o fa-fw w3-margin-right w3-text-theme"></i><%= userCount %> # of Users</p>
+         <p><i class="fa fa-thumbs-up fa-fw w3-margin-right w3-text-theme"></i><%= likeCount %> # of Likes</p>
+ <p><i class="fa fa-id-badge fa-fw w3-margin-right w3-text-theme"></i><%= botsInvited %> # of Bots Invited</p>
+        </div>
+      </div>
+
+
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
     </body>
     <footer>
         <%- include("parts/footer") %>
